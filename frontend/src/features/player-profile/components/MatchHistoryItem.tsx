@@ -1,3 +1,4 @@
+import { Skeleton } from '../../../components/feedback/Skeleton';
 import { ROLE_BADGE_COLOR } from '../../../constants/roles';
 import type { MatchHistoryItem as MatchHistoryItemType } from '../../../types/player';
 
@@ -46,6 +47,23 @@ export function MatchHistoryItem({ match }: MatchHistoryItemProps) {
       <div className="shrink-0 py-3 pr-3 text-right">
         <p className={`text-sm font-semibold ${RESULT_TEXT_COLOR[match.result]}`}>{RESULT_LABEL[match.result]}</p>
         <p className="text-[11px] text-gray-400">{formatRelativeTime(match.playedAt)}</p>
+      </div>
+    </div>
+  );
+}
+
+export function MatchHistoryItemSkeleton() {
+  return (
+    <div className="flex animate-pulse items-stretch gap-3 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <span className="w-1.5 shrink-0 bg-gray-200 dark:bg-gray-800" />
+      <Skeleton className="my-3 h-10 w-10 shrink-0 rounded-full" />
+      <div className="min-w-0 flex-1 space-y-2 py-3">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-3 w-16" />
+      </div>
+      <div className="shrink-0 space-y-2 py-3 pr-3 text-right">
+        <Skeleton className="ml-auto h-4 w-10" />
+        <Skeleton className="ml-auto h-3 w-12" />
       </div>
     </div>
   );

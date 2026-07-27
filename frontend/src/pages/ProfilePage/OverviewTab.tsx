@@ -1,22 +1,16 @@
-import { StatSummaryCard } from '../../features/player-profile/components/StatSummaryCard';
-import type { PlayerStatsSummary } from '../../types/player';
+import { ErrorState } from '../../components/feedback/ErrorState';
+import { StatSummaryCard, StatSummaryCardSkeleton } from '../../features/player-profile/components/StatSummaryCard';
+import { usePlayerProfile } from '../../features/player-profile/hooks/usePlayerProfile';
 
 interface OverviewTabProps {
   battleTag: string;
 }
 
-const MOCK_SUMMARY: PlayerStatsSummary = {
-  winRate: 58,
-  gamesPlayed: 342,
-  kda: 3.4,
-  topHeroes: [
-    { heroId: 'genji', heroName: '겐지', role: 'damage', playTimeMinutes: 5820, winRate: 61, accuracy: 42 },
-    { heroId: 'ana', heroName: '아나', role: 'support', playTimeMinutes: 3120, winRate: 55, accuracy: 58 },
-    { heroId: 'reinhardt', heroName: '라인하르트', role: 'tank', playTimeMinutes: 2460, winRate: 52, accuracy: 71 },
-  ],
-};
+export function OverviewTab({ battleTag }: OverviewTabProps) {
+  const { data, isLoading, isError } = usePlayerProfile(battleTag);
 
-// TODO: usePlayerProfile(battleTag)로 교체 예정 - 현재는 Mock Data
-export function OverviewTab({ battleTag: _battleTag }: OverviewTabProps) {
-  return <StatSummaryCard summary={MOCK_SUMMARY} />;
+  if (isLoading) return <StatSummaryCardSkeleton />;
+  if (isError || !data) return <ErrorState />;
+
+  return <StatSummaryCard summary={data} />;
 }
