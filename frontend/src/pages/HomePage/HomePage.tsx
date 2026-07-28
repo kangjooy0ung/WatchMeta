@@ -2,9 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { PageContainer } from '../../components/layout/PageContainer';
 import { ROUTES } from '../../constants/routes';
 import { SearchBar } from '../../features/player-search/components/SearchBar';
+import { useMyProfileStore } from '../../store/useMyProfileStore';
 
 export function HomePage() {
   const navigate = useNavigate();
+  const myBattleTag = useMyProfileStore((state) => state.myBattleTag);
 
   const handleSearch = (battleTag: string) => {
     navigate(ROUTES.profile(battleTag));
@@ -19,7 +21,21 @@ export function HomePage() {
           </h1>
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">내 전적 분석과 실시간 메타를 한 눈에</p>
         </div>
-        <SearchBar onSearch={handleSearch} />
+
+        {myBattleTag && (
+          <button
+            type="button"
+            onClick={() => navigate(ROUTES.profile(myBattleTag))}
+            className="w-full rounded-full bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm transition-colors active:bg-orange-600"
+          >
+            내 전적 보기 ({myBattleTag})
+          </button>
+        )}
+
+        <div className="w-full">
+          {myBattleTag && <p className="mb-2 text-left text-xs text-gray-400">다른 배틀태그 검색</p>}
+          <SearchBar onSearch={handleSearch} />
+        </div>
       </div>
     </PageContainer>
   );

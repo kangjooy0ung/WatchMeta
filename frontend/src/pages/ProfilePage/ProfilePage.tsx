@@ -1,7 +1,8 @@
-import { User } from 'lucide-react';
+import { Star, User } from 'lucide-react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { PageContainer } from '../../components/layout/PageContainer';
 import { usePlayerSearch } from '../../features/player-search/hooks/usePlayerSearch';
+import { useMyProfileStore } from '../../store/useMyProfileStore';
 import { HeroesTab } from './HeroesTab';
 import { MatchesTab } from './MatchesTab';
 import { OverviewTab } from './OverviewTab';
@@ -22,8 +23,13 @@ export function ProfilePage() {
   const { battleTag } = useParams<{ battleTag: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const { data } = usePlayerSearch(battleTag);
+  const myBattleTag = useMyProfileStore((state) => state.myBattleTag);
+  const setMyBattleTag = useMyProfileStore((state) => state.setMyBattleTag);
+  const clearMyBattleTag = useMyProfileStore((state) => state.clearMyBattleTag);
 
   if (!battleTag) return null;
+
+  const isMine = myBattleTag === battleTag;
 
   const tabParam = searchParams.get('tab');
   const activeTab: ProfileTab = isProfileTab(tabParam) ? tabParam : 'overview';
@@ -42,10 +48,20 @@ export function ProfilePage() {
             <User className="h-6 w-6 text-gray-400" />
           )}
         </div>
-        <div>
-          <p className="font-semibold text-gray-900 dark:text-white">{battleTag}</p>
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-semibold text-gray-900 dark:text-white">{battleTag}</p>
           {data?.title && <p className="text-xs text-gray-500 dark:text-gray-400">{data.title}</p>}
         </div>
+        <button
+          type="button"
+          onClick={() => (isMine ? clearMyBattleTag() : setMyBattleTag(battleTag))}
+          aria-label={isMine ? '내 계정으로 저장 해제' : '내 계정으로 저장'}
+          className={`shrink-0 rounded-full p-2 transition-colors ${
+            isMine ? 'text-amber-400' : 'text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-500'
+          }`}
+        >
+          <Star className="h-5 w-5" fill={isMine ? 'currentColor' : 'none'} />
+        </button>
       </div>
 
       <div className="sticky top-0 z-10 -mx-4 flex border-b border-gray-200 bg-white/95 px-4 backdrop-blur dark:border-gray-800 dark:bg-gray-900/95">

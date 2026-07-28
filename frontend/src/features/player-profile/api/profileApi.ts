@@ -5,9 +5,17 @@ const MOCK_SUMMARY: PlayerStatsSummary = {
   gamesPlayed: 342,
   kda: 3.4,
   topHeroes: [
-    { heroId: 'genji', heroName: '겐지', role: 'damage', playTimeMinutes: 5820, winRate: 61, accuracy: 42 },
-    { heroId: 'ana', heroName: '아나', role: 'support', playTimeMinutes: 3120, winRate: 55, accuracy: 58 },
-    { heroId: 'reinhardt', heroName: '라인하르트', role: 'tank', playTimeMinutes: 2460, winRate: 52, accuracy: 71 },
+    { heroId: 'genji', heroName: '겐지', role: 'damage', playTimeMinutes: 5820, winRate: 61, pickRate: 37, accuracy: 42 },
+    { heroId: 'ana', heroName: '아나', role: 'support', playTimeMinutes: 3120, winRate: 55, pickRate: 20, accuracy: 58 },
+    {
+      heroId: 'reinhardt',
+      heroName: '라인하르트',
+      role: 'tank',
+      playTimeMinutes: 2460,
+      winRate: 52,
+      pickRate: 15,
+      accuracy: 71,
+    },
   ],
 };
 
