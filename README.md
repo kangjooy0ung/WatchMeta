@@ -67,25 +67,31 @@ WatchMeta/
 
 ## 시작하기
 
+npm workspaces로 묶여 있어 루트에서 한 번만 설치하면 됩니다.
+
 ```bash
 git clone https://github.com/kangjooy0ung/WatchMeta.git
-cd WatchMeta/frontend
+cd WatchMeta
 npm install
 npm run dev
 ```
 
-| 명령어 | 설명 |
+| 명령어 (루트에서 실행) | 설명 |
 | --- | --- |
-| `npm run dev` | 로컬 개발 서버 실행 |
-| `npm run build` | 타입체크 후 프로덕션 빌드 (`tsc -b && vite build`) |
-| `npm run preview` | 빌드 결과 로컬 미리보기 |
-| `npm run lint` | oxlint 린트 검사 |
+| `npm run dev` | 프론트엔드 개발 서버 실행 |
+| `npm run dev:backend` | 백엔드 개발 서버 실행 |
+| `npm run build` | 프론트엔드 타입체크 후 프로덕션 빌드 |
+| `npm run lint` | 프론트엔드 oxlint 린트 검사 |
+
+특정 워크스페이스에서 직접 명령을 실행하고 싶다면 `frontend/`, `backend/` 디렉터리로 이동해 각 `package.json`의 스크립트를 그대로 사용해도 됩니다.
 
 ---
 
 ## 배포
 
 Vercel을 통해 배포합니다. 모노레포 구조이므로 프로젝트 설정 시 **Root Directory를 `frontend`로 지정**해야 합니다.
+
+npm workspaces 도입으로 `package-lock.json`이 루트 하나로 통합되었습니다. Vercel이 Root Directory 바깥 파일을 보지 못하면 그 lockfile을 못 읽으므로, 프로젝트 설정의 **"Include files outside of the root directory"** 옵션을 켜주는 것이 안전합니다 (꺼져 있어도 `frontend/package.json`의 의존성 목록만으로 빌드는 되지만, 버전이 lockfile에 고정되지 않습니다).
 
 ---
 
