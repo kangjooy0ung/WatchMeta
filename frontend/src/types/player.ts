@@ -20,6 +20,7 @@ export interface HeroPlayStat {
   role: HeroRole;
   playTimeMinutes: number;
   winRate: number;
+  pickRate: number;
   accuracy: number;
 }
 
