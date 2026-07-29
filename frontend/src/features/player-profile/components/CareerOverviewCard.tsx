@@ -19,7 +19,7 @@ export function CareerOverviewCard({ overview }: CareerOverviewCardProps) {
   const maxRoleHours = Math.max(...ROLE_ORDER.map((role) => overview.roleHours[role]));
 
   return (
-    <section className="glass-panel flex flex-col gap-5 rounded-xl p-5">
+    <section className="glass-panel flex flex-col gap-5 rounded-xl p-5 lg:gap-6 lg:p-6">
       <div className="flex items-baseline justify-between">
         <h3 className="font-headline-lg text-headline-md italic text-on-surface">CAREER OVERVIEW</h3>
         <span className="font-label-sm text-label-sm text-on-surface-variant">경력 개요</span>

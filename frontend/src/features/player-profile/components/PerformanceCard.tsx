@@ -32,7 +32,7 @@ export function PerformanceCard({ performance }: PerformanceCardProps) {
   ];
 
   return (
-    <section className="glass-panel flex flex-col gap-4 rounded-xl p-5">
+    <section className="glass-panel flex flex-col gap-4 rounded-xl p-5 lg:p-6">
       <h3 className="font-headline-lg text-headline-md italic uppercase text-on-surface">Performance</h3>
       <div className="grid grid-cols-2 gap-3">
         {tiles.map((tile) => (

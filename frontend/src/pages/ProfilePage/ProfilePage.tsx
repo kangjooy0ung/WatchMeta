@@ -32,7 +32,7 @@ export function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
-      <div className="mx-auto w-full max-w-md space-y-4 px-4 pt-4 text-on-background">
+      <div className="mx-auto w-full max-w-md space-y-4 px-4 pt-4 text-on-background lg:max-w-[1600px] lg:space-y-8 lg:px-8 lg:pt-6">
         {isLoading && <ProfilePageSkeleton />}
         {isError && <ErrorState message={getErrorMessage(error, '문제가 발생했어요. 다시 시도해 주세요.')} />}
         {data && (
@@ -42,10 +42,16 @@ export function ProfilePage() {
               isMine={isMine}
               onToggleSave={() => (isMine ? clearMyBattleTag() : setMyBattleTag(battleTag))}
             />
-            <CareerOverviewCard overview={data} />
-            <PerformanceCard performance={data.performance} />
-            <MostPlayedHeroesCard topHeroes={data.topHeroes} />
-            <RecentMatchesCard matches={data.recentMatches} />
+            <div className="space-y-4 lg:grid lg:grid-cols-12 lg:gap-8 lg:space-y-0">
+              <div className="space-y-4 lg:col-span-4 lg:space-y-6">
+                <CareerOverviewCard overview={data} />
+                <PerformanceCard performance={data.performance} />
+              </div>
+              <div className="space-y-4 lg:col-span-8 lg:space-y-8">
+                <MostPlayedHeroesCard topHeroes={data.topHeroes} />
+                <RecentMatchesCard matches={data.recentMatches} />
+              </div>
+            </div>
           </>
         )}
       </div>
