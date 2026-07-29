@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { InfoNote } from '../../components/feedback/InfoNote';
 import { ROUTES } from '../../constants/routes';
 import { SearchBar } from '../../features/player-search/components/SearchBar';
 import { useMyProfileStore } from '../../store/useMyProfileStore';
@@ -34,6 +35,9 @@ export function HomePage() {
         <div className="glass-panel w-full rounded-xl p-5">
           {myBattleTag && <p className="mb-2 text-left text-xs text-on-surface-variant">다른 배틀태그 검색</p>}
           <SearchBar onSearch={handleSearch} />
+          <div className="mt-3 text-left">
+            <InfoNote message="배틀넷 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있어요." />
+          </div>
         </div>
       </div>
     </div>

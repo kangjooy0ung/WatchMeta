@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { ErrorState } from '../../components/feedback/ErrorState';
+import { getErrorMessage } from '../../lib/getErrorMessage';
 import { CareerOverviewCard } from '../../features/player-profile/components/CareerOverviewCard';
 import { MostPlayedHeroesCard } from '../../features/player-profile/components/MostPlayedHeroesCard';
 import { PerformanceCard } from '../../features/player-profile/components/PerformanceCard';
@@ -23,7 +24,7 @@ export function ProfilePage() {
   const myBattleTag = useMyProfileStore((state) => state.myBattleTag);
   const setMyBattleTag = useMyProfileStore((state) => state.setMyBattleTag);
   const clearMyBattleTag = useMyProfileStore((state) => state.clearMyBattleTag);
-  const { data, isLoading, isError } = usePlayerOverview(battleTag);
+  const { data, isLoading, isError, error } = usePlayerOverview(battleTag);
 
   if (!battleTag) return null;
 
@@ -33,7 +34,7 @@ export function ProfilePage() {
     <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
       <div className="mx-auto w-full max-w-md space-y-4 px-4 pt-4 text-on-background">
         {isLoading && <ProfilePageSkeleton />}
-        {isError && <ErrorState />}
+        {isError && <ErrorState message={getErrorMessage(error, '문제가 발생했어요. 다시 시도해 주세요.')} />}
         {data && (
           <>
             <ProfileHeaderCard

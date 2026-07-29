@@ -6,6 +6,7 @@ export interface TierListEntry {
   heroId: string;
   heroName: string;
   role: HeroRole;
+  portraitUrl?: string;
   tier: TierRank;
   winRate: number;
   pickRate: number;

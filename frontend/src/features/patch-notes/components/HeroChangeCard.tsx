@@ -1,31 +1,9 @@
-import { useState } from 'react';
-import { ROLE_ACCENT_COLOR, ROLE_ICON, ROLE_RING_COLOR } from '../../../constants/roles';
+import { HeroPortrait } from '../../../components/hero/HeroPortrait';
+import { ROLE_ACCENT_COLOR, ROLE_ICON } from '../../../constants/roles';
 import type { PatchHeroChange } from '../../../types/patchNote';
 
 interface HeroChangeCardProps {
   heroChange: PatchHeroChange;
-}
-
-function HeroPortrait({ hero, role, portraitUrl }: Pick<PatchHeroChange, 'hero' | 'role' | 'portraitUrl'>) {
-  const [failed, setFailed] = useState(false);
-
-  return (
-    <div
-      className={`flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 bg-surface-dim ${ROLE_RING_COLOR[role]}`}
-    >
-      {portraitUrl && !failed ? (
-        <img
-          src={portraitUrl}
-          alt={hero}
-          className="h-full w-full object-cover"
-          loading="lazy"
-          onError={() => setFailed(true)}
-        />
-      ) : (
-        <span className="font-headline-md text-xs italic text-on-surface">{hero.slice(0, 1)}</span>
-      )}
-    </div>
-  );
 }
 
 export function HeroChangeCard({ heroChange }: HeroChangeCardProps) {
@@ -35,7 +13,7 @@ export function HeroChangeCard({ heroChange }: HeroChangeCardProps) {
   return (
     <div className="rounded-xl border border-outline-variant bg-surface-container p-4">
       <div className="mb-2 flex items-center gap-2">
-        <HeroPortrait hero={hero} role={role} portraitUrl={portraitUrl} />
+        <HeroPortrait name={hero} role={role} portraitUrl={portraitUrl} className="h-8 w-8" />
         <h4 className="font-headline-md text-base text-on-surface">{hero}</h4>
         <RoleIcon className={`h-3.5 w-3.5 ${ROLE_ACCENT_COLOR[role]}`} />
       </div>
