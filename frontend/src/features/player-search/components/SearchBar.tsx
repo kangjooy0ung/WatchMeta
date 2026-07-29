@@ -22,21 +22,21 @@ export function SearchBar({ onSearch }: SearchBarProps) {
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
-      <label className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-3 shadow-sm transition-colors focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100 dark:border-gray-700 dark:bg-gray-800 dark:focus-within:ring-orange-900/40">
-        <Search className="h-5 w-5 shrink-0 text-gray-400" />
+      <label className="flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container px-4 py-3 transition-colors focus-within:border-primary">
+        <Search className="h-5 w-5 shrink-0 text-on-surface-variant" />
         <input
           type="text"
           value={battleTag}
           onChange={(e) => setBattleTag(e.target.value)}
           placeholder="닉네임#태그 (예: Player#1234)"
-          className="w-full bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400 dark:text-white"
+          className="w-full bg-transparent text-sm text-on-surface outline-none placeholder:text-on-surface-variant/60"
         />
       </label>
       <button
         type="submit"
-        className="mt-3 w-full rounded-full bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm transition-colors active:bg-orange-600"
+        className="mt-3 w-full -skew-x-[10deg] bg-primary py-3 text-sm font-bold text-surface-container-lowest transition-all active:scale-95 hover:shadow-[0_0_20px_rgba(255,194,127,0.5)]"
       >
-        전적 검색
+        <span className="block skew-x-[10deg]">전적 검색</span>
       </button>
     </form>
   );

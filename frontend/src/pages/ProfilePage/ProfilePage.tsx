@@ -1,91 +1,53 @@
-import { Star, User } from 'lucide-react';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { PageContainer } from '../../components/layout/PageContainer';
-import { usePlayerSearch } from '../../features/player-search/hooks/usePlayerSearch';
+import { useParams } from 'react-router-dom';
+import { ErrorState } from '../../components/feedback/ErrorState';
+import { CareerOverviewCard } from '../../features/player-profile/components/CareerOverviewCard';
+import { MostPlayedHeroesCard } from '../../features/player-profile/components/MostPlayedHeroesCard';
+import { PerformanceCard } from '../../features/player-profile/components/PerformanceCard';
+import { ProfileHeaderCard } from '../../features/player-profile/components/ProfileHeaderCard';
+import { RecentMatchesCard } from '../../features/player-profile/components/RecentMatchesCard';
+import { usePlayerOverview } from '../../features/player-profile/hooks/usePlayerOverview';
 import { useMyProfileStore } from '../../store/useMyProfileStore';
-import { HeroesTab } from './HeroesTab';
-import { MatchesTab } from './MatchesTab';
-import { OverviewTab } from './OverviewTab';
 
-type ProfileTab = 'overview' | 'heroes' | 'matches';
-
-const TABS: { id: ProfileTab; label: string }[] = [
-  { id: 'overview', label: '오버뷰' },
-  { id: 'heroes', label: '영웅별' },
-  { id: 'matches', label: '최근 전적' },
-];
-
-function isProfileTab(value: string | null): value is ProfileTab {
-  return value === 'overview' || value === 'heroes' || value === 'matches';
+function ProfilePageSkeleton() {
+  return (
+    <div className="space-y-4">
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i} className="glass-panel h-32 animate-pulse rounded-xl bg-surface-container-high/40" />
+      ))}
+    </div>
+  );
 }
 
 export function ProfilePage() {
   const { battleTag } = useParams<{ battleTag: string }>();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data } = usePlayerSearch(battleTag);
   const myBattleTag = useMyProfileStore((state) => state.myBattleTag);
   const setMyBattleTag = useMyProfileStore((state) => state.setMyBattleTag);
   const clearMyBattleTag = useMyProfileStore((state) => state.clearMyBattleTag);
+  const { data, isLoading, isError } = usePlayerOverview(battleTag);
 
   if (!battleTag) return null;
 
   const isMine = myBattleTag === battleTag;
 
-  const tabParam = searchParams.get('tab');
-  const activeTab: ProfileTab = isProfileTab(tabParam) ? tabParam : 'overview';
-
-  const handleTabChange = (tab: ProfileTab) => {
-    setSearchParams({ tab }, { replace: true });
-  };
-
   return (
-    <PageContainer>
-      <div className="flex items-center gap-3 py-4">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
-          {data?.avatarUrl ? (
-            <img src={data.avatarUrl} alt={battleTag} className="h-full w-full object-cover" />
-          ) : (
-            <User className="h-6 w-6 text-gray-400" />
-          )}
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="truncate font-semibold text-gray-900 dark:text-white">{battleTag}</p>
-          {data?.title && <p className="text-xs text-gray-500 dark:text-gray-400">{data.title}</p>}
-        </div>
-        <button
-          type="button"
-          onClick={() => (isMine ? clearMyBattleTag() : setMyBattleTag(battleTag))}
-          aria-label={isMine ? '내 계정으로 저장 해제' : '내 계정으로 저장'}
-          className={`shrink-0 rounded-full p-2 transition-colors ${
-            isMine ? 'text-amber-400' : 'text-gray-300 hover:text-gray-400 dark:text-gray-600 dark:hover:text-gray-500'
-          }`}
-        >
-          <Star className="h-5 w-5" fill={isMine ? 'currentColor' : 'none'} />
-        </button>
+    <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
+      <div className="mx-auto w-full max-w-md space-y-4 px-4 pt-4 text-on-background">
+        {isLoading && <ProfilePageSkeleton />}
+        {isError && <ErrorState />}
+        {data && (
+          <>
+            <ProfileHeaderCard
+              overview={data}
+              isMine={isMine}
+              onToggleSave={() => (isMine ? clearMyBattleTag() : setMyBattleTag(battleTag))}
+            />
+            <CareerOverviewCard overview={data} />
+            <PerformanceCard performance={data.performance} />
+            <MostPlayedHeroesCard topHeroes={data.topHeroes} />
+            <RecentMatchesCard matches={data.recentMatches} />
+          </>
+        )}
       </div>
-
-      <div className="sticky top-0 z-10 -mx-4 flex border-b border-gray-200 bg-white/95 px-4 backdrop-blur dark:border-gray-800 dark:bg-gray-900/95">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => handleTabChange(tab.id)}
-            className={`flex-1 border-b-2 py-3 text-sm font-medium transition-colors ${
-              activeTab === tab.id
-                ? 'border-orange-500 text-orange-500'
-                : 'border-transparent text-gray-400 dark:text-gray-500'
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      <div className="py-4">
-        {activeTab === 'overview' && <OverviewTab battleTag={battleTag} />}
-        {activeTab === 'heroes' && <HeroesTab battleTag={battleTag} />}
-        {activeTab === 'matches' && <MatchesTab battleTag={battleTag} />}
-      </div>
-    </PageContainer>
+    </div>
   );
 }
