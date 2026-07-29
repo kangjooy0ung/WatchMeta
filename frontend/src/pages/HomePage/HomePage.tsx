@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { PageContainer } from '../../components/layout/PageContainer';
 import { ROUTES } from '../../constants/routes';
 import { SearchBar } from '../../features/player-search/components/SearchBar';
 import { useMyProfileStore } from '../../store/useMyProfileStore';
@@ -13,30 +12,30 @@ export function HomePage() {
   };
 
   return (
-    <PageContainer>
-      <div className="flex min-h-[70vh] flex-col items-center justify-center gap-8 text-center">
+    <div className="min-h-screen bg-background text-on-background">
+      <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col items-center justify-center gap-8 px-4 pb-[calc(5rem+env(safe-area-inset-bottom))] text-center lg:px-8">
         <div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-            Watch<span className="text-orange-500">Meta</span>
+          <h1 className="font-headline-xl text-headline-xl italic uppercase tracking-tighter text-primary">
+            Watch<span className="text-secondary">Meta</span>
           </h1>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">내 전적 분석과 실시간 메타를 한 눈에</p>
+          <p className="mt-2 text-sm text-on-surface-variant">내 전적 분석과 실시간 메타를 한 눈에</p>
         </div>
 
         {myBattleTag && (
           <button
             type="button"
             onClick={() => navigate(ROUTES.profile(myBattleTag))}
-            className="w-full rounded-full bg-orange-500 py-3 text-sm font-semibold text-white shadow-sm transition-colors active:bg-orange-600"
+            className="w-full -skew-x-[10deg] bg-primary py-3 text-sm font-bold text-surface-container-lowest transition-all active:scale-95 hover:shadow-[0_0_20px_rgba(255,194,127,0.5)]"
           >
-            내 전적 보기 ({myBattleTag})
+            <span className="block skew-x-[10deg]">내 전적 보기 ({myBattleTag})</span>
           </button>
         )}
 
-        <div className="w-full">
-          {myBattleTag && <p className="mb-2 text-left text-xs text-gray-400">다른 배틀태그 검색</p>}
+        <div className="glass-panel w-full rounded-xl p-5">
+          {myBattleTag && <p className="mb-2 text-left text-xs text-on-surface-variant">다른 배틀태그 검색</p>}
           <SearchBar onSearch={handleSearch} />
         </div>
       </div>
-    </PageContainer>
+    </div>
   );
 }

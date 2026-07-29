@@ -13,19 +13,22 @@ interface PatchVersionSelectProps {
 
 export function PatchVersionSelect({ version, versions, onChange }: PatchVersionSelectProps) {
   return (
-    <div className="relative flex-1">
-      <select
-        value={version}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full appearance-none rounded-full border border-gray-200 bg-white py-2 pl-3 pr-8 text-xs font-medium text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-      >
-        {versions.map((v) => (
-          <option key={v.value} value={v.value}>
-            {v.label}
-          </option>
-        ))}
-      </select>
-      <ChevronDown className="pointer-events-none absolute right-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
-    </div>
+    <label className="flex flex-1 cursor-pointer flex-col rounded-xl border border-outline-variant bg-surface-container p-3 transition-colors hover:border-primary">
+      <span className="text-label-sm font-label-sm text-on-surface-variant">패치</span>
+      <div className="flex items-center gap-1">
+        <select
+          value={version}
+          onChange={(e) => onChange(e.target.value)}
+          className="w-full appearance-none bg-transparent font-bold text-on-surface focus:outline-none"
+        >
+          {versions.map((v) => (
+            <option key={v.value} value={v.value} className="bg-surface-container text-on-surface">
+              {v.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="h-4 w-4 shrink-0 text-on-surface-variant" />
+      </div>
+    </label>
   );
 }
