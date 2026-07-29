@@ -4,7 +4,7 @@ import { PatchVersionSelect, type PatchVersionOption } from '../../features/tier
 import { RankFilter } from '../../features/tier-list/components/RankFilter';
 import { RoleTabs } from '../../features/tier-list/components/RoleTabs';
 import { TierSection } from '../../features/tier-list/components/TierSection';
-import { MOCK_TIER_LIST } from '../../features/tier-list/data/mockTierList';
+import { TIER_LIST } from '../../features/tier-list/data/tierList';
 import type { HeroRole } from '../../types/hero';
 import type { TierRank } from '../../types/tier';
 
@@ -17,14 +17,14 @@ const PATCH_VERSIONS: PatchVersionOption[] = [
   { value: '10.3', label: '10.3 패치' },
 ];
 
-// TODO: useTierList({ role, rank, patchVersion })로 교체 예정 - 현재는 Mock Data를 역할/티어 기준으로 클라이언트에서만 그룹핑함
+// TODO: useTierList({ role, rank, patchVersion })로 교체 예정 - 현재는 공식 영웅 통계 페이지 기준 정적 데이터를 역할/티어 기준으로 클라이언트에서만 그룹핑함 (랭크/패치 필터는 아직 미연동)
 export function TierListPage() {
   const [role, setRole] = useState<HeroRole | 'all'>('all');
   const [rank, setRank] = useState('전체');
   const [patchVersion, setPatchVersion] = useState(PATCH_VERSIONS[0].value);
 
   const tierGroups = useMemo(() => {
-    const filtered = role === 'all' ? MOCK_TIER_LIST : MOCK_TIER_LIST.filter((entry) => entry.role === role);
+    const filtered = role === 'all' ? TIER_LIST : TIER_LIST.filter((entry) => entry.role === role);
     return TIER_ORDER.map((tier) => ({
       tier,
       entries: filtered.filter((entry) => entry.tier === tier).sort((a, b) => ROLE_ORDER[a.role] - ROLE_ORDER[b.role]),
