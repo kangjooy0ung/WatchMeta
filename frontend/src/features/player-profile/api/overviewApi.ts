@@ -23,8 +23,7 @@ const MOCK_OVERVIEW: PlayerOverviewData = {
       heroId: 'dva',
       heroName: 'D.Va',
       role: 'tank',
-      portraitUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuC2Cme6JQ5IVcb6vglGZKbTvk9QGOjn-ZYzi3NRyr2ag2uYEF_atUC8-m2QQeexVQeChJ7R-BZ4anuwfL6YdT2ABn7s2cKFyh2VMaAbXDFmDnXJY-MiyCXNDZPJqog0lS6xxJItAh0T6z72JYPIws3WrUT5Ha4DTgnyFk96TRhRYB3YQRcxL2_RDjYOLkYpgMPMHxS7uhpeAhpYR01d4MNzDW5QRz-2-ekxv4aPgw3dmoDAdiK3oGSKtRX3oGP7z5Dqa_KXzmWKVvU',
+      portraitUrl: 'https://d1u1mce87gyfbn.cloudfront.net/hero/dva/hero-select-portrait.png',
       playTimeHours: 122,
       levelLabel: 'LV. 45 · 모스트 탱커',
     },
@@ -32,8 +31,7 @@ const MOCK_OVERVIEW: PlayerOverviewData = {
       heroId: 'zenyatta',
       heroName: 'ZENYATTA',
       role: 'support',
-      portraitUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuCHu-m-NcImF7CBT5tlG-18t_Ymg-CtC7eOeHdhLrB1iGHL5t2OVpzoMt21ir9r_xMwjUgdlUQ1cYNyDNNyENRCdTEloXEk-qaiitcyG7bGM9T2vtxIYZqIUCyP_PVJvlvEQadEvRN8I0rA626Pa_18B89mZBi_7NX4C25dB2eBql3fQgtXvGVwgiGm9ieeDaWaCS5QV_LJaYKILf66zcIWndIYYbWXzu40YIa2RQMV7_H20V_BRXshuMI34z9fOhxXC5-YCW30RtI',
+      portraitUrl: 'https://d1u1mce87gyfbn.cloudfront.net/hero/zenyatta/hero-select-portrait.png',
       playTimeHours: 113,
       levelLabel: 'LV. 32 · 주력 힐러',
     },
@@ -41,8 +39,7 @@ const MOCK_OVERVIEW: PlayerOverviewData = {
       heroId: 'hanzo',
       heroName: 'HANZO',
       role: 'damage',
-      portraitUrl:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuBdheJljcUIFQQz_dfoUcbrPkfvXvpHhP00xLPnaphV0ilRV1C167_TwPuaVnB0LQSevLZ_S0TowV3ceCY7TjRlfjNGlG6XGy1vG9vSRRdCpl4S-1gAwclAMl55-rWTo_FPhcNDjl0azVPggEtR5oMr44p5TaXjF7KT8DQHx-_zyuH-HSx6yPIxy9mzfjO24lOvc5aACg2Cfk7gTTOFORkiOgOWLFYJU8I-duPRMtGRUu0Q-XuX9wOhEXmV-gh52d5OhSg-gh1Bl-Q',
+      portraitUrl: 'https://d1u1mce87gyfbn.cloudfront.net/hero/hanzo/hero-select-portrait.png',
       playTimeHours: 103,
       levelLabel: 'LV. 28 · 주력 딜러',
     },
