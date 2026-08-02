@@ -25,7 +25,7 @@ export function SearchPage() {
         <SearchBar onSearch={handleSearch} />
 
         <div className="mt-3 w-full">
-          <InfoNote message="배틀넷 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있어요." />
+          <InfoNote message="배틀넷 및 오버워치 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있어요." />
         </div>
 
         <RecentSearchList onSelect={handleSearch} />

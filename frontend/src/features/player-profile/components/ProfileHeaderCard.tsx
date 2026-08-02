@@ -1,5 +1,7 @@
-import { Gem, Hexagon, Star } from 'lucide-react';
+import { Star, ThumbsUp } from 'lucide-react';
+import type { HeroRole } from '../../../types/hero';
 import type { PlayerOverviewData } from '../../../types/player';
+import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
 
 interface ProfileHeaderCardProps {
   overview: PlayerOverviewData;
@@ -7,9 +9,11 @@ interface ProfileHeaderCardProps {
   onToggleSave: () => void;
 }
 
+const RANK_ROLE_ORDER: HeroRole[] = ['tank', 'damage', 'support'];
+
 export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHeaderCardProps) {
   return (
-    <section className="glass-panel relative overflow-hidden rounded-xl border-l-4 border-primary p-5 lg:flex lg:items-end lg:justify-between lg:gap-8 lg:p-8">
+    <section className="glass-panel relative overflow-hidden rounded-xl border-l-4 border-primary p-4 lg:flex lg:items-end lg:justify-between lg:gap-6 lg:p-6">
       <button
         type="button"
         onClick={onToggleSave}
@@ -22,8 +26,8 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
       </button>
 
       <div>
-        <div className="flex items-center gap-4 lg:gap-6">
-          <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-primary bg-surface-dim p-1 lg:h-24 lg:w-24">
+        <div className="flex items-center gap-3 lg:gap-5">
+          <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-primary bg-surface-dim p-1 lg:h-20 lg:w-20">
             <img
               src={overview.avatarUrl}
               alt={overview.battleTag}
@@ -36,20 +40,41 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
                 {overview.battleTag}
               </h2>
             </div>
-            <div className="mt-1 flex items-center gap-2 bg-surface-container-high px-2 py-0.5 lg:mt-2">
-              <Hexagon className="h-3.5 w-3.5 text-primary" fill="currentColor" fillOpacity={0.15} />
-              <span className="font-label-sm text-label-sm tracking-widest text-primary">LVL {overview.level}</span>
+            {overview.title && (
+              <p className="mt-0.5 truncate font-label-sm text-label-sm italic text-on-surface-variant">
+                {overview.title}
+              </p>
+            )}
+            <div className="mt-1 flex w-fit items-center gap-2 bg-surface-container-high px-2 py-0.5 lg:mt-2">
+              <ThumbsUp className="h-3.5 w-3.5 text-primary" fill="currentColor" fillOpacity={0.15} />
+              <span className="font-label-sm text-label-sm tracking-widest text-primary">
+                인정 {overview.endorsementLevel}
+              </span>
             </div>
           </div>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t border-outline-variant/30 pt-3 lg:mt-3 lg:justify-start lg:gap-4 lg:border-t-0 lg:pt-0">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 text-secondary">
-              <Gem className="platinum-glow h-4 w-4" />
-              <span className="font-headline-md text-sm italic lg:text-headline-md">{overview.tier}</span>
-            </div>
-            <span className="font-label-sm text-label-sm text-on-surface-variant">{overview.platform}</span>
+        <div className="mt-3 flex items-center justify-between border-t border-outline-variant/30 pt-2.5 lg:mt-2 lg:justify-start lg:gap-4 lg:border-t-0 lg:pt-0">
+          <div className="flex flex-wrap items-center gap-3">
+            {RANK_ROLE_ORDER.filter((role) => overview.competitiveRanks[role]).map((role) => {
+              const rank = overview.competitiveRanks[role];
+              if (!rank) return null;
+              const Icon = ROLE_ICON[role];
+              return (
+                <div key={role} className="flex items-center gap-1.5">
+                  <Icon className={`h-4 w-4 ${ROLE_TEXT_COLOR[role]}`} />
+                  <span className="font-headline-md text-sm italic text-on-surface lg:text-headline-md">
+                    {rank.division.toUpperCase()} {rank.tier}
+                  </span>
+                </div>
+              );
+            })}
+            {RANK_ROLE_ORDER.every((role) => !overview.competitiveRanks[role]) && (
+              <span className="font-label-sm text-label-sm text-on-surface-variant">경쟁전 미배치</span>
+            )}
+            <span className="font-label-sm text-label-sm text-on-surface-variant">
+              {overview.platform.toUpperCase()}
+            </span>
           </div>
           <div className="text-right lg:hidden">
             <p className="font-label-sm text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">
@@ -66,7 +91,7 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
         <p className="font-label-sm text-label-sm uppercase tracking-[0.2em] text-on-surface-variant">
           총 플레이 시간
         </p>
-        <p className="font-stat-value text-[48px] italic text-primary">
+        <p className="font-stat-value text-4xl italic text-primary">
           {overview.totalPlaytimeHours} <span className="text-xl">시간</span>
         </p>
       </div>

@@ -14,16 +14,6 @@ export interface PlayerProfile {
   competitiveRank: Partial<Record<'tank' | 'damage' | 'support', RankInfo>>;
 }
 
-export interface MatchHistoryItem {
-  matchId: string;
-  map: string;
-  result: 'win' | 'loss' | 'draw';
-  heroId: string;
-  heroName: string;
-  role: HeroRole;
-  playedAt: string;
-}
-
 export interface TopPlayedHero {
   heroId: string;
   heroName: string;
@@ -33,21 +23,52 @@ export interface TopPlayedHero {
   levelLabel: string;
 }
 
+export interface HeroStatBlock {
+  eliminations: number;
+  assists: number;
+  deaths: number;
+  damage: number;
+  healing: number;
+}
+
+export interface HeroStat {
+  heroId: string;
+  heroName: string;
+  role: HeroRole;
+  portraitUrl: string;
+  gamesPlayed: number;
+  gamesWon: number;
+  gamesLost: number;
+  winRate: number;
+  kda: number;
+  playTimeHours: number;
+  total: HeroStatBlock;
+  average: HeroStatBlock;
+}
+
+export interface CompetitiveRoleRank {
+  division: string;
+  tier: number;
+  roleIcon: string;
+  rankIcon: string;
+}
+
 export interface PlayerOverviewData {
   battleTag: string;
   avatarUrl: string;
-  level: number;
-  tier: string;
-  platform: string;
+  title: string | null;
+  endorsementLevel: number;
+  platform: 'pc' | 'console';
+  competitiveRanks: Partial<Record<'tank' | 'damage' | 'support', CompetitiveRoleRank>>;
   totalPlaytimeHours: number;
   roleHours: Record<'tank' | 'damage' | 'support', number>;
-  modeHours: { competitive: number; quickplay: number; arcade: number };
+  modeHours: { competitive: number; quickplay: number };
   performance: {
     winRate: number;
     eliminationDeathRatio: number;
     eliminationsPer10Min: number;
-    finalBlows: number;
+    damagePer10Min: number;
   };
   topHeroes: TopPlayedHero[];
-  recentMatches: MatchHistoryItem[];
+  heroStats: HeroStat[];
 }

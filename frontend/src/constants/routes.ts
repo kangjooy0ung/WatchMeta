@@ -1,7 +1,9 @@
 export const ROUTES = {
   home: '/',
   search: '/search',
-  profile: (battleTag: string) => `/profile/${battleTag}`,
+  // battleTag에 포함된 '#'은 URL에서 예약 문자(해시)라 인코딩하지 않으면 라우팅이 깨진다.
+  profile: (battleTag: string) => `/profile/${encodeURIComponent(battleTag)}`,
+  profileHero: (battleTag: string, heroId: string) => `/profile/${encodeURIComponent(battleTag)}/heroes/${heroId}`,
   tierList: '/tier-list',
   heroDetail: (heroId: string) => `/tier-list/${heroId}`,
   patchNotes: '/patch-notes',

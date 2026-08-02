@@ -1,6 +1,6 @@
 import { ChevronDown } from 'lucide-react';
 
-const RANKS = ['전체', '브론즈', '실버', '골드', '플래티넘', '다이아몬드', '마스터', '그랜드마스터'];
+const RANKS = ['전체', '브론즈', '실버', '골드', '플래티넘', '다이아몬드', '마스터', '그랜드마스터 및 챔피언'];
 
 interface RankFilterProps {
   rank: string;

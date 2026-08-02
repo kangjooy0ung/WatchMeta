@@ -19,26 +19,26 @@ export function PerformanceCard({ performance }: PerformanceCardProps) {
     },
     {
       label: '10분당 처치',
-      value: formatThousands(performance.eliminationsPer10Min),
+      value: performance.eliminationsPer10Min.toFixed(1),
       borderClass: 'border-tier-b',
       colorClass: 'text-tier-b',
     },
     {
-      label: '결정타',
-      value: performance.finalBlows.toLocaleString(),
+      label: '10분당 데미지',
+      value: formatThousands(performance.damagePer10Min),
       borderClass: 'border-damage-red',
       colorClass: 'text-damage-red',
     },
   ];
 
   return (
-    <section className="glass-panel flex flex-col gap-4 rounded-xl p-5 lg:p-6">
+    <section className="glass-panel flex flex-col gap-3 rounded-xl p-4 lg:p-5">
       <h3 className="font-headline-lg text-headline-md italic uppercase text-on-surface">Performance</h3>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-2.5">
         {tiles.map((tile) => (
-          <div key={tile.label} className={`border-b-2 bg-surface-container-low p-4 ${tile.borderClass}`}>
+          <div key={tile.label} className={`border-b-2 bg-surface-container-low p-3 ${tile.borderClass}`}>
             <p className="font-label-sm text-[10px] uppercase text-on-surface-variant">{tile.label}</p>
-            <p className={`font-stat-value text-xl ${tile.colorClass}`}>{tile.value}</p>
+            <p className={`font-stat-value text-lg ${tile.colorClass}`}>{tile.value}</p>
           </div>
         ))}
       </div>
