@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: watchmeta-backend
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: npm install && npm run build:backend
+    startCommand: npm run start:backend
+    healthCheckPath: /health
+    envVars:
+      - key: OVERFAST_BASE_URL
+        value: https://overfast-api.tekrop.fr
