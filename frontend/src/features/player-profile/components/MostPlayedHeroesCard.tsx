@@ -1,31 +1,35 @@
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../../constants/routes';
 import type { PlayerOverviewData } from '../../../types/player';
 import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
 
 interface MostPlayedHeroesCardProps {
+  battleTag: string;
   topHeroes: PlayerOverviewData['topHeroes'];
 }
 
-export function MostPlayedHeroesCard({ topHeroes }: MostPlayedHeroesCardProps) {
+export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesCardProps) {
   return (
-    <section className="glass-panel rounded-xl p-5 lg:p-6">
-      <div className="mb-4 flex items-baseline justify-between lg:mb-8">
+    <section className="glass-panel rounded-xl p-4 lg:p-5">
+      <div className="mb-3 flex items-baseline justify-between lg:mb-4">
         <h3 className="font-headline-lg text-headline-md italic uppercase text-on-surface">Most Played Heroes</h3>
         <span className="font-label-sm text-label-sm text-on-surface-variant">모스트 영웅</span>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 lg:gap-6">
+      <div className="grid grid-cols-3 gap-2 lg:gap-4">
         {topHeroes.map((hero) => {
           const Icon = ROLE_ICON[hero.role];
           return (
-            <div
+            <Link
               key={hero.heroId}
-              className="group relative cursor-pointer overflow-hidden rounded-lg border border-outline-variant/30 transition-colors hover:border-primary"
+              to={ROUTES.profileHero(battleTag, hero.heroId)}
+              className="group relative block cursor-pointer overflow-hidden rounded-lg border border-outline-variant/30 transition-colors hover:border-primary"
             >
               <div className="aspect-3/4 w-full overflow-hidden">
                 <img
                   src={hero.portraitUrl}
                   alt={hero.heroName}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="h-full w-full scale-90 object-cover transition-transform duration-500 group-hover:scale-100"
                 />
               </div>
               <div className="hero-card-gradient absolute inset-0 flex flex-col justify-end p-2 lg:p-4">
@@ -39,7 +43,7 @@ export function MostPlayedHeroesCard({ topHeroes }: MostPlayedHeroesCardProps) {
                   {hero.playTimeHours}시간
                 </p>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

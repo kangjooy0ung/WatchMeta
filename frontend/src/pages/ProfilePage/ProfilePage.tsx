@@ -2,10 +2,11 @@ import { useParams } from 'react-router-dom';
 import { ErrorState } from '../../components/feedback/ErrorState';
 import { getErrorMessage } from '../../lib/getErrorMessage';
 import { CareerOverviewCard } from '../../features/player-profile/components/CareerOverviewCard';
+import { HeroAnalysisCTA } from '../../features/player-profile/components/HeroAnalysisCTA';
 import { MostPlayedHeroesCard } from '../../features/player-profile/components/MostPlayedHeroesCard';
 import { PerformanceCard } from '../../features/player-profile/components/PerformanceCard';
 import { ProfileHeaderCard } from '../../features/player-profile/components/ProfileHeaderCard';
-import { RecentMatchesCard } from '../../features/player-profile/components/RecentMatchesCard';
+import { RecentHeroesCard } from '../../features/player-profile/components/RecentHeroesCard';
 import { usePlayerOverview } from '../../features/player-profile/hooks/usePlayerOverview';
 import { useMyProfileStore } from '../../store/useMyProfileStore';
 
@@ -32,7 +33,7 @@ export function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
-      <div className="mx-auto w-full max-w-md space-y-4 px-4 pt-4 text-on-background lg:max-w-[1600px] lg:space-y-8 lg:px-8 lg:pt-6">
+      <div className="mx-auto w-full max-w-md space-y-3 px-4 pt-4 text-on-background lg:max-w-[1600px] lg:space-y-5 lg:px-8 lg:pt-5">
         {isLoading && <ProfilePageSkeleton />}
         {isError && <ErrorState message={getErrorMessage(error, '문제가 발생했어요. 다시 시도해 주세요.')} />}
         {data && (
@@ -42,14 +43,15 @@ export function ProfilePage() {
               isMine={isMine}
               onToggleSave={() => (isMine ? clearMyBattleTag() : setMyBattleTag(battleTag))}
             />
-            <div className="space-y-4 lg:grid lg:grid-cols-12 lg:gap-8 lg:space-y-0">
-              <div className="space-y-4 lg:col-span-4 lg:space-y-6">
+            <div className="space-y-3 lg:grid lg:grid-cols-12 lg:gap-5 lg:space-y-0">
+              <div className="space-y-3 lg:col-span-4">
                 <CareerOverviewCard overview={data} />
                 <PerformanceCard performance={data.performance} />
+                <HeroAnalysisCTA battleTag={battleTag} heroId={data.heroStats[0].heroId} />
               </div>
-              <div className="space-y-4 lg:col-span-8 lg:space-y-8">
-                <MostPlayedHeroesCard topHeroes={data.topHeroes} />
-                <RecentMatchesCard matches={data.recentMatches} />
+              <div className="space-y-3 lg:col-span-8">
+                <MostPlayedHeroesCard battleTag={battleTag} topHeroes={data.topHeroes} />
+                <RecentHeroesCard battleTag={battleTag} heroStats={data.heroStats} />
               </div>
             </div>
           </>
