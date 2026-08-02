@@ -4,7 +4,7 @@ import { PatchVersionSelect, type PatchVersionOption } from '../../features/tier
 import { RankFilter } from '../../features/tier-list/components/RankFilter';
 import { RoleTabs } from '../../features/tier-list/components/RoleTabs';
 import { TierSection } from '../../features/tier-list/components/TierSection';
-import { TIER_LIST } from '../../features/tier-list/data/tierList';
+import { buildTierList } from '../../features/tier-list/data/tierList';
 import type { HeroRole } from '../../types/hero';
 import type { TierRank } from '../../types/tier';
 
@@ -17,19 +17,21 @@ const PATCH_VERSIONS: PatchVersionOption[] = [
   { value: '10.3', label: '10.3 패치' },
 ];
 
-// TODO: useTierList({ role, rank, patchVersion })로 교체 예정 - 현재는 공식 영웅 통계 페이지 기준 정적 데이터를 역할/티어 기준으로 클라이언트에서만 그룹핑함 (랭크/패치 필터는 아직 미연동)
+// TODO: useTierList({ role, rank, patchVersion })로 교체 예정 - 현재는 공식 영웅 통계 페이지 기준 정적 데이터를 역할/티어 기준으로 클라이언트에서만 그룹핑함 (패치 필터는 아직 미연동)
 export function TierListPage() {
   const [role, setRole] = useState<HeroRole | 'all'>('all');
   const [rank, setRank] = useState('전체');
   const [patchVersion, setPatchVersion] = useState(PATCH_VERSIONS[0].value);
 
+  const tierList = useMemo(() => buildTierList(rank), [rank]);
+
   const tierGroups = useMemo(() => {
-    const filtered = role === 'all' ? TIER_LIST : TIER_LIST.filter((entry) => entry.role === role);
+    const filtered = role === 'all' ? tierList : tierList.filter((entry) => entry.role === role);
     return TIER_ORDER.map((tier) => ({
       tier,
       entries: filtered.filter((entry) => entry.tier === tier).sort((a, b) => ROLE_ORDER[a.role] - ROLE_ORDER[b.role]),
     }));
-  }, [role]);
+  }, [tierList, role]);
 
   const visibleEntries = useMemo(() => tierGroups.flatMap((group) => group.entries), [tierGroups]);
   const patchLabel = PATCH_VERSIONS.find((version) => version.value === patchVersion)?.label ?? patchVersion;
@@ -42,6 +44,7 @@ export function TierListPage() {
             <h1 className="font-headline-xl text-headline-xl italic uppercase text-primary">Season 13 메타 데이터</h1>
             <p className="max-w-xl text-body-lg font-body-lg text-on-surface-variant">
               {rank} 랭크 · {patchLabel} 기준 통계입니다.
+              <span className="ml-1 text-on-surface-variant/70">(경쟁전 기준)</span>
             </p>
           </div>
         </section>
