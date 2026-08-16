@@ -6,7 +6,7 @@ export function PrivacyPolicyPage() {
 
         <div className="space-y-4 text-sm leading-relaxed text-on-surface-variant">
           <p>
-            WatchMeta(이하 &apos;사이트&apos;)는 오버워치 플레이어의 공개 전적과 메타 티어표를 보여주는 비공식 팬
+            WatchMeta(이하 &apos;사이트&apos;)는 오버워치 플레이어의 공개 전적과 메타 티어표를 보여주는 비공식
             사이트입니다. 별도의 회원가입이나 로그인 기능은 없으며, 아래와 같은 방식으로만 데이터를 다룹니다.
           </p>
 
