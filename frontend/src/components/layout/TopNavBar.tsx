@@ -11,14 +11,19 @@ const NAV_LINKS = [
 
 export function TopNavBar() {
   const navigate = useNavigate();
-  const myBattleTag = useMyProfileStore((state) => state.myBattleTag);
-  const accountTo = myBattleTag ? ROUTES.profile(myBattleTag) : ROUTES.search;
+  const myProfile = useMyProfileStore((state) => state.myProfile);
+  const accountTo = myProfile ? ROUTES.profile(myProfile.playerId) : ROUTES.search;
 
   return (
     <header className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-outline-variant bg-surface-dim/90 px-4 py-3 backdrop-blur-xl md:px-8">
       <div className="flex items-center gap-8">
-        <Link to={ROUTES.home} className="font-headline-md text-headline-md italic tracking-tighter text-primary">
-          WATCHMETA
+        <Link to={ROUTES.home} className="flex items-center gap-2">
+          <img
+            src="/overwatch-icon.png"
+            alt="Overwatch"
+            className="h-7 w-7 shrink-0 -translate-y-px"
+          />
+          <span className="font-headline-md text-headline-md italic tracking-tighter text-primary">WATCHMETA</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           {NAV_LINKS.map(({ to, label }) => (
