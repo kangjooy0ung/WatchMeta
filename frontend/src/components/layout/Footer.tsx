@@ -22,9 +22,8 @@ export function Footer() {
         </nav>
 
         <p className="max-w-lg text-[11px] leading-relaxed">
-          WatchMeta는 블리자드 엔터테인먼트(Blizzard Entertainment)의 보증을 받은 사이트가 아니며, 오버워치
-          제작·운영에 공식적으로 관여하는 어떤 곳의 입장도 대변하지 않습니다. 오버워치 및 관련 명칭은 블리자드
-          엔터테인먼트의 상표입니다. Overwatch © Blizzard Entertainment, Inc.
+          WatchMeta는 블리자드 엔터테인먼트의 보증을 받지 않은 비공식 팬 사이트입니다. 오버워치 및 관련 명칭은
+          블리자드 엔터테인먼트의 상표입니다. Overwatch © Blizzard Entertainment, Inc.
         </p>
       </div>
     </footer>
