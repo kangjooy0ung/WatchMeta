@@ -53,8 +53,16 @@ export interface CompetitiveRoleRank {
   rankIcon: string;
 }
 
+export interface PlayerSearchResult {
+  playerId: string;
+  name: string;
+  avatarUrl: string | null;
+  title: string | null;
+}
+
 export interface PlayerOverviewData {
   battleTag: string;
+  displayName: string;
   avatarUrl: string;
   title: string | null;
   endorsementLevel: number;

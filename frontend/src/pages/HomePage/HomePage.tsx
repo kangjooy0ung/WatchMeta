@@ -6,10 +6,10 @@ import { useMyProfileStore } from '../../store/useMyProfileStore';
 
 export function HomePage() {
   const navigate = useNavigate();
-  const myBattleTag = useMyProfileStore((state) => state.myBattleTag);
+  const myProfile = useMyProfileStore((state) => state.myProfile);
 
-  const handleSearch = (battleTag: string) => {
-    navigate(ROUTES.profile(battleTag));
+  const handleSearch = (playerId: string) => {
+    navigate(ROUTES.profile(playerId));
   };
 
   return (
@@ -22,18 +22,18 @@ export function HomePage() {
           <p className="mt-2 text-sm text-on-surface-variant">내 전적 분석과 실시간 메타를 한 눈에</p>
         </div>
 
-        {myBattleTag && (
+        {myProfile && (
           <button
             type="button"
-            onClick={() => navigate(ROUTES.profile(myBattleTag))}
+            onClick={() => navigate(ROUTES.profile(myProfile.playerId))}
             className="w-full -skew-x-[10deg] bg-primary py-3 text-sm font-bold text-surface-container-lowest transition-all active:scale-95 hover:shadow-[0_0_20px_rgba(255,194,127,0.5)]"
           >
-            <span className="block skew-x-[10deg]">내 전적 보기 ({myBattleTag})</span>
+            <span className="block skew-x-[10deg]">내 전적 보기 ({myProfile.label})</span>
           </button>
         )}
 
         <div className="glass-panel w-full rounded-xl p-5">
-          {myBattleTag && <p className="mb-2 text-left text-xs text-on-surface-variant">다른 배틀태그 검색</p>}
+          {myProfile && <p className="mb-2 text-left text-xs text-on-surface-variant">다른 닉네임 검색</p>}
           <SearchBar onSearch={handleSearch} />
           <div className="mt-3 text-left">
             <InfoNote message="배틀넷 및 오버워치 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있어요." />
