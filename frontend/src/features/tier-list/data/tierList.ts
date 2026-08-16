@@ -1,7 +1,6 @@
 import { ALL_HEROES } from '../../../constants/heroes';
 import type { TierListEntry, TierRank } from '../../../types/tier';
-import { HERO_RATES, type HeroRate } from './heroRates';
-import { HERO_RATES_BY_TIER, type RateTier } from './heroRatesByTier';
+import { HERO_RATES, type HeroRate, type RateRegion, type RateTier } from './heroRates';
 
 // 티어 배분 비율: 상위 티어일수록 소수만 진입
 const TIER_SIZE_RATIO: Record<TierRank, number> = { S: 0.15, A: 0.25, B: 0.3, C: 0.2, D: 0.1 };
@@ -12,9 +11,16 @@ const RANK_TO_RATE_TIER: Record<string, RateTier> = {
   실버: 'silver',
   골드: 'gold',
   플래티넘: 'platinum',
+  에메랄드: 'emerald',
   다이아몬드: 'diamond',
   마스터: 'master',
   '그랜드마스터 및 챔피언': 'grandmaster',
+};
+
+const SERVER_TO_RATE_REGION: Record<string, RateRegion> = {
+  아시아: 'asia',
+  아메리카: 'americas',
+  유럽: 'europe',
 };
 
 function normalize(value: number, min: number, max: number): number {
@@ -27,7 +33,8 @@ function buildFromRates(rates: Record<string, HeroRate>): TierListEntry[] {
   const pickRateRange = { min: Math.min(...allRates.map((r) => r.pickRate)), max: Math.max(...allRates.map((r) => r.pickRate)) };
 
   // 픽률과 승률을 함께 반영한 메타 점수: 둘 다 높을수록 상위 티어로 배정
-  const heroStats = ALL_HEROES.map((hero) => {
+  // rates에 없는 영웅(실데이터 수집 전 신캐 등)은 티어표 계산에서 제외
+  const heroStats = ALL_HEROES.filter((hero) => rates[hero.id]).map((hero) => {
     const rate = rates[hero.id];
     const winRateNorm = normalize(rate.winRate, winRateRange.min, winRateRange.max);
     const pickRateNorm = normalize(rate.pickRate, pickRateRange.min, pickRateRange.max);
@@ -60,7 +67,8 @@ function buildFromRates(rates: Record<string, HeroRate>): TierListEntry[] {
   }));
 }
 
-export function buildTierList(rank: string): TierListEntry[] {
-  const rateTier = RANK_TO_RATE_TIER[rank];
-  return buildFromRates(rateTier ? HERO_RATES_BY_TIER[rateTier] : HERO_RATES);
+export function buildTierList(rank: string, server: string): TierListEntry[] {
+  const rateTier = RANK_TO_RATE_TIER[rank] ?? 'all';
+  const rateRegion = SERVER_TO_RATE_REGION[server] ?? 'asia';
+  return buildFromRates(HERO_RATES[rateRegion][rateTier]);
 }

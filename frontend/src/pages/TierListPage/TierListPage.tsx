@@ -3,27 +3,29 @@ import { MetaStatsSummary } from '../../features/tier-list/components/MetaStatsS
 import { PatchVersionSelect, type PatchVersionOption } from '../../features/tier-list/components/PatchVersionSelect';
 import { RankFilter } from '../../features/tier-list/components/RankFilter';
 import { RoleTabs } from '../../features/tier-list/components/RoleTabs';
+import { ServerFilter } from '../../features/tier-list/components/ServerFilter';
 import { TierSection } from '../../features/tier-list/components/TierSection';
 import { buildTierList } from '../../features/tier-list/data/tierList';
+import { PATCH_NOTES } from '../../features/patch-notes/data/patchNotes';
 import type { HeroRole } from '../../types/hero';
 import type { TierRank } from '../../types/tier';
 
 const TIER_ORDER: TierRank[] = ['S', 'A', 'B', 'C', 'D'];
 const ROLE_ORDER: Record<HeroRole, number> = { tank: 0, damage: 1, support: 2 };
 
+// heroRates.ts는 패치별 스냅샷이 아니라 "가장 최근 확인 시점" 단일 데이터라, 과거 패치를 골라도
+// 실제로는 같은 수치가 나온다. 그래서 선택 가능한 옵션은 실제 최신 패치 하나만 제공한다.
+const CURRENT_PATCH = PATCH_NOTES[0];
 const PATCH_VERSIONS: PatchVersionOption[] = [
-  { value: '10.5', label: '10.5 패치 (최신)' },
-  { value: '10.4', label: '10.4 패치' },
-  { value: '10.3', label: '10.3 패치' },
+  { value: CURRENT_PATCH.version, label: `${CURRENT_PATCH.patchDate} 패치 (최신)` },
 ];
-
-// TODO: useTierList({ role, rank, patchVersion })로 교체 예정 - 현재는 공식 영웅 통계 페이지 기준 정적 데이터를 역할/티어 기준으로 클라이언트에서만 그룹핑함 (패치 필터는 아직 미연동)
 export function TierListPage() {
   const [role, setRole] = useState<HeroRole | 'all'>('all');
   const [rank, setRank] = useState('전체');
+  const [server, setServer] = useState('아시아');
   const [patchVersion, setPatchVersion] = useState(PATCH_VERSIONS[0].value);
 
-  const tierList = useMemo(() => buildTierList(rank), [rank]);
+  const tierList = useMemo(() => buildTierList(rank, server), [rank, server]);
 
   const tierGroups = useMemo(() => {
     const filtered = role === 'all' ? tierList : tierList.filter((entry) => entry.role === role);
@@ -41,16 +43,17 @@ export function TierListPage() {
       <div className="mx-auto w-full max-w-[1600px] space-y-8 px-4 pt-6 lg:px-8">
         <section className="flex flex-col items-start justify-between gap-4 border-l-4 border-primary pl-4 md:flex-row md:items-end">
           <div>
-            <h1 className="font-headline-xl text-headline-xl italic uppercase text-primary">Season 13 메타 데이터</h1>
+            <h1 className="font-headline-xl text-headline-xl italic uppercase text-primary">4시즌 메타 데이터</h1>
             <p className="max-w-xl text-body-lg font-body-lg text-on-surface-variant">
-              {rank} 랭크 · {patchLabel} 기준 통계입니다.
+              {server} 서버 · {rank} 랭크 · {patchLabel} 기준 통계입니다.
               <span className="ml-1 text-on-surface-variant/70">(경쟁전 기준)</span>
             </p>
           </div>
         </section>
 
-        <section className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_repeat(2,minmax(160px,220px))]">
+        <section className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_repeat(3,minmax(160px,220px))]">
           <RoleTabs role={role} onChange={setRole} />
+          <ServerFilter server={server} onChange={setServer} />
           <RankFilter rank={rank} onChange={setRank} />
           <PatchVersionSelect version={patchVersion} versions={PATCH_VERSIONS} onChange={setPatchVersion} />
         </section>
