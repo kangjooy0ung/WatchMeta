@@ -22,14 +22,14 @@ function ProfilePageSkeleton() {
 
 export function ProfilePage() {
   const { battleTag } = useParams<{ battleTag: string }>();
-  const myBattleTag = useMyProfileStore((state) => state.myBattleTag);
-  const setMyBattleTag = useMyProfileStore((state) => state.setMyBattleTag);
-  const clearMyBattleTag = useMyProfileStore((state) => state.clearMyBattleTag);
+  const myProfile = useMyProfileStore((state) => state.myProfile);
+  const setMyProfile = useMyProfileStore((state) => state.setMyProfile);
+  const clearMyProfile = useMyProfileStore((state) => state.clearMyProfile);
   const { data, isLoading, isError, error } = usePlayerOverview(battleTag);
 
   if (!battleTag) return null;
 
-  const isMine = myBattleTag === battleTag;
+  const isMine = myProfile?.playerId === battleTag;
 
   return (
     <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
@@ -41,7 +41,9 @@ export function ProfilePage() {
             <ProfileHeaderCard
               overview={data}
               isMine={isMine}
-              onToggleSave={() => (isMine ? clearMyBattleTag() : setMyBattleTag(battleTag))}
+              onToggleSave={() =>
+                isMine ? clearMyProfile() : setMyProfile({ playerId: battleTag, label: data.displayName })
+              }
             />
             <div className="space-y-3 lg:grid lg:grid-cols-12 lg:gap-5 lg:space-y-0">
               <div className="space-y-3 lg:col-span-4">

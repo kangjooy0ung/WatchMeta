@@ -17,8 +17,8 @@ export function SearchPage() {
         <div className="mb-4 w-full">
           <h1 className="font-headline-lg text-headline-md italic text-primary">전적 검색</h1>
           <p className="mt-1 text-sm text-on-surface-variant">
-            배틀태그로 다른 플레이어의 전적을 검색해 보세요. 프로필에서 ⭐를 누르면 내 계정으로 저장되고, 상단
-            &apos;계정&apos; 메뉴에서 언제든 바로 확인할 수 있어요.
+            닉네임으로 다른 플레이어의 전적을 검색해 보세요. 동명이인이 있으면 목록에서 직접 골라야 해요. 프로필에서
+            ⭐를 누르면 내 계정으로 저장되고, 상단 &apos;계정&apos; 메뉴에서 언제든 바로 확인할 수 있어요.
           </p>
         </div>
 

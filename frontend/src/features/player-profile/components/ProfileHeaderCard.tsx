@@ -30,25 +30,25 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
           <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 border-primary bg-surface-dim p-1 lg:h-20 lg:w-20">
             <img
               src={overview.avatarUrl}
-              alt={overview.battleTag}
+              alt={overview.displayName}
               className="h-full w-full rounded-full object-cover"
             />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <h2 className="truncate font-headline-lg text-headline-md italic text-on-surface lg:font-headline-xl lg:text-headline-xl">
-                {overview.battleTag}
+              <h2 className="truncate pr-1 font-headline-lg text-headline-md italic text-on-surface lg:font-headline-xl lg:text-headline-xl">
+                {overview.displayName}
               </h2>
             </div>
             {overview.title && (
-              <p className="mt-0.5 truncate font-label-sm text-label-sm italic text-on-surface-variant">
+              <p className="mt-0.5 truncate pr-1 font-label-sm text-label-sm italic text-on-surface-variant">
                 {overview.title}
               </p>
             )}
             <div className="mt-1 flex w-fit items-center gap-2 bg-surface-container-high px-2 py-0.5 lg:mt-2">
               <ThumbsUp className="h-3.5 w-3.5 text-primary" fill="currentColor" fillOpacity={0.15} />
               <span className="font-label-sm text-label-sm tracking-widest text-primary">
-                인정 {overview.endorsementLevel}
+                추천레벨 {overview.endorsementLevel}
               </span>
             </div>
           </div>
