@@ -41,7 +41,7 @@ export function PlayerHeroDetailPage() {
     : [];
 
   return (
-    <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
+    <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
       <div className="mx-auto w-full max-w-md space-y-3 px-4 pt-4 text-on-background lg:max-w-3xl lg:pt-5">
         <Link
           to={ROUTES.profile(battleTag)}

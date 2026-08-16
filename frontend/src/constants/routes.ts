@@ -8,4 +8,5 @@ export const ROUTES = {
   heroDetail: (heroId: string) => `/tier-list/${heroId}`,
   patchNotes: '/patch-notes',
   patchNoteDetail: (version: string) => `/patch-notes/${version}`,
+  privacyPolicy: '/privacy',
 } as const;

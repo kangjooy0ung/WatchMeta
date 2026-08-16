@@ -39,7 +39,7 @@ export function TierListPage() {
   const patchLabel = PATCH_VERSIONS.find((version) => version.value === patchVersion)?.label ?? patchVersion;
 
   return (
-    <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
+    <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
       <div className="mx-auto w-full max-w-[1600px] space-y-8 px-4 pt-6 lg:px-8">
         <section className="flex flex-col items-start justify-between gap-4 border-l-4 border-primary pl-4 md:flex-row md:items-end">
           <div>

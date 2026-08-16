@@ -12,7 +12,7 @@ export function SearchPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
+    <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
       <div className="mx-auto flex w-full max-w-2xl flex-col items-center px-4 pt-6 lg:px-8">
         <div className="mb-4 w-full">
           <h1 className="font-headline-lg text-headline-md italic text-primary">전적 검색</h1>

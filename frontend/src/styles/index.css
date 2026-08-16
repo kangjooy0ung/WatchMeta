@@ -6,6 +6,10 @@ body,
   height: 100%;
 }
 
+body {
+  background-color: #19120a;
+}
+
 /*
  * Overwatch Kinetic 디자인 시스템 (DESIGN.md) 토큰.
  * 전역 Tailwind 테마에 등록해 어느 화면에서든 재사용 가능하게 하되,

@@ -3,7 +3,7 @@ import { PATCH_NOTES, PATCH_NOTES_SOURCE_URL } from '../../features/patch-notes/
 
 export function PatchNotesPage() {
   return (
-    <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
+    <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
       <div className="mx-auto w-full max-w-3xl space-y-6 px-4 pt-6 lg:px-8">
         <section className="border-l-4 border-primary pl-4">
           <h1 className="font-headline-xl text-headline-xl italic uppercase text-primary">패치 노트</h1>
