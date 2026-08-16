@@ -7,9 +7,9 @@ export function Footer() {
   return (
     <footer className="border-t border-outline-variant/30 px-4 pb-[calc(5rem+env(safe-area-inset-bottom))] pt-6 text-on-surface-variant/60 md:pb-8">
       <div className="mx-auto flex w-full max-w-[1600px] flex-col items-center gap-2 text-center">
-        <span className="text-sm font-bold italic tracking-tight text-on-surface-variant">WATCHMETA</span>
-
-        <nav className="flex flex-wrap justify-center gap-3 text-xs">
+        <nav className="flex flex-wrap items-center justify-center gap-3 text-xs">
+          <span className="font-bold italic tracking-tight text-on-surface-variant">WATCHMETA</span>
+          <span className="text-on-surface-variant/30">·</span>
           <a href={GITHUB_REPO_URL} target="_blank" rel="noreferrer" className="hover:text-on-surface-variant">
             소개
           </a>
@@ -21,7 +21,7 @@ export function Footer() {
           </a>
         </nav>
 
-        <p className="max-w-lg text-[11px] leading-relaxed">
+        <p className="max-w-xl break-keep text-[11px] leading-relaxed">
           WatchMeta는 블리자드 엔터테인먼트의 보증을 받지 않은 비공식 팬 사이트입니다. 오버워치 및 관련 명칭은
           블리자드 엔터테인먼트의 상표입니다. Overwatch © Blizzard Entertainment, Inc.
         </p>
