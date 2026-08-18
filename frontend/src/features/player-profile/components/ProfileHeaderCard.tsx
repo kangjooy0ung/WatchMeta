@@ -1,7 +1,7 @@
 import { Star, ThumbsUp } from 'lucide-react';
 import type { HeroRole } from '../../../types/hero';
 import type { PlayerOverviewData } from '../../../types/player';
-import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
+import { ROLE_ICON, ROLE_LABEL, ROLE_TEXT_COLOR } from '../constants/roleTheme';
 
 interface ProfileHeaderCardProps {
   overview: PlayerOverviewData;
@@ -55,14 +55,20 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
         </div>
 
         <div className="mt-3 flex items-center justify-between border-t border-outline-variant/30 pt-2.5 lg:mt-2 lg:justify-start lg:gap-4 lg:border-t-0 lg:pt-0">
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             {RANK_ROLE_ORDER.filter((role) => overview.competitiveRanks[role]).map((role) => {
               const rank = overview.competitiveRanks[role];
               if (!rank) return null;
               const Icon = ROLE_ICON[role];
               return (
-                <div key={role} className="flex items-center gap-1.5">
-                  <Icon className={`h-4 w-4 ${ROLE_TEXT_COLOR[role]}`} />
+                <div
+                  key={role}
+                  className="flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-high px-2 py-1"
+                >
+                  <Icon className={`h-3.5 w-3.5 shrink-0 ${ROLE_TEXT_COLOR[role]}`} />
+                  <span className={`font-label-sm text-[10px] uppercase tracking-wider ${ROLE_TEXT_COLOR[role]}`}>
+                    {ROLE_LABEL[role]}
+                  </span>
                   <span className="font-headline-md text-sm italic text-on-surface lg:text-headline-md">
                     {rank.division.toUpperCase()} {rank.tier}
                   </span>
