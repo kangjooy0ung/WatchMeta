@@ -7,6 +7,10 @@ export interface HeroRate {
 export type RateRegion = 'asia' | 'americas' | 'europe';
 export type RateTier = 'all' | 'grandmaster' | 'master' | 'diamond' | 'emerald' | 'platinum' | 'gold' | 'silver' | 'bronze';
 
+// 지역·등급별 정확한 쿼리 파라미터 인코딩은 확인되지 않아, 필터별 딥링크 대신 기준 페이지로만 연결한다.
+export const HERO_RATES_SOURCE_URL = 'https://overwatch.blizzard.com/ko-kr/rates/';
+export const HERO_RATES_CHECKED_AT = '2026년 8월 16일';
+
 // 출처: https://overwatch.blizzard.com/ko-kr/rates/?input=PC&map=all-maps&region={Region}&role=All&rq=2&tier={Tier}
 // (PC, 경쟁전 - 역할 고정, 지역·등급별 / 2026-08-16 확인 — 신규 영웅 디몬(dmon), 신규 등급 에메랄드 반영)
 export const HERO_RATES: Record<RateRegion, Record<RateTier, Record<string, HeroRate>>> = {

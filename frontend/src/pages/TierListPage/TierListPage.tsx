@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { MetaDataDisclosure } from '../../features/tier-list/components/MetaDataDisclosure';
 import { MetaStatsSummary } from '../../features/tier-list/components/MetaStatsSummary';
 import { PatchVersionSelect, type PatchVersionOption } from '../../features/tier-list/components/PatchVersionSelect';
 import { RankFilter } from '../../features/tier-list/components/RankFilter';
@@ -57,6 +58,8 @@ export function TierListPage() {
           <RankFilter rank={rank} onChange={setRank} />
           <PatchVersionSelect version={patchVersion} versions={PATCH_VERSIONS} onChange={setPatchVersion} />
         </section>
+
+        <MetaDataDisclosure />
 
         <div className="space-y-10">
           {tierGroups.map(({ tier, entries }) => (

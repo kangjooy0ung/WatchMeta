@@ -3,7 +3,7 @@ import type { TierListEntry, TierRank } from '../../../types/tier';
 import { HERO_RATES, type HeroRate, type RateRegion, type RateTier } from './heroRates';
 
 // 티어 배분 비율: 상위 티어일수록 소수만 진입
-const TIER_SIZE_RATIO: Record<TierRank, number> = { S: 0.15, A: 0.25, B: 0.3, C: 0.2, D: 0.1 };
+export const TIER_SIZE_RATIO: Record<TierRank, number> = { S: 0.15, A: 0.25, B: 0.3, C: 0.2, D: 0.1 };
 const TIER_ORDER: TierRank[] = ['S', 'A', 'B', 'C', 'D'];
 
 const RANK_TO_RATE_TIER: Record<string, RateTier> = {
