@@ -17,6 +17,11 @@ export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesC
         <span className="font-label-sm text-label-sm text-on-surface-variant">모스트 영웅</span>
       </div>
 
+      {topHeroes.length === 0 ? (
+        <p className="py-6 text-center font-label-sm text-label-sm text-on-surface-variant">
+          이 모드에서 플레이한 기록이 없어요.
+        </p>
+      ) : (
       <div className="grid grid-cols-3 gap-2 lg:gap-4">
         {topHeroes.map((hero) => {
           const Icon = ROLE_ICON[hero.role];
@@ -48,6 +53,7 @@ export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesC
           );
         })}
       </div>
+      )}
     </section>
   );
 }

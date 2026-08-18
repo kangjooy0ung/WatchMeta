@@ -70,6 +70,42 @@ function toHours(seconds: number | undefined): number {
   return Math.round((seconds ?? 0) / 3600);
 }
 
+function buildHeroStats(stats: StatsSummary, heroesMap: Map<string, import('../services/heroesCache.js').HeroMeta>) {
+  const emptyStatBlock: StatBlock = { eliminations: 0, assists: 0, deaths: 0, damage: 0, healing: 0 };
+  const playedHeroes = stats.heroes ?? {};
+
+  return Array.from(heroesMap.values())
+    .sort((a, b) => (playedHeroes[b.key]?.time_played ?? 0) - (playedHeroes[a.key]?.time_played ?? 0))
+    .map((meta) => {
+      const heroStat = playedHeroes[meta.key];
+      return {
+        heroId: meta.key,
+        heroName: meta.name,
+        role: meta.role,
+        portraitUrl: meta.portrait,
+        gamesPlayed: heroStat?.games_played ?? 0,
+        gamesWon: heroStat?.games_won ?? 0,
+        gamesLost: heroStat?.games_lost ?? 0,
+        winRate: heroStat?.winrate ?? 0,
+        kda: heroStat?.kda ?? 0,
+        playTimeHours: toHours(heroStat?.time_played),
+        total: heroStat?.total ?? emptyStatBlock,
+        average: heroStat?.average ?? emptyStatBlock,
+      };
+    });
+}
+
+function buildPerformance(stats: StatsSummary) {
+  const eliminations = stats.general.total?.eliminations ?? 0;
+  const deaths = stats.general.total?.deaths || 1;
+  return {
+    winRate: stats.general.winrate,
+    eliminationDeathRatio: Math.round((eliminations / deaths) * 100) / 100,
+    eliminationsPer10Min: stats.general.average?.eliminations ?? 0,
+    damagePer10Min: stats.general.average?.damage ?? 0,
+  };
+}
+
 // 배틀태그를 직접 player_id로 변환하는 방식은 더 이상 대부분의 계정에서 통하지 않아
 // (OverFast가 해시 형태의 내부 ID를 반환), 이름 검색으로 후보를 찾아 사용자가 직접 고르게 한다.
 playersRouter.get('/search', async (req, res) => {
@@ -159,29 +195,13 @@ playersRouter.get('/:battleTag/overview', async (req, res) => {
       }
     }
 
-    const playedHeroes = stats.heroes ?? {};
+    const heroStats = buildHeroStats(stats, heroesMap);
+    const heroStatsByMode = {
+      competitive: competitiveRes ? buildHeroStats(competitiveRes.data, heroesMap) : [],
+      quickplay: quickplayRes ? buildHeroStats(quickplayRes.data, heroesMap) : [],
+    };
 
-    const heroStats = Array.from(heroesMap.values())
-      .sort((a, b) => (playedHeroes[b.key]?.time_played ?? 0) - (playedHeroes[a.key]?.time_played ?? 0))
-      .map((meta) => {
-        const heroStat = playedHeroes[meta.key];
-        return {
-          heroId: meta.key,
-          heroName: meta.name,
-          role: meta.role,
-          portraitUrl: meta.portrait,
-          gamesPlayed: heroStat?.games_played ?? 0,
-          gamesWon: heroStat?.games_won ?? 0,
-          gamesLost: heroStat?.games_lost ?? 0,
-          winRate: heroStat?.winrate ?? 0,
-          kda: heroStat?.kda ?? 0,
-          playTimeHours: toHours(heroStat?.time_played),
-          total: heroStat?.total ?? emptyStatBlock,
-          average: heroStat?.average ?? emptyStatBlock,
-        };
-      });
-
-    const topHeroes = heroStats.slice(0, 3).map((hero) => ({
+    const topHeroes = heroStats.slice(0, 6).map((hero) => ({
       heroId: hero.heroId,
       heroName: hero.heroName,
       role: hero.role,
@@ -189,9 +209,6 @@ playersRouter.get('/:battleTag/overview', async (req, res) => {
       playTimeHours: hero.playTimeHours,
       levelLabel: `${hero.gamesPlayed}경기 · 승률 ${hero.winRate.toFixed(1)}%`,
     }));
-
-    const eliminations = stats.general.total?.eliminations ?? 0;
-    const deaths = stats.general.total?.deaths || 1;
 
     res.json({
       battleTag,
@@ -211,14 +228,14 @@ playersRouter.get('/:battleTag/overview', async (req, res) => {
         competitive: toHours(competitiveRes?.data.general.time_played),
         quickplay: toHours(quickplayRes?.data.general.time_played),
       },
-      performance: {
-        winRate: stats.general.winrate,
-        eliminationDeathRatio: Math.round((eliminations / deaths) * 100) / 100,
-        eliminationsPer10Min: stats.general.average?.eliminations ?? 0,
-        damagePer10Min: stats.general.average?.damage ?? 0,
+      performance: buildPerformance(stats),
+      performanceByMode: {
+        competitive: competitiveRes ? buildPerformance(competitiveRes.data) : null,
+        quickplay: quickplayRes ? buildPerformance(quickplayRes.data) : null,
       },
       topHeroes,
       heroStats,
+      heroStatsByMode,
     });
   } catch {
     res.status(502).json({ message: 'Overwatch 데이터를 가져오지 못했습니다.' });
