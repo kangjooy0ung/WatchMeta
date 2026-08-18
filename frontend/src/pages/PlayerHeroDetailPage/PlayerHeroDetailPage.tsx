@@ -2,6 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { ErrorState } from '../../components/feedback/ErrorState';
 import { InfoNote } from '../../components/feedback/InfoNote';
+import { ShareLinkButton } from '../../components/feedback/ShareLinkButton';
 import { HeroImage } from '../../components/hero/HeroImage';
 import { HeroRosterSelector } from '../../features/player-profile/components/HeroRosterSelector';
 import { ROLE_ICON, ROLE_LABEL, ROLE_TEXT_COLOR } from '../../features/player-profile/constants/roleTheme';
@@ -44,13 +45,16 @@ export function PlayerHeroDetailPage() {
   return (
     <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
       <div className="mx-auto w-full max-w-md space-y-3 px-4 pt-4 text-on-background lg:max-w-3xl lg:pt-5">
-        <Link
-          to={ROUTES.profile(battleTag)}
-          className="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant transition-colors hover:text-primary"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          프로필로 돌아가기
-        </Link>
+        <div className="flex items-center justify-between gap-2">
+          <Link
+            to={ROUTES.profile(battleTag)}
+            className="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant transition-colors hover:text-primary"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            프로필로 돌아가기
+          </Link>
+          <ShareLinkButton />
+        </div>
 
         {isLoading && <PlayerHeroDetailSkeleton />}
         {isError && (
