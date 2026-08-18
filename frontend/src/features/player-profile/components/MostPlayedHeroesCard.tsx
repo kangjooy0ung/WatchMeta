@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { HeroImage } from '../../../components/hero/HeroImage';
 import { ROUTES } from '../../../constants/routes';
 import type { PlayerOverviewData } from '../../../types/player';
 import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
@@ -26,7 +27,7 @@ export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesC
               className="group relative block cursor-pointer overflow-hidden rounded-lg border border-outline-variant/30 transition-colors hover:border-primary"
             >
               <div className="aspect-3/4 w-full overflow-hidden">
-                <img
+                <HeroImage
                   src={hero.portraitUrl}
                   alt={hero.heroName}
                   className="h-full w-full scale-90 object-cover transition-transform duration-500 group-hover:scale-100"

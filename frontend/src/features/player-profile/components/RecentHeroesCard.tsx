@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { HeroImage } from '../../../components/hero/HeroImage';
 import { ROUTES } from '../../../constants/routes';
 import type { HeroStat } from '../../../types/player';
 import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
@@ -43,7 +44,7 @@ export function RecentHeroesCard({ battleTag, heroStats }: RecentHeroesCardProps
               >
                 <div className="flex min-w-0 flex-1 items-center gap-3 lg:col-span-5">
                   <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-md bg-surface-dim">
-                    <img src={hero.portraitUrl} alt={hero.heroName} className="h-full w-full object-cover" />
+                    <HeroImage src={hero.portraitUrl} alt={hero.heroName} className="h-full w-full object-cover" />
                     <div className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full border border-surface-container bg-surface-container-lowest">
                       <Icon className={`h-2.5 w-2.5 ${ROLE_TEXT_COLOR[hero.role]}`} />
                     </div>
