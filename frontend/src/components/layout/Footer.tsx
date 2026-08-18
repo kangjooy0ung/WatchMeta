@@ -21,7 +21,7 @@ export function Footer() {
           </a>
         </nav>
 
-        <p className="max-w-xl break-keep text-[11px] leading-relaxed">
+        <p className="max-w-md break-keep text-balance text-[11px] leading-relaxed">
           WatchMeta는 블리자드 엔터테인먼트의 보증을 받은 사이트가 아닙니다. 오버워치 및 관련 명칭은
           블리자드 엔터테인먼트의 상표입니다. Overwatch © Blizzard Entertainment, Inc.
         </p>
