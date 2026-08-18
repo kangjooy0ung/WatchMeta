@@ -25,7 +25,7 @@ export function ProfilePage() {
   const myProfile = useMyProfileStore((state) => state.myProfile);
   const setMyProfile = useMyProfileStore((state) => state.setMyProfile);
   const clearMyProfile = useMyProfileStore((state) => state.clearMyProfile);
-  const { data, isLoading, isError, error } = usePlayerOverview(battleTag);
+  const { data, isLoading, isError, error, refetch } = usePlayerOverview(battleTag);
 
   if (!battleTag) return null;
 
@@ -35,7 +35,12 @@ export function ProfilePage() {
     <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
       <div className="mx-auto w-full max-w-md space-y-3 px-4 pt-4 text-on-background lg:max-w-[1600px] lg:space-y-5 lg:px-8 lg:pt-5">
         {isLoading && <ProfilePageSkeleton />}
-        {isError && <ErrorState message={getErrorMessage(error, '문제가 발생했어요. 다시 시도해 주세요.')} />}
+        {isError && (
+          <ErrorState
+            message={getErrorMessage(error, '문제가 발생했어요. 다시 시도해 주세요.')}
+            onRetry={() => refetch()}
+          />
+        )}
         {data && (
           <>
             <ProfileHeaderCard
