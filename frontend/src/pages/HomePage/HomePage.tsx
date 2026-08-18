@@ -13,8 +13,8 @@ export function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-on-background">
-      <div className="mx-auto flex min-h-screen w-full max-w-2xl flex-col items-center justify-center gap-8 px-4 pb-[calc(5rem+env(safe-area-inset-bottom))] text-center lg:px-8">
+    <div className="bg-background text-on-background">
+      <div className="mx-auto flex min-h-[70vh] w-full max-w-2xl flex-col items-center justify-center gap-8 px-4 pb-[calc(5rem+env(safe-area-inset-bottom))] pt-10 text-center lg:px-8">
         <div>
           <h1 className="font-headline-xl text-headline-xl italic uppercase tracking-tighter text-primary">
             Watch<span className="text-secondary">Meta</span>

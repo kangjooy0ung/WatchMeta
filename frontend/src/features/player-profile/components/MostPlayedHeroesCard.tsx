@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { HeroImage } from '../../../components/hero/HeroImage';
 import { ROUTES } from '../../../constants/routes';
 import type { PlayerOverviewData } from '../../../types/player';
 import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
@@ -16,6 +17,11 @@ export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesC
         <span className="font-label-sm text-label-sm text-on-surface-variant">모스트 영웅</span>
       </div>
 
+      {topHeroes.length === 0 ? (
+        <p className="py-6 text-center font-label-sm text-label-sm text-on-surface-variant">
+          이 모드에서 플레이한 기록이 없어요.
+        </p>
+      ) : (
       <div className="grid grid-cols-3 gap-2 lg:gap-4">
         {topHeroes.map((hero) => {
           const Icon = ROLE_ICON[hero.role];
@@ -26,7 +32,7 @@ export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesC
               className="group relative block cursor-pointer overflow-hidden rounded-lg border border-outline-variant/30 transition-colors hover:border-primary"
             >
               <div className="aspect-3/4 w-full overflow-hidden">
-                <img
+                <HeroImage
                   src={hero.portraitUrl}
                   alt={hero.heroName}
                   className="h-full w-full scale-90 object-cover transition-transform duration-500 group-hover:scale-100"
@@ -47,6 +53,7 @@ export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesC
           );
         })}
       </div>
+      )}
     </section>
   );
 }

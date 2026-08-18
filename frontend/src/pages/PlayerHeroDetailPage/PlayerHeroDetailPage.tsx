@@ -2,6 +2,8 @@ import { ArrowLeft } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { ErrorState } from '../../components/feedback/ErrorState';
 import { InfoNote } from '../../components/feedback/InfoNote';
+import { ShareLinkButton } from '../../components/feedback/ShareLinkButton';
+import { HeroImage } from '../../components/hero/HeroImage';
 import { HeroRosterSelector } from '../../features/player-profile/components/HeroRosterSelector';
 import { ROLE_ICON, ROLE_LABEL, ROLE_TEXT_COLOR } from '../../features/player-profile/constants/roleTheme';
 import { usePlayerOverview } from '../../features/player-profile/hooks/usePlayerOverview';
@@ -24,7 +26,7 @@ function PlayerHeroDetailSkeleton() {
 
 export function PlayerHeroDetailPage() {
   const { battleTag, heroId } = useParams<{ battleTag: string; heroId: string }>();
-  const { data, isLoading, isError, error } = usePlayerOverview(battleTag);
+  const { data, isLoading, isError, error, refetch } = usePlayerOverview(battleTag);
 
   if (!battleTag || !heroId) return null;
 
@@ -41,18 +43,26 @@ export function PlayerHeroDetailPage() {
     : [];
 
   return (
-    <div className="min-h-screen bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
+    <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))]">
       <div className="mx-auto w-full max-w-md space-y-3 px-4 pt-4 text-on-background lg:max-w-3xl lg:pt-5">
-        <Link
-          to={ROUTES.profile(battleTag)}
-          className="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant transition-colors hover:text-primary"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          프로필로 돌아가기
-        </Link>
+        <div className="flex items-center justify-between gap-2">
+          <Link
+            to={ROUTES.profile(battleTag)}
+            className="inline-flex items-center gap-1.5 font-label-sm text-label-sm text-on-surface-variant transition-colors hover:text-primary"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            프로필로 돌아가기
+          </Link>
+          <ShareLinkButton />
+        </div>
 
         {isLoading && <PlayerHeroDetailSkeleton />}
-        {isError && <ErrorState message={getErrorMessage(error, '문제가 발생했어요. 다시 시도해 주세요.')} />}
+        {isError && (
+          <ErrorState
+            message={getErrorMessage(error, '문제가 발생했어요. 다시 시도해 주세요.')}
+            onRetry={() => refetch()}
+          />
+        )}
         {data && !hero && <ErrorState message="해당 영웅의 플레이 기록을 찾을 수 없어요." />}
 
         {data && (
@@ -64,7 +74,7 @@ export function PlayerHeroDetailPage() {
             <section className="glass-panel relative overflow-hidden rounded-xl border-l-4 border-primary p-4">
               <div className="flex items-center gap-3">
                 <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg border-2 border-primary/60 bg-surface-dim">
-                  <img src={hero.portraitUrl} alt={hero.heroName} className="h-full w-full object-cover" />
+                  <HeroImage src={hero.portraitUrl} alt={hero.heroName} className="h-full w-full object-cover" />
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">

@@ -8,9 +8,10 @@ interface RoleTabsProps {
 
 export function RoleTabs({ role, onChange }: RoleTabsProps) {
   return (
-    <div className="flex rounded-xl border border-outline-variant bg-surface-container-high p-1">
+    <div role="group" aria-label="역할 필터" className="flex rounded-xl border border-outline-variant bg-surface-container-high p-1">
       <button
         type="button"
+        aria-pressed={role === 'all'}
         onClick={() => onChange('all')}
         className={`flex-1 rounded-lg py-2 text-sm font-bold transition-all active:scale-95 ${
           role === 'all'
@@ -28,6 +29,7 @@ export function RoleTabs({ role, onChange }: RoleTabsProps) {
             key={id}
             type="button"
             aria-label={label}
+            aria-pressed={isActive}
             onClick={() => onChange(id)}
             className={`flex flex-1 items-center justify-center rounded-lg py-2 transition-all active:scale-95 ${
               isActive ? 'bg-primary' : 'hover:bg-surface-variant/40'

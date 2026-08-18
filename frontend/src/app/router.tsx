@@ -3,6 +3,7 @@ import { HomePage } from '../pages/HomePage/HomePage';
 import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 import { PatchNotesPage } from '../pages/PatchNotesPage/PatchNotesPage';
 import { PlayerHeroDetailPage } from '../pages/PlayerHeroDetailPage/PlayerHeroDetailPage';
+import { PrivacyPolicyPage } from '../pages/PrivacyPolicyPage/PrivacyPolicyPage';
 import { ProfilePage } from '../pages/ProfilePage/ProfilePage';
 import { SearchPage } from '../pages/SearchPage/SearchPage';
 import { HeroDetailPage } from '../pages/TierListPage/HeroDetailPage';
@@ -18,6 +19,7 @@ export function AppRouter() {
       <Route path="/tier-list" element={<TierListPage />} />
       <Route path="/tier-list/:heroId" element={<HeroDetailPage />} />
       <Route path="/patch-notes" element={<PatchNotesPage />} />
+      <Route path="/privacy" element={<PrivacyPolicyPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

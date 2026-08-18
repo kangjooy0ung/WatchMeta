@@ -1,7 +1,8 @@
 import { Star, ThumbsUp } from 'lucide-react';
+import { ShareLinkButton } from '../../../components/feedback/ShareLinkButton';
 import type { HeroRole } from '../../../types/hero';
 import type { PlayerOverviewData } from '../../../types/player';
-import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
+import { ROLE_ICON, ROLE_LABEL, ROLE_TEXT_COLOR } from '../constants/roleTheme';
 
 interface ProfileHeaderCardProps {
   overview: PlayerOverviewData;
@@ -14,16 +15,19 @@ const RANK_ROLE_ORDER: HeroRole[] = ['tank', 'damage', 'support'];
 export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHeaderCardProps) {
   return (
     <section className="glass-panel relative overflow-hidden rounded-xl border-l-4 border-primary p-4 lg:flex lg:items-end lg:justify-between lg:gap-6 lg:p-6">
-      <button
-        type="button"
-        onClick={onToggleSave}
-        aria-label={isMine ? '내 계정으로 저장 해제' : '내 계정으로 저장'}
-        className={`absolute right-4 top-4 rounded-full p-1.5 transition-colors lg:right-6 lg:top-6 ${
-          isMine ? 'text-primary' : 'text-on-surface-variant/50 hover:text-on-surface-variant'
-        }`}
-      >
-        <Star className="h-5 w-5" fill={isMine ? 'currentColor' : 'none'} />
-      </button>
+      <div className="absolute right-4 top-4 flex items-center gap-2 lg:right-6 lg:top-6">
+        <ShareLinkButton />
+        <button
+          type="button"
+          onClick={onToggleSave}
+          aria-label={isMine ? '내 계정으로 저장 해제' : '내 계정으로 저장'}
+          className={`rounded-full p-1.5 transition-colors ${
+            isMine ? 'text-primary' : 'text-on-surface-variant/50 hover:text-on-surface-variant'
+          }`}
+        >
+          <Star className="h-5 w-5" fill={isMine ? 'currentColor' : 'none'} />
+        </button>
+      </div>
 
       <div>
         <div className="flex items-center gap-3 lg:gap-5">
@@ -55,14 +59,20 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
         </div>
 
         <div className="mt-3 flex items-center justify-between border-t border-outline-variant/30 pt-2.5 lg:mt-2 lg:justify-start lg:gap-4 lg:border-t-0 lg:pt-0">
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             {RANK_ROLE_ORDER.filter((role) => overview.competitiveRanks[role]).map((role) => {
               const rank = overview.competitiveRanks[role];
               if (!rank) return null;
               const Icon = ROLE_ICON[role];
               return (
-                <div key={role} className="flex items-center gap-1.5">
-                  <Icon className={`h-4 w-4 ${ROLE_TEXT_COLOR[role]}`} />
+                <div
+                  key={role}
+                  className="flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-high px-2 py-1"
+                >
+                  <Icon className={`h-3.5 w-3.5 shrink-0 ${ROLE_TEXT_COLOR[role]}`} />
+                  <span className={`font-label-sm text-[10px] uppercase tracking-wider ${ROLE_TEXT_COLOR[role]}`}>
+                    {ROLE_LABEL[role]}
+                  </span>
                   <span className="font-headline-md text-sm italic text-on-surface lg:text-headline-md">
                     {rank.division.toUpperCase()} {rank.tier}
                   </span>

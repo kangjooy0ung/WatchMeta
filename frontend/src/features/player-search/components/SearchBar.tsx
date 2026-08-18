@@ -1,5 +1,6 @@
+import { isAxiosError } from 'axios';
 import { Search } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { useSearchHistoryStore } from '../../../store/useSearchHistoryStore';
 import type { PlayerSearchResult } from '../../../types/player';
@@ -9,34 +10,74 @@ interface SearchBarProps {
   onSearch: (playerId: string, label: string) => void;
 }
 
+function describeSearchError(error: unknown): string {
+  if (isAxiosError(error)) {
+    if (!error.response) {
+      return '네트워크 연결을 확인하고 다시 시도해 주세요.';
+    }
+    if (error.response.status === 502) {
+      return '오버워치 서버 응답이 지연되고 있어요. 잠시 후 다시 시도해 주세요.';
+    }
+    if (typeof error.response.data?.message === 'string') {
+      return error.response.data.message;
+    }
+  }
+  return '검색 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.';
+}
+
 export function SearchBar({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<PlayerSearchResult[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [canRetry, setCanRetry] = useState(false);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const lastQueryRef = useRef('');
   const addSearch = useSearchHistoryStore((state) => state.addSearch);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const trimmed = query.trim();
-    if (!trimmed) return;
+  useEffect(() => {
+    if (!isSearching) return;
+    setElapsedSeconds(0);
+    const timer = setInterval(() => setElapsedSeconds((s) => s + 1), 1000);
+    return () => clearInterval(timer);
+  }, [isSearching]);
 
+  const runSearch = async (namePart: string) => {
     setIsSearching(true);
     setErrorMessage(null);
+    setCanRetry(false);
     try {
-      // 배틀태그의 '#태그' 부분은 더 이상 검색에 쓸 수 없어, 닉네임만 잘라서 검색한다.
-      const namePart = trimmed.split('#')[0];
       const found = await searchPlayersByName(namePart);
       setResults(found);
       if (found.length === 0) {
         setErrorMessage('일치하는 플레이어를 찾지 못했어요. 닉네임 철자를 확인해 보세요.');
       }
-    } catch {
-      setErrorMessage('검색 중 문제가 발생했어요. 잠시 후 다시 시도해 주세요.');
+    } catch (error) {
+      setErrorMessage(describeSearchError(error));
+      setCanRetry(true);
       setResults(null);
     } finally {
       setIsSearching(false);
     }
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const trimmed = query.trim();
+    if (!trimmed) {
+      setErrorMessage('검색어를 입력해 주세요.');
+      return;
+    }
+
+    // 배틀태그의 '#태그' 부분은 더 이상 검색에 쓸 수 없어, 닉네임만 잘라서 검색한다.
+    const namePart = trimmed.split('#')[0];
+    lastQueryRef.current = namePart;
+    await runSearch(namePart);
+  };
+
+  const handleRetry = () => {
+    if (!lastQueryRef.current) return;
+    void runSearch(lastQueryRef.current);
   };
 
   const handlePick = (result: PlayerSearchResult) => {
@@ -64,11 +105,26 @@ export function SearchBar({ onSearch }: SearchBarProps) {
           disabled={isSearching}
           className="mt-3 w-full -skew-x-[10deg] bg-primary py-3 text-sm font-bold text-surface-container-lowest transition-all active:scale-95 hover:shadow-[0_0_20px_rgba(255,194,127,0.5)] disabled:opacity-60"
         >
-          <span className="block skew-x-[10deg]">{isSearching ? '검색 중...' : '전적 검색'}</span>
+          <span className="block skew-x-[10deg]">
+            {isSearching ? `검색 중... (${elapsedSeconds}초, 최대 10초 소요)` : '전적 검색'}
+          </span>
         </button>
       </form>
 
-      {errorMessage && <p className="mt-3 text-left text-xs text-on-surface-variant">{errorMessage}</p>}
+      {errorMessage && (
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-left">
+          <p className="text-xs text-on-surface-variant">{errorMessage}</p>
+          {canRetry && (
+            <button
+              type="button"
+              onClick={handleRetry}
+              className="shrink-0 rounded-full border border-outline-variant px-3 py-1 text-xs font-semibold text-on-surface transition-colors hover:border-primary hover:text-primary"
+            >
+              다시 시도
+            </button>
+          )}
+        </div>
+      )}
 
       {results && results.length > 0 && (
         <div className="mt-3 w-full">

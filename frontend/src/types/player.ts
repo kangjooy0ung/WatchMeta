@@ -60,6 +60,15 @@ export interface PlayerSearchResult {
   title: string | null;
 }
 
+export interface PlayerPerformance {
+  winRate: number;
+  eliminationDeathRatio: number;
+  eliminationsPer10Min: number;
+  damagePer10Min: number;
+}
+
+export type GameMode = 'competitive' | 'quickplay';
+
 export interface PlayerOverviewData {
   battleTag: string;
   displayName: string;
@@ -71,12 +80,9 @@ export interface PlayerOverviewData {
   totalPlaytimeHours: number;
   roleHours: Record<'tank' | 'damage' | 'support', number>;
   modeHours: { competitive: number; quickplay: number };
-  performance: {
-    winRate: number;
-    eliminationDeathRatio: number;
-    eliminationsPer10Min: number;
-    damagePer10Min: number;
-  };
+  performance: PlayerPerformance;
+  performanceByMode: Record<GameMode, PlayerPerformance | null>;
   topHeroes: TopPlayedHero[];
   heroStats: HeroStat[];
+  heroStatsByMode: Record<GameMode, HeroStat[]>;
 }

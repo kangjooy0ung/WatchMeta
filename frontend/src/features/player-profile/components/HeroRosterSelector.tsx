@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { HeroImage } from '../../../components/hero/HeroImage';
 import { ROUTES } from '../../../constants/routes';
 import type { HeroRole } from '../../../types/hero';
 import type { HeroStat } from '../../../types/player';
@@ -49,7 +50,7 @@ export function HeroRosterSelector({ battleTag, heroStats, activeHeroId }: HeroR
                           : 'border-transparent hover:border-outline-variant'
                       }`}
                     >
-                      <img
+                      <HeroImage
                         src={hero.portraitUrl}
                         alt={hero.heroName}
                         className={`h-full w-full object-cover ${isPlayed ? '' : 'opacity-30 grayscale'}`}
