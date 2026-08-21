@@ -2,7 +2,7 @@ import { Star, ThumbsUp } from 'lucide-react';
 import { ShareLinkButton } from '../../../components/feedback/ShareLinkButton';
 import type { HeroRole } from '../../../types/hero';
 import type { PlayerOverviewData } from '../../../types/player';
-import { ROLE_ICON, ROLE_LABEL, ROLE_TEXT_COLOR } from '../constants/roleTheme';
+import { ROLE_ICON, ROLE_TEXT_COLOR } from '../constants/roleTheme';
 
 interface ProfileHeaderCardProps {
   overview: PlayerOverviewData;
@@ -73,9 +73,6 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
                   className="flex items-center gap-1.5 rounded-lg border border-outline-variant/40 bg-surface-container-high px-2 py-1"
                 >
                   <Icon className={`h-3.5 w-3.5 shrink-0 ${ROLE_TEXT_COLOR[role]}`} />
-                  <span className={`font-label-sm text-[10px] uppercase tracking-wider ${ROLE_TEXT_COLOR[role]}`}>
-                    {ROLE_LABEL[role]}
-                  </span>
                   <span className="font-headline-md text-sm italic text-on-surface lg:text-headline-md">
                     {rank.division.toUpperCase()} {rank.tier}
                   </span>
