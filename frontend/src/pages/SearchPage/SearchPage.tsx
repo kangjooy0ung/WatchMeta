@@ -3,9 +3,15 @@ import { InfoNote } from '../../components/feedback/InfoNote';
 import { ROUTES } from '../../constants/routes';
 import { RecentSearchList } from '../../features/player-search/components/RecentSearchList';
 import { SearchBar } from '../../features/player-search/components/SearchBar';
+import { useDocumentMeta } from '../../lib/useDocumentMeta';
 
 export function SearchPage() {
   const navigate = useNavigate();
+  useDocumentMeta({
+    title: '오버워치 전적 검색 | WatchMeta',
+    description: '배틀태그로 오버워치 플레이어 전적을 검색하고, 경쟁전 티어·승률·모스트 영웅을 확인하세요.',
+    path: ROUTES.search,
+  });
 
   const handleSearch = (battleTag: string) => {
     navigate(ROUTES.profile(battleTag));
@@ -24,8 +30,9 @@ export function SearchPage() {
 
         <SearchBar onSearch={handleSearch} />
 
-        <div className="mt-3 w-full">
-          <InfoNote message="배틀넷 및 오버워치 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있어요." />
+        <div className="mt-3 w-full space-y-1.5">
+          <InfoNote message="배틀넷 및 오버워치 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있습니다." />
+          <InfoNote message="2026년 8월 12일부터 한국 PC 서버는 넥슨이 별도로 운영합니다. 이 사이트는 블리자드 공식 통계를 기반으로 하기 때문에, 그 이후 한국 서버에서 쌓인 전적은 반영되지 않을 수 있습니다." />
         </div>
 
         <RecentSearchList onSelect={handleSearch} />

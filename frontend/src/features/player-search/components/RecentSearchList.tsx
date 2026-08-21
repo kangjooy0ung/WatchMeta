@@ -1,5 +1,7 @@
 import { X } from 'lucide-react';
-import { useSearchHistoryStore } from '../../../store/useSearchHistoryStore';
+import { useState } from 'react';
+import { Toast } from '../../../components/feedback/Toast';
+import { useSearchHistoryStore, type RecentSearchEntry } from '../../../store/useSearchHistoryStore';
 
 interface RecentSearchListProps {
   onSelect: (playerId: string, label: string) => void;
@@ -8,36 +10,63 @@ interface RecentSearchListProps {
 export function RecentSearchList({ onSelect }: RecentSearchListProps) {
   const recentSearches = useSearchHistoryStore((state) => state.recentSearches);
   const removeSearch = useSearchHistoryStore((state) => state.removeSearch);
+  const addSearch = useSearchHistoryStore((state) => state.addSearch);
+  const [removedEntry, setRemovedEntry] = useState<RecentSearchEntry | null>(null);
 
-  if (recentSearches.length === 0) return null;
+  const handleRemove = (entry: RecentSearchEntry) => {
+    removeSearch(entry.playerId);
+    setRemovedEntry(entry);
+  };
+
+  const handleUndo = () => {
+    if (!removedEntry) return;
+    addSearch(removedEntry);
+    setRemovedEntry(null);
+  };
+
+  // 마지막 한 개를 지우면 recentSearches가 비어 목록 전체가 사라지는데, 이때도 되돌리기 토스트는
+  // 계속 보여야 해서 목록 렌더링과 토스트 렌더링을 분리한다.
+  if (recentSearches.length === 0 && !removedEntry) return null;
 
   return (
     <div className="mt-6 w-full">
-      <p className="mb-2 text-left text-xs font-semibold text-on-surface-variant">최근 검색</p>
-      <ul className="flex flex-col gap-2">
-        {recentSearches.map((entry) => (
-          <li
-            key={entry.playerId}
-            className="flex items-center justify-between rounded-xl border border-outline-variant bg-surface-container px-4 py-2.5"
-          >
-            <button
-              type="button"
-              onClick={() => onSelect(entry.playerId, entry.label)}
-              className="flex-1 truncate text-left text-sm font-medium text-on-surface"
-            >
-              {entry.label}
-            </button>
-            <button
-              type="button"
-              onClick={() => removeSearch(entry.playerId)}
-              aria-label={`${entry.label} 삭제`}
-              className="ml-2 shrink-0 rounded-full p-1 text-on-surface-variant/50 transition-colors hover:text-on-surface-variant"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </li>
-        ))}
-      </ul>
+      {recentSearches.length > 0 && (
+        <>
+          <p className="mb-2 text-left text-xs font-semibold text-on-surface-variant">최근 검색</p>
+          <ul className="flex flex-col gap-2">
+            {recentSearches.map((entry) => (
+              <li
+                key={entry.playerId}
+                className="flex items-center justify-between rounded-xl border border-outline-variant bg-surface-container px-4 py-2.5"
+              >
+                <button
+                  type="button"
+                  onClick={() => onSelect(entry.playerId, entry.label)}
+                  className="flex-1 truncate text-left text-sm font-medium text-on-surface"
+                >
+                  {entry.label}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRemove(entry)}
+                  aria-label={`${entry.label} 삭제`}
+                  className="ml-2 shrink-0 rounded-full p-1 text-on-surface-variant/50 transition-colors hover:text-on-surface-variant"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {removedEntry && (
+        <Toast
+          message={`${removedEntry.label} 검색 기록을 삭제했어요.`}
+          actionLabel="되돌리기"
+          onAction={handleUndo}
+          onDismiss={() => setRemovedEntry(null)}
+        />
+      )}
     </div>
   );
 }

@@ -1,4 +1,8 @@
+import { ROUTES } from '../../constants/routes';
+import { useDocumentMeta } from '../../lib/useDocumentMeta';
+
 export function PrivacyPolicyPage() {
+  useDocumentMeta({ title: '개인정보처리방침 | WatchMeta', path: ROUTES.privacyPolicy });
   return (
     <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
       <div className="mx-auto flex w-full max-w-2xl flex-col gap-4 px-4 pt-6 lg:px-8">

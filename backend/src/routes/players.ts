@@ -62,6 +62,9 @@ interface PlayerSearchEntry {
   avatar: string | null;
   title: string | null;
   is_public: boolean;
+  // OverFast가 이 계정 데이터를 마지막으로 갱신한 시각(unix seconds). 배틀태그 번호·플랫폼·지역처럼
+  // 동명이인을 구분할 만한 정보를 OverFast 검색 응답이 제공하지 않아, 최소한의 구분 신호로 사용한다.
+  last_updated_at?: number;
 }
 
 const ROLES: Role[] = ['tank', 'damage', 'support'];
@@ -129,6 +132,7 @@ playersRouter.get('/search', async (req, res) => {
           name: entry.name,
           avatarUrl: entry.avatar,
           title: entry.title,
+          lastUpdatedAt: entry.last_updated_at ?? null,
         })),
     );
   } catch {

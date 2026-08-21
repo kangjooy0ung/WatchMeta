@@ -11,6 +11,8 @@ export interface TierListEntry {
   winRate: number;
   pickRate: number;
   banRate?: number;
+  lowSample?: boolean;
+  isNew?: boolean;
 }
 
 export interface TierListFilters {

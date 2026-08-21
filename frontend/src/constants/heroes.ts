@@ -11,7 +11,7 @@ export const ALL_HEROES: Hero[] = [
   { id: 'cassidy', name: '캐서디', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/9240cd64cc8ef58df9acbf55204ab1b5d8578f743fda5931f0dbccbd75ab841b.png' },
   { id: 'domina', name: '도미나', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/1161c112292c56c052c0ae711792fcde06e3251b98bc9709e582dd7585b5dcd6.png' },
   { id: 'doomfist', name: '둠피스트', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ff5c54f43ad253c7faeda9c4ed31d42582ea6b19205d197866f3dd0c0aa14c16.png' },
-  { id: 'dmon', name: 'D.Mon', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a46c60b8562fdbd0b8308396d0808f7606fba208bc67cccf3f82fe56d2c73b9d.png' },
+  { id: 'dmon', name: 'D.Mon', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a46c60b8562fdbd0b8308396d0808f7606fba208bc67cccf3f82fe56d2c73b9d.png', isNew: true },
   { id: 'dva', name: 'D.Va', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/df5a5532862d9292634fb3dc0e51a4705aa601de65e5e815513ccc663d84de56.png' },
   { id: 'echo', name: '에코', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d4f2d5b0c2b7e82d61353186c5f23152ccba9d3569b50839aa580dca3e9114ba.png' },
   { id: 'emre', name: '엠레', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c51e2f698138861c0e3b6cfab3c3ca9d67fd709be175e7c397aa6f2649712a30.png' },

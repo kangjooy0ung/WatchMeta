@@ -33,7 +33,10 @@ export function PerformanceCard({ performance }: PerformanceCardProps) {
 
   return (
     <section className="glass-panel flex flex-col gap-3 rounded-xl p-4 lg:p-5">
-      <h3 className="font-headline-lg text-headline-md italic uppercase text-on-surface">Performance</h3>
+      <div className="flex items-baseline justify-between">
+        <h3 className="font-headline-lg text-headline-md italic uppercase text-on-surface">Performance</h3>
+        <span className="font-label-sm text-label-sm text-on-surface-variant">종합 성과</span>
+      </div>
       <div className="grid grid-cols-2 gap-2.5">
         {tiles.map((tile) => (
           <div key={tile.label} className={`border-b-2 bg-surface-container-low p-3 ${tile.borderClass}`}>

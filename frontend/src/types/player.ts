@@ -58,6 +58,9 @@ export interface PlayerSearchResult {
   name: string;
   avatarUrl: string | null;
   title: string | null;
+  // 마지막 데이터 갱신 시각(unix seconds). 배틀태그 번호·플랫폼 같은 식별 정보를 API가 주지 않아,
+  // 동명이인 중 최근에 플레이한 계정을 가늠하는 용도로 쓴다.
+  lastUpdatedAt: number | null;
 }
 
 export interface PlayerPerformance {
