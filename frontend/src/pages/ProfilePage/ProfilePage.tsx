@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { ErrorState } from '../../components/feedback/ErrorState';
+import { Toast } from '../../components/feedback/Toast';
 import { getErrorMessage } from '../../lib/getErrorMessage';
 import { CareerOverviewCard } from '../../features/player-profile/components/CareerOverviewCard';
 import { HeroAnalysisCTA } from '../../features/player-profile/components/HeroAnalysisCTA';
@@ -9,6 +10,8 @@ import { PerformanceCard } from '../../features/player-profile/components/Perfor
 import { ProfileHeaderCard } from '../../features/player-profile/components/ProfileHeaderCard';
 import { RecentHeroesCard } from '../../features/player-profile/components/RecentHeroesCard';
 import { usePlayerOverview } from '../../features/player-profile/hooks/usePlayerOverview';
+import { ROUTES } from '../../constants/routes';
+import { useDocumentMeta } from '../../lib/useDocumentMeta';
 import { useMyProfileStore } from '../../store/useMyProfileStore';
 import type { GameMode, TopPlayedHero } from '../../types/player';
 
@@ -33,7 +36,29 @@ export function ProfilePage() {
   const setMyProfile = useMyProfileStore((state) => state.setMyProfile);
   const clearMyProfile = useMyProfileStore((state) => state.clearMyProfile);
   const { data, isLoading, isError, error, refetch } = usePlayerOverview(battleTag);
-  const [mode, setMode] = useState<ModeFilter>('all');
+  useDocumentMeta({
+    title: data ? `${data.displayName} 오버워치 전적 | WatchMeta` : '오버워치 전적 조회 | WatchMeta',
+    description: data ? `${data.displayName}의 오버워치 경쟁전 티어, 승률, 모스트 영웅을 확인하세요.` : undefined,
+    path: battleTag ? ROUTES.profile(battleTag) : undefined,
+    noIndex: true,
+  });
+  const [saveToast, setSaveToast] = useState<string | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const modeParam = searchParams.get('mode');
+  const mode: ModeFilter = MODE_FILTERS.includes(modeParam as ModeFilter) ? (modeParam as ModeFilter) : 'all';
+  const setMode = (next: ModeFilter) =>
+    setSearchParams(
+      (prev) => {
+        const nextParams = new URLSearchParams(prev);
+        if (next === 'all') {
+          nextParams.delete('mode');
+        } else {
+          nextParams.set('mode', next);
+        }
+        return nextParams;
+      },
+      { replace: false },
+    );
 
   if (!battleTag) return null;
 
@@ -68,9 +93,15 @@ export function ProfilePage() {
             <ProfileHeaderCard
               overview={data}
               isMine={isMine}
-              onToggleSave={() =>
-                isMine ? clearMyProfile() : setMyProfile({ playerId: battleTag, label: data.displayName })
-              }
+              onToggleSave={() => {
+                if (isMine) {
+                  clearMyProfile();
+                  setSaveToast('내 계정 저장을 해제했어요.');
+                } else {
+                  setMyProfile({ playerId: battleTag, label: data.displayName });
+                  setSaveToast('내 계정으로 저장했어요. 상단 \'계정\' 메뉴에서 바로 볼 수 있어요.');
+                }
+              }}
             />
 
             <div
@@ -112,6 +143,7 @@ export function ProfilePage() {
           </>
         )}
       </div>
+      {saveToast && <Toast message={saveToast} onDismiss={() => setSaveToast(null)} />}
     </div>
   );
 }

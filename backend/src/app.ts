@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import { mapStatsRouter } from './routes/mapStats.js';
 import { playersRouter } from './routes/players.js';
 
 export function createApp() {
@@ -13,6 +14,7 @@ export function createApp() {
   });
 
   app.use('/api/players', playersRouter);
+  app.use('/api', mapStatsRouter);
 
   return app;
 }

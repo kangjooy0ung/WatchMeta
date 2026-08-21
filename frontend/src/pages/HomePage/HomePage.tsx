@@ -2,11 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import { InfoNote } from '../../components/feedback/InfoNote';
 import { ROUTES } from '../../constants/routes';
 import { SearchBar } from '../../features/player-search/components/SearchBar';
+import { useDocumentMeta } from '../../lib/useDocumentMeta';
 import { useMyProfileStore } from '../../store/useMyProfileStore';
 
 export function HomePage() {
   const navigate = useNavigate();
   const myProfile = useMyProfileStore((state) => state.myProfile);
+  useDocumentMeta({
+    title: 'WatchMeta - 오버워치 전적검색 · 실시간 메타 티어리스트',
+    description: '오버워치 서버·랭크별 영웅 메타 티어리스트, 배틀태그 전적 검색, 패치노트를 한 곳에서 확인하세요.',
+    path: '/',
+  });
 
   const handleSearch = (playerId: string) => {
     navigate(ROUTES.profile(playerId));
@@ -36,7 +42,7 @@ export function HomePage() {
           {myProfile && <p className="mb-2 text-left text-xs text-on-surface-variant">다른 닉네임 검색</p>}
           <SearchBar onSearch={handleSearch} />
           <div className="mt-3 text-left">
-            <InfoNote message="배틀넷 및 오버워치 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있어요." />
+            <InfoNote message="배틀넷 및 오버워치 개인정보 설정에서 프로필을 '공개'로 설정한 계정만 조회할 수 있습니다." />
           </div>
         </div>
       </div>

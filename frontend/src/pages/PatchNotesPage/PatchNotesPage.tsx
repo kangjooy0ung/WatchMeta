@@ -1,9 +1,16 @@
 import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
+import { ROUTES } from '../../constants/routes';
 import { PatchNoteCard } from '../../features/patch-notes/components/PatchNoteCard';
 import { PATCH_NOTES, PATCH_NOTES_SOURCE_URL } from '../../features/patch-notes/data/patchNotes';
+import { useDocumentMeta } from '../../lib/useDocumentMeta';
 
 export function PatchNotesPage() {
+  useDocumentMeta({
+    title: '오버워치 패치 노트 정리 | WatchMeta',
+    description: '오버워치 공식 패치 노트를 기반으로 정리한 최신 영웅 밸런스 변경 사항을 확인하세요.',
+    path: ROUTES.patchNotes,
+  });
   const [heroSearch, setHeroSearch] = useState('');
   const normalizedSearch = heroSearch.trim().toLowerCase();
 

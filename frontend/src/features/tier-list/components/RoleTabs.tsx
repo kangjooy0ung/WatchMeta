@@ -28,14 +28,22 @@ export function RoleTabs({ role, onChange }: RoleTabsProps) {
           <button
             key={id}
             type="button"
+            title={label}
             aria-label={label}
             aria-pressed={isActive}
             onClick={() => onChange(id)}
-            className={`flex flex-1 items-center justify-center rounded-lg py-2 transition-all active:scale-95 ${
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 transition-all active:scale-95 ${
               isActive ? 'bg-primary' : 'hover:bg-surface-variant/40'
             }`}
           >
             <Icon className={`h-5 w-5 ${isActive ? 'text-surface-container-lowest' : ROLE_ACCENT_COLOR[id]}`} />
+            <span
+              className={`hidden text-sm font-bold sm:inline ${
+                isActive ? 'text-surface-container-lowest' : 'text-on-surface-variant'
+              }`}
+            >
+              {label}
+            </span>
           </button>
         );
       })}

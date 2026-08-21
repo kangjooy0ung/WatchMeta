@@ -10,6 +10,20 @@ interface SearchBarProps {
   onSearch: (playerId: string, label: string) => void;
 }
 
+// 배틀태그 번호·플랫폼·지역 같은 식별 정보를 검색 API가 제공하지 않아, 동명이인을 구분할 최소한의
+// 단서로 "최근 활동 시각"만이라도 상대적 표현으로 보여준다.
+function formatRelativeActivity(unixSeconds: number | null): string | null {
+  if (!unixSeconds) return null;
+  const diffMs = Date.now() - unixSeconds * 1000;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  if (diffDays <= 0) return '오늘 활동';
+  if (diffDays === 1) return '어제 활동';
+  if (diffDays < 30) return `${diffDays}일 전 활동`;
+  const diffMonths = Math.floor(diffDays / 30);
+  if (diffMonths < 12) return `${diffMonths}개월 전 활동`;
+  return '1년 이상 전 활동';
+}
+
 function describeSearchError(error: unknown): string {
   if (isAxiosError(error)) {
     if (!error.response) {
@@ -100,6 +114,9 @@ export function SearchBar({ onSearch }: SearchBarProps) {
             className="w-full bg-transparent text-sm text-on-surface outline-none placeholder:text-on-surface-variant/60"
           />
         </label>
+        <p className="mt-1.5 pl-2 text-xs text-on-surface-variant/70">
+          닉네임#1234처럼 배틀태그를 입력해도 괜찮습니다. &apos;#&apos; 뒤 숫자는 검색에 쓰지 않으니 닉네임만 입력해도 됩니다.
+        </p>
         <button
           type="submit"
           disabled={isSearching}
@@ -129,28 +146,36 @@ export function SearchBar({ onSearch }: SearchBarProps) {
       {results && results.length > 0 && (
         <div className="mt-3 w-full">
           <p className="mb-2 text-left text-xs font-semibold text-on-surface-variant">
-            동명이인이 있을 수 있어요. 본인 계정을 선택해 주세요.
+            동명이인이 있을 수 있습니다. 배틀태그 번호는 검색 API가 제공하지 않아 표시할 수 없으니, 아바타·타이틀·최근
+            활동 시각으로 본인 계정을 찾아 선택해 주세요.
           </p>
           <ul className="flex max-h-72 flex-col gap-2 overflow-y-auto">
-            {results.map((result) => (
-              <li key={result.playerId}>
-                <button
-                  type="button"
-                  onClick={() => handlePick(result)}
-                  className="flex w-full items-center gap-3 rounded-xl border border-outline-variant bg-surface-container px-3 py-2.5 text-left transition-colors hover:border-primary"
-                >
-                  <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-surface-dim">
-                    {result.avatarUrl && (
-                      <img src={result.avatarUrl} alt={result.name} className="h-full w-full object-cover" />
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-on-surface">{result.name}</p>
-                    {result.title && <p className="truncate text-xs text-on-surface-variant">{result.title}</p>}
-                  </div>
-                </button>
-              </li>
-            ))}
+            {results.map((result) => {
+              const activity = formatRelativeActivity(result.lastUpdatedAt);
+              return (
+                <li key={result.playerId}>
+                  <button
+                    type="button"
+                    onClick={() => handlePick(result)}
+                    className="flex w-full items-center gap-3 rounded-xl border border-outline-variant bg-surface-container px-3 py-2.5 text-left transition-colors hover:border-primary"
+                  >
+                    <div className="h-9 w-9 shrink-0 overflow-hidden rounded-full bg-surface-dim">
+                      {result.avatarUrl && (
+                        <img src={result.avatarUrl} alt={result.name} className="h-full w-full object-cover" />
+                      )}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-on-surface">{result.name}</p>
+                      <div className="flex items-center gap-1.5">
+                        {result.title && <p className="truncate text-xs text-on-surface-variant">{result.title}</p>}
+                        {result.title && activity && <span className="text-on-surface-variant/40">·</span>}
+                        {activity && <p className="shrink-0 text-xs text-on-surface-variant/70">{activity}</p>}
+                      </div>
+                    </div>
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

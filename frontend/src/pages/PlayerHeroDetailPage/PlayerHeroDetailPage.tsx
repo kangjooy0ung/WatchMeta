@@ -7,12 +7,26 @@ import { HeroImage } from '../../components/hero/HeroImage';
 import { HeroRosterSelector } from '../../features/player-profile/components/HeroRosterSelector';
 import { ROLE_ICON, ROLE_LABEL, ROLE_TEXT_COLOR } from '../../features/player-profile/constants/roleTheme';
 import { usePlayerOverview } from '../../features/player-profile/hooks/usePlayerOverview';
+import { getHeroMetaRate } from '../../features/tier-list/data/tierList';
 import { ROUTES } from '../../constants/routes';
 import { getErrorMessage } from '../../lib/getErrorMessage';
+import { useDocumentMeta } from '../../lib/useDocumentMeta';
 
 function formatThousands(value: number): string {
   return value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value.toFixed(0);
 }
+
+const DIVISION_LABEL_KO: Record<string, string> = {
+  bronze: '브론즈',
+  silver: '실버',
+  gold: '골드',
+  platinum: '플래티넘',
+  emerald: '에메랄드',
+  diamond: '다이아몬드',
+  master: '마스터',
+  grandmaster: '그랜드마스터',
+  champion: '챔피언',
+};
 
 function PlayerHeroDetailSkeleton() {
   return (
@@ -27,10 +41,21 @@ function PlayerHeroDetailSkeleton() {
 export function PlayerHeroDetailPage() {
   const { battleTag, heroId } = useParams<{ battleTag: string; heroId: string }>();
   const { data, isLoading, isError, error, refetch } = usePlayerOverview(battleTag);
+  const hero = data?.heroStats.find((h) => h.heroId === heroId);
+  useDocumentMeta({
+    title: hero && data ? `${data.displayName}의 ${hero.heroName} 전적 | WatchMeta` : '영웅별 전적 | WatchMeta',
+    description: hero ? `${hero.heroName} 승률 ${hero.winRate.toFixed(1)}%, KDA ${hero.kda.toFixed(2)}` : undefined,
+    path: battleTag && heroId ? ROUTES.profileHero(battleTag, heroId) : undefined,
+    noIndex: true,
+  });
 
   if (!battleTag || !heroId) return null;
 
-  const hero = data?.heroStats.find((h) => h.heroId === heroId);
+  // 승률만 비교 가능한 이유: 메타 데이터 출처가 승률·픽률·밴률만 공개해 KDA·피해량 같은 다른
+  // 지표는 랭크별 평균 자체가 없다. 한국 서버는 자체 데이터가 없어 아시아 서버 고정으로 비교한다.
+  const division = hero ? data?.competitiveRanks[hero.role]?.division ?? null : null;
+  const metaRate = hero ? getHeroMetaRate(hero.heroId, division) : null;
+  const divisionLabel = division ? DIVISION_LABEL_KO[division.toLowerCase()] ?? division : null;
 
   const statRows = hero
     ? [
@@ -96,12 +121,23 @@ export function PlayerHeroDetailPage() {
               </div>
             </section>
 
-            {hero.gamesPlayed === 0 && <InfoNote message="아직 이 영웅으로 플레이한 기록이 없어요." />}
+            {hero.gamesPlayed === 0 && <InfoNote message="아직 이 영웅으로 플레이한 기록이 없습니다." />}
 
             <section className="glass-panel grid grid-cols-2 gap-2.5 rounded-xl p-4 lg:grid-cols-4">
               <div className="border-b-2 border-primary bg-surface-container-low p-3">
                 <p className="font-label-sm text-[10px] uppercase text-on-surface-variant">승률</p>
                 <p className="font-stat-value text-lg text-primary">{hero.winRate.toFixed(1)}%</p>
+                {metaRate && (
+                  <p
+                    className={`mt-0.5 text-[10px] font-semibold ${
+                      hero.winRate >= metaRate.winRate ? 'text-tier-b' : 'text-damage-red'
+                    }`}
+                  >
+                    {divisionLabel ?? '전체 랭크'} 메타 평균({metaRate.winRate}%) 대비{' '}
+                    {hero.winRate >= metaRate.winRate ? '+' : ''}
+                    {(hero.winRate - metaRate.winRate).toFixed(1)}%p
+                  </p>
+                )}
               </div>
               <div className="border-b-2 border-secondary bg-surface-container-low p-3">
                 <p className="font-label-sm text-[10px] uppercase text-on-surface-variant">KDA</p>
@@ -119,10 +155,15 @@ export function PlayerHeroDetailPage() {
               </div>
             </section>
 
+            {metaRate && (
+              <InfoNote message="승률은 메타 화면과 같은 출처(아시아 서버 기준)의 랭크별 평균과 비교합니다. KDA·피해량 같은 다른 지표는 공개된 평균 데이터가 없어 비교를 제공하지 않습니다." />
+            )}
+
             <section className="glass-panel rounded-xl p-4">
-              <h3 className="mb-3 font-headline-lg text-headline-md italic uppercase text-on-surface">
-                Match Average
-              </h3>
+              <div className="mb-3 flex items-baseline justify-between">
+                <h3 className="font-headline-lg text-headline-md italic uppercase text-on-surface">Match Average</h3>
+                <span className="font-label-sm text-label-sm text-on-surface-variant">경기 평균</span>
+              </div>
               <div className="flex flex-col divide-y divide-outline-variant/30">
                 {statRows.map((row) => (
                   <div key={row.label} className="flex items-center justify-between py-2">

@@ -21,11 +21,14 @@ export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHea
           type="button"
           onClick={onToggleSave}
           aria-label={isMine ? '내 계정으로 저장 해제' : '내 계정으로 저장'}
-          className={`rounded-full p-1.5 transition-colors ${
-            isMine ? 'text-primary' : 'text-on-surface-variant/50 hover:text-on-surface-variant'
+          className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1.5 text-xs font-semibold transition-colors ${
+            isMine
+              ? 'border-primary/40 bg-primary/10 text-primary'
+              : 'border-outline-variant text-on-surface-variant/70 hover:border-primary hover:text-on-surface-variant'
           }`}
         >
-          <Star className="h-5 w-5" fill={isMine ? 'currentColor' : 'none'} />
+          <Star className="h-3.5 w-3.5 shrink-0" fill={isMine ? 'currentColor' : 'none'} />
+          <span>{isMine ? '저장됨' : '내 계정으로 저장'}</span>
         </button>
       </div>
 
