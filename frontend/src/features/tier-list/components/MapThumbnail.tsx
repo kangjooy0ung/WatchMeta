@@ -35,7 +35,7 @@ export function MapThumbnail({ map, href, isActive }: MapThumbnailProps) {
         </div>
       )}
       <div className="hero-card-gradient absolute inset-0 flex items-end p-2">
-        <p className="line-clamp-2 font-headline-md text-xs italic leading-tight text-white [word-break:keep-all]">
+        <p className="line-clamp-2 font-headline-md text-xs leading-tight text-white [word-break:keep-all]">
           {map.name}
         </p>
       </div>
