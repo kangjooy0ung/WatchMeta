@@ -64,7 +64,12 @@ mapStatsRouter.get('/map-stats', async (req, res) => {
       .filter((entry): entry is NonNullable<typeof entry> => entry !== null)
       .sort((a, b) => b.winRate - a.winRate);
 
-    res.json(entries);
+    // OverFast가 응답에 자체 캐시 경과 시간(초)을 age 헤더로 실어 보낸다. 실제 집계 시각·기간은
+    // 출처가 공개하지 않아 모르지만, "캐시가 얼마나 오래됐는지"는 이걸로 정직하게 보여줄 수 있다.
+    const ageHeader = statsRes.headers.age;
+    const updatedSecondsAgo = typeof ageHeader === 'string' && !Number.isNaN(Number(ageHeader)) ? Number(ageHeader) : null;
+
+    res.json({ heroes: entries, meta: { updatedSecondsAgo } });
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 400) {
       res.status(400).json({ message: '선택한 맵은 경쟁전 통계를 제공하지 않습니다.' });
