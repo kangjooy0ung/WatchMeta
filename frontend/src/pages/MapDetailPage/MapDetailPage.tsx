@@ -80,7 +80,7 @@ export function MapDetailPage() {
 
   const selectedMap = isAllMaps ? undefined : maps?.find((m) => m.key === mapKey);
   const modeLabel = selectedMap ? GAMEMODE_LABEL[selectedMap.gamemodes[0]] ?? selectedMap.gamemodes[0] : null;
-  const mapTitle = isAllMaps ? '전체 전장' : selectedMap?.name ?? '전장';
+  const mapTitle = isAllMaps ? '전체 전장 승률' : selectedMap?.name ?? '전장';
 
   useEffect(() => {
     if (!isAllMaps && selectedMap) {
