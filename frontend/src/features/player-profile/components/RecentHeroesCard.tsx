@@ -115,7 +115,7 @@ export function RecentHeroesCard({ battleTag, heroStats }: RecentHeroesCardProps
                     </div>
                   </div>
                   <div className="min-w-0">
-                    <p className="truncate font-body-md text-sm font-bold italic text-on-surface">{hero.heroName}</p>
+                    <p className="truncate font-body-md text-sm font-bold text-on-surface">{hero.heroName}</p>
                     <p className="truncate font-label-sm text-[11px] text-on-surface-variant lg:hidden">
                       {hero.gamesPlayed}경기 · KDA {hero.kda.toFixed(2)}
                     </p>

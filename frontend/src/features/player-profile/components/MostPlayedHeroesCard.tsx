@@ -40,7 +40,7 @@ export function MostPlayedHeroesCard({ battleTag, topHeroes }: MostPlayedHeroesC
               </div>
               <div className="hero-card-gradient absolute inset-0 flex flex-col justify-end p-2 lg:p-4">
                 <div className="flex items-center justify-between">
-                  <p className="truncate font-headline-md text-xs italic text-on-surface lg:text-headline-md">
+                  <p className="truncate font-headline-md text-xs text-on-surface lg:text-headline-md">
                     {hero.heroName}
                   </p>
                   <Icon className={`h-3.5 w-3.5 shrink-0 ${ROLE_TEXT_COLOR[hero.role]}`} />

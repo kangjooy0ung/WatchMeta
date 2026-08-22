@@ -10,17 +10,22 @@ interface HeroPortraitProps {
 }
 
 export function HeroPortrait({ name, role, portraitUrl, className = 'h-8 w-8' }: HeroPortraitProps) {
-  const { containerRef, shouldRenderImage, handleLoad, handleError } = useDeferredImageLoad(portraitUrl);
+  const { containerRef, shouldRenderImage, isLoaded, handleLoad, handleError } = useDeferredImageLoad(portraitUrl);
 
   return (
     <div
       ref={containerRef}
-      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 bg-surface-dim ${ROLE_RING_COLOR[role]} ${className}`}
+      className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border-2 bg-surface-dim ${ROLE_RING_COLOR[role]} ${className}`}
     >
-      {shouldRenderImage ? (
-        <img src={portraitUrl} alt={name} className="h-full w-full object-cover" onLoad={handleLoad} onError={handleError} />
-      ) : (
-        <span className="font-headline-md italic text-on-surface">{name.slice(0, 1)}</span>
+      {!isLoaded && <span className="font-headline-md italic text-on-surface">{name.slice(0, 1)}</span>}
+      {shouldRenderImage && (
+        <img
+          src={portraitUrl}
+          alt={name}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={handleLoad}
+          onError={handleError}
+        />
       )}
     </div>
   );
