@@ -15,7 +15,7 @@ const RANK_ROLE_ORDER: HeroRole[] = ['tank', 'damage', 'support'];
 export function ProfileHeaderCard({ overview, isMine, onToggleSave }: ProfileHeaderCardProps) {
   return (
     <section className="glass-panel relative overflow-hidden rounded-xl border-l-4 border-primary p-4 lg:flex lg:items-end lg:justify-between lg:gap-6 lg:p-6">
-      <div className="absolute right-4 top-4 flex items-center gap-2 lg:right-6 lg:top-6">
+      <div className="mb-3 flex items-center justify-end gap-2 lg:absolute lg:right-6 lg:top-6 lg:mb-0">
         <ShareLinkButton />
         <button
           type="button"
