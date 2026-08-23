@@ -99,7 +99,7 @@ export function MapStatsPage() {
                     <p className="mb-2 text-label-sm font-label-sm uppercase tracking-wider text-on-surface-variant">
                       {GAMEMODE_LABEL[mode] ?? mode}
                     </p>
-                    <div className="flex flex-col gap-3">
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-3">
                       {mapsInMode.map((map) => (
                         <MapThumbnail key={map.key} map={map} href={ROUTES.mapDetail(map.key)} isActive={false} />
                       ))}

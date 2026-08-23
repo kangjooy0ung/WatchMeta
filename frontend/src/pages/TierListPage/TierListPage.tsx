@@ -115,7 +115,7 @@ export function TierListPage() {
           </Link>
         </section>
 
-        <div className="sticky top-16 z-20 -mx-4 space-y-3 border-b border-outline-variant/40 bg-background/95 px-4 pb-4 pt-2 backdrop-blur lg:-mx-8 lg:px-8">
+        <div className="-mx-4 space-y-3 border-b border-outline-variant/40 bg-background/95 px-4 pb-4 pt-2 backdrop-blur sm:sticky sm:top-16 sm:z-20 lg:-mx-8 lg:px-8">
           <section className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_repeat(3,minmax(160px,220px))]">
             <RoleTabs role={role} onChange={setRole} />
             <ServerFilter server={server} onChange={setServer} />
