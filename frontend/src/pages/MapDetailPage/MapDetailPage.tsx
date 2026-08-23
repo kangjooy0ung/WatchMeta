@@ -196,7 +196,7 @@ export function MapDetailPage() {
               <Link
                 key={hero.heroId}
                 to={heroDetailHref(hero.heroId)}
-                className="flex items-center gap-3 rounded-xl border border-outline-variant bg-surface-container px-3 py-2.5 transition-colors hover:border-primary sm:gap-4 sm:px-4"
+                className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-outline-variant bg-surface-container px-3 py-2.5 transition-colors hover:border-primary sm:flex-nowrap sm:gap-4 sm:px-4"
               >
                 <span className="w-5 shrink-0 text-center font-stat-value text-sm text-on-surface-variant">
                   {index + 1}
@@ -208,7 +208,7 @@ export function MapDetailPage() {
                   </p>
                   <SampleConfidenceBadge pickRate={hero.pickRate} className="hidden sm:inline-block" />
                 </div>
-                <div className="flex w-full max-w-sm shrink-0 items-center gap-3">
+                <div className="flex w-full items-center gap-3 sm:w-auto sm:max-w-sm sm:shrink-0">
                   <div className="grid flex-1 grid-cols-2 gap-3">
                     <RateBar label="픽률" percentage={hero.pickRate} colorClass="bg-primary" />
                     <RateBar label="승률" percentage={hero.winRate} colorClass="bg-secondary" />
