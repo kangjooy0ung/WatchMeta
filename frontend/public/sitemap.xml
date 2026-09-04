@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://watchmeta.vercel.app/</loc><lastmod>2026-08-19</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/ana</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/anran</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/ashe</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/baptiste</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/bastion</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/brigitte</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/cassidy</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/domina</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/doomfist</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/dmon</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/dva</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/echo</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/emre</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/freja</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/genji</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/hanzo</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/hazard</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/illari</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/jetpack-cat</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/junker-queen</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/junkrat</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/juno</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/kiriko</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/lifeweaver</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/lucio</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/mauga</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/mei</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/mercy</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/mizuki</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/moira</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/orisa</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/pharah</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/ramattra</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/reaper</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/reinhardt</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/roadhog</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/shion</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/sierra</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/sigma</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/sojourn</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/soldier-76</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/sombra</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/symmetra</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/torbjorn</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/tracer</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/vendetta</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/venture</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/widowmaker</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/winston</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/wrecking-ball</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/wuyang</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/zarya</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://watchmeta.vercel.app/perks/zenyatta</loc><lastmod>2026-09-04</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <url><loc>https://watchmeta.vercel.app/tier-list</loc><lastmod>2026-08-19</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://watchmeta.vercel.app/maps</loc><lastmod>2026-08-20</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://watchmeta.vercel.app/search</loc><lastmod>2026-08-19</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
