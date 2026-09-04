@@ -1,12 +1,13 @@
-import { BarChart3, Home, Map, Newspaper, Search } from 'lucide-react';
+import { BarChart3, Home, Map, Newspaper, Search, Sparkles } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 
 const TABS = [
   { to: ROUTES.home, label: '홈', icon: Home, end: true },
-  { to: ROUTES.search, label: '전적검색', icon: Search, end: false },
   { to: ROUTES.tierList, label: '티어표', icon: BarChart3, end: false },
+  { to: ROUTES.perks, label: '특전', icon: Sparkles, end: false },
   { to: ROUTES.mapStats, label: '전장승률', icon: Map, end: false },
+  { to: ROUTES.search, label: '전적검색', icon: Search, end: false },
   { to: ROUTES.patchNotes, label: '패치노트', icon: Newspaper, end: false },
 ];
 

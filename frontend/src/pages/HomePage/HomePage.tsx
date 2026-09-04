@@ -9,8 +9,9 @@ export function HomePage() {
   const navigate = useNavigate();
   const myProfile = useMyProfileStore((state) => state.myProfile);
   useDocumentMeta({
-    title: 'WatchMeta - 오버워치 전적검색 · 실시간 메타 티어리스트',
-    description: '오버워치 서버·랭크별 영웅 메타 티어리스트, 배틀태그 전적 검색, 패치노트를 한 곳에서 확인하세요.',
+    title: 'WatchMeta - 오버워치 전적검색 · 실시간 메타 티어리스트 (워치메타)',
+    description:
+      'WatchMeta(워치메타)에서 오버워치 서버·랭크별 영웅 메타 티어리스트, 배틀태그 전적 검색, 영웅 특전(퍽) 정리, 패치노트를 한 곳에서 확인하세요.',
     path: '/',
   });
 
@@ -25,7 +26,9 @@ export function HomePage() {
           <h1 className="font-headline-xl text-headline-xl italic uppercase tracking-tighter text-primary">
             Watch<span className="text-secondary">Meta</span>
           </h1>
-          <p className="mt-2 text-sm text-on-surface-variant">내 전적 분석과 실시간 메타를 한 눈에</p>
+          <p className="mt-2 text-sm text-on-surface-variant">
+            워치메타 · 오버워치 전적 분석과 실시간 메타를 한 눈에
+          </p>
         </div>
 
         {myProfile && (

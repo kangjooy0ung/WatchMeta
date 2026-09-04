@@ -5,6 +5,7 @@ import { useMyProfileStore } from '../../store/useMyProfileStore';
 
 const NAV_LINKS = [
   { to: ROUTES.tierList, label: '메타' },
+  { to: ROUTES.perks, label: '특전' },
   { to: ROUTES.mapStats, label: '전장승률' },
   { to: ROUTES.search, label: '전적검색' },
   { to: ROUTES.patchNotes, label: '패치노트' },
