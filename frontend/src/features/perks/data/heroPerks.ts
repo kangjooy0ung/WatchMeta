@@ -1,6 +1,11 @@
 // 특전 이름·설명·아이콘 출처: OverFast API (https://overfast-api.tekrop.fr/heroes/{key}?locale=ko-kr), 2026-09-04 확인
 // 커뮤니티 선호율(preferRate) 출처: owperks.com 커뮤니티 투표 집계 (2026-09-04 확인). 실제 게임 내 채용률이 아니라
 // 플레이어들이 '가장 자주 고른다'고 응답한 비율이며, 두 특전 중 나머지 하나는 (100 - preferRate)로 환산했다.
+//
+// 예외 - 독트린(doctrine): 2026-10-06(5시즌) 정식 출시 전이라 OverFast API·owperks.com 어디에도 데이터가 없다.
+// heroes.ts(ALL_HEROES)에는 목록 노출을 위해 넣어뒀지만, 여기(HERO_PERKS)에는 일부러 항목을 만들지 않았다 —
+// 이름·설명을 비공식으로 지어내는 대신, HeroPerkDetailPage가 이미 갖고 있는 "특전 정보가 없는 영웅이에요" 처리를
+// 그대로 타게 둔다. 5시즌 출시 후 OverFast API가 갱신되면 그때 공식 데이터로 항목을 추가할 것.
 
 export interface Perk {
   name: string;
