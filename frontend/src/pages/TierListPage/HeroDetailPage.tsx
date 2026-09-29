@@ -6,7 +6,6 @@ import { PageContainer } from '../../components/layout/PageContainer';
 import { ALL_HEROES } from '../../constants/heroes';
 import { ROLE_ACCENT_COLOR, ROLE_ICON, ROLES } from '../../constants/roles';
 import { ROUTES } from '../../constants/routes';
-import { SERVERS_WITHOUT_DATA } from '../../features/tier-list/components/ServerFilter';
 import { RateBar } from '../../features/tier-list/components/RateBar';
 import { SampleConfidenceBadge } from '../../features/tier-list/components/SampleConfidenceBadge';
 import { buildTierList, RANK_TO_RATE_TIER, SERVER_TO_RATE_REGION } from '../../features/tier-list/data/tierList';
@@ -52,8 +51,7 @@ export function HeroDetailPage() {
 
   const { data: maps } = useCompetitiveMaps();
   const selectedMap = mapKey ? maps?.find((m) => m.key === mapKey) : undefined;
-  const hasServerData = !SERVERS_WITHOUT_DATA.includes(server);
-  const region = SERVER_TO_RATE_REGION[hasServerData ? server : DEFAULT_SERVER];
+  const region = SERVER_TO_RATE_REGION[server];
   const division = RANK_TO_RATE_TIER[rank];
   const {
     data: mapData,
@@ -75,7 +73,7 @@ export function HeroDetailPage() {
     );
   }
 
-  const entry = buildTierList(rank, hasServerData ? server : DEFAULT_SERVER).find((e) => e.heroId === hero.id);
+  const entry = buildTierList(rank, server).find((e) => e.heroId === hero.id);
   const RoleIcon = ROLE_ICON[hero.role];
   const roleLabel = ROLES.find((r) => r.id === hero.role)?.label ?? hero.role;
 

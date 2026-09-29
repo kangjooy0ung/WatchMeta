@@ -64,7 +64,7 @@ export function PatchNotesPage() {
         <p className="text-label-sm font-label-sm text-on-surface-variant">
           출처:{' '}
           <a href={PATCH_NOTES_SOURCE_URL} target="_blank" rel="noreferrer" className="underline">
-            블리자드 공식 패치 노트
+            오버워치 공식 패치 노트 (넥슨)
           </a>
         </p>
       </div>
