@@ -17,8 +17,9 @@ export const RANK_TO_RATE_TIER: Record<string, RateTier> = {
   '그랜드마스터 및 챔피언': 'grandmaster',
 };
 
-// '한국'·'중국'은 데이터가 없어 이 표에 없고, 호출부(TierListPage)에서 '아시아'로 대체해 넘긴다.
+// 데이터 출처인 넥슨 공식 영웅 통계 페이지가 나누는 지역 그대로.
 export const SERVER_TO_RATE_REGION: Record<string, RateRegion> = {
+  한국: 'korea',
   아시아: 'asia',
   북미: 'americas',
   유럽: 'europe',
@@ -106,8 +107,8 @@ const DIVISION_TO_RATE_TIER: Record<string, RateTier> = {
 };
 
 // 영웅 상세 화면에서 "내 성적 vs 같은 랭크 메타 평균"을 비교하기 위한 조회 함수.
-// 랭크 정보가 없거나 매핑에 없으면 전체 랭크 평균으로 대체한다. 한국 서버 데이터가 없어 아시아
-// 서버 고정으로만 비교를 제공한다(KoreaServerNotice와 같은 이유).
+// 랭크 정보가 없거나 매핑에 없으면 전체 랭크 평균으로 대체한다. 서버 필터와 무관하게 아시아
+// 지역 고정으로 비교를 제공한다.
 export function getHeroMetaRate(heroId: string, division?: string | null): HeroRate | null {
   const tier = (division && DIVISION_TO_RATE_TIER[division.toLowerCase()]) || 'all';
   return HERO_RATES.asia[tier][heroId] ?? null;

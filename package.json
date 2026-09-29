@@ -12,6 +12,7 @@
     "build": "npm run build --workspace frontend",
     "build:backend": "npm run build --workspace backend",
     "start:backend": "npm run start --workspace backend",
-    "lint": "npm run lint --workspace frontend"
+    "lint": "npm run lint --workspace frontend",
+    "update:rates": "python3 scripts/update-hero-rates.py"
   }
 }

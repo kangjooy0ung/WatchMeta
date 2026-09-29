@@ -5,14 +5,13 @@ import { ErrorState } from '../../components/feedback/ErrorState';
 import { HeroPortrait } from '../../components/hero/HeroPortrait';
 import { ROUTES } from '../../constants/routes';
 import { ALL_MAPS_KEY, GAMEMODE_LABEL } from '../../features/tier-list/constants/mapModes';
-import { KoreaServerNotice } from '../../features/tier-list/components/KoreaServerNotice';
 import { MapDataDisclosure } from '../../features/tier-list/components/MapDataDisclosure';
 import { MapSortControl, type MapSortOption } from '../../features/tier-list/components/MapSortControl';
 import { RankFilter } from '../../features/tier-list/components/RankFilter';
 import { RateBar } from '../../features/tier-list/components/RateBar';
 import { RoleTabs } from '../../features/tier-list/components/RoleTabs';
 import { SampleConfidenceBadge } from '../../features/tier-list/components/SampleConfidenceBadge';
-import { ServerFilter, SERVERS_WITHOUT_DATA } from '../../features/tier-list/components/ServerFilter';
+import { ServerFilter } from '../../features/tier-list/components/ServerFilter';
 import { RANK_TO_RATE_TIER, SERVER_TO_RATE_REGION } from '../../features/tier-list/data/tierList';
 import { useCompetitiveMaps, useMapHeroStats } from '../../features/tier-list/hooks/useMapStats';
 import { sortByMapScore } from '../../features/tier-list/lib/mapScore';
@@ -64,8 +63,7 @@ export function MapDetailPage() {
   const sort: MapSortOption = VALID_SORTS.includes(sortParam as MapSortOption) ? (sortParam as MapSortOption) : DEFAULT_SORT;
 
   const { data: maps } = useCompetitiveMaps();
-  const hasServerData = !SERVERS_WITHOUT_DATA.includes(server);
-  const region = SERVER_TO_RATE_REGION[hasServerData ? server : DEFAULT_SERVER];
+  const region = SERVER_TO_RATE_REGION[server];
   const division = RANK_TO_RATE_TIER[rank]; // '전체'는 매핑에 없어 undefined → division 필터 없이 조회
   const {
     data: mapData,
@@ -174,8 +172,6 @@ export function MapDetailPage() {
             className="w-full bg-transparent text-xs text-on-surface outline-none placeholder:text-on-surface-variant/60"
           />
         </label>
-
-        {!hasServerData && <KoreaServerNotice server={server} />}
 
         <MapDataDisclosure updatedSecondsAgo={mapData?.meta.updatedSecondsAgo ?? null} />
 

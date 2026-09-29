@@ -1,13 +1,12 @@
 import { Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { KoreaServerNotice } from '../../features/tier-list/components/KoreaServerNotice';
 import { MetaDataDisclosure } from '../../features/tier-list/components/MetaDataDisclosure';
 import { MetaStatsSummary } from '../../features/tier-list/components/MetaStatsSummary';
 import { PatchVersionSelect, type PatchVersionOption } from '../../features/tier-list/components/PatchVersionSelect';
 import { RankFilter } from '../../features/tier-list/components/RankFilter';
 import { RoleTabs } from '../../features/tier-list/components/RoleTabs';
-import { ServerFilter, SERVERS_WITHOUT_DATA } from '../../features/tier-list/components/ServerFilter';
+import { ServerFilter } from '../../features/tier-list/components/ServerFilter';
 import { TIER_META, TierSection } from '../../features/tier-list/components/TierSection';
 import { buildTierList } from '../../features/tier-list/data/tierList';
 import { PATCH_NOTES } from '../../features/patch-notes/data/patchNotes';
@@ -72,8 +71,7 @@ export function TierListPage() {
   const setServer = (next: string) => updateParam('server', next, DEFAULT_SERVER);
   const setPatchVersion = (next: string) => updateParam('patch', next, PATCH_VERSIONS[0].value);
 
-  const hasServerData = !SERVERS_WITHOUT_DATA.includes(server);
-  const tierList = useMemo(() => buildTierList(rank, hasServerData ? server : DEFAULT_SERVER), [rank, server, hasServerData]);
+  const tierList = useMemo(() => buildTierList(rank, server), [rank, server]);
 
   const normalizedHeroQuery = heroQuery.trim();
   const tierGroups = useMemo(() => {
@@ -164,8 +162,6 @@ export function TierListPage() {
             </div>
           </div>
         </div>
-
-        {!hasServerData && <KoreaServerNotice server={server} />}
 
         <MetaDataDisclosure />
 

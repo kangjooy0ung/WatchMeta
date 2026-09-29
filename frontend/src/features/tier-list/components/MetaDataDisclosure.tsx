@@ -21,7 +21,7 @@ export function MetaDataDisclosure() {
             rel="noreferrer"
             className="underline decoration-dotted underline-offset-2 hover:text-primary"
           >
-            블리자드 공식 승률 통계 페이지
+            오버워치 공식 영웅 통계 페이지 (넥슨)
           </a>
           를 {HERO_RATES_CHECKED_AT} 기준으로 확인해 반영했습니다. 실시간 자동 갱신이 아니라 수동 스냅샷이라,
           이후 변동은 바로 반영되지 않을 수 있습니다.
