@@ -10,14 +10,14 @@ import {
   PERKS_CHECKED_AT,
   PERKS_PREFER_SOURCE_URL,
 } from '../../features/perks/data/heroPerks';
-import { consensusPicks, contestedPicks, heroTopPerks, type PerkPick } from '../../features/perks/lib/perkStats';
+import { consensusPicks, contestedPicks, heroTopPerks, type RatedPerkPick } from '../../features/perks/lib/perkStats';
 import { useDocumentMeta } from '../../lib/useDocumentMeta';
 import type { HeroRole } from '../../types/hero';
 
 const VALID_ROLES: Array<HeroRole | 'all'> = ['all', 'tank', 'damage', 'support'];
 const ROLE_ORDER: Record<HeroRole, number> = { tank: 0, damage: 1, support: 2 };
 
-function TrendRow({ pick }: { pick: PerkPick }) {
+function TrendRow({ pick }: { pick: RatedPerkPick }) {
   const rate = Math.round(pick.preferRate);
   return (
     <li>
