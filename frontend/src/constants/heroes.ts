@@ -2,8 +2,10 @@ import type { Hero } from '../types/hero';
 
 // 출처: OverFast API (https://overfast-api.tekrop.fr/heroes?locale=ko-kr), 2026-07-29 확인
 // 예외 - 독트린(doctrine): 2026-10-06(5시즌) 정식 출시 전 영웅이라 OverFast API에는 아직 없다. 블리즈컨 2026
-// 공개 및 기간 한정 체험 취재 기준으로 수동 추가했고, 공식 포트레이트 이미지가 없어 portraitUrl을 비워
-// 대체 이니셜만 표시되게 했다. 5시즌 출시 후 API가 갱신되면 정식 데이터로 교체할 것.
+// 공개 및 기간 한정 체험 취재 기준으로 수동 추가했다. 다른 영웅처럼 쓸 수 있는 공식 포트레이트가 아직
+// 공개되지 않아, 넥슨이 공지에 올린 '탈론의 지배' 공식 키아트에서 독트린 부분을 잘라 public/heroes/에 넣어
+// 임시로 쓰고 있다(다른 영웅과 구도·배경이 달라 보인다). 출시 후 API가 갱신되면 공식 포트레이트 URL로
+// 교체하고 이 임시 이미지는 지울 것.
 export const ALL_HEROES: Hero[] = [
   { id: 'ana', name: '아나', role: 'support', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/985b06beae46b7ba3ca87d1512d0fc62ca7f206ceca58ef16fc44d43a1cc84ed.png' },
   { id: 'anran', name: '안란', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2c38b41d79a1ce9a08b9ad8eb7edf3ff819bd448af16a5815be8c7fdb7203aa0.png' },
@@ -15,7 +17,7 @@ export const ALL_HEROES: Hero[] = [
   { id: 'domina', name: '도미나', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/1161c112292c56c052c0ae711792fcde06e3251b98bc9709e582dd7585b5dcd6.png' },
   { id: 'doomfist', name: '둠피스트', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ff5c54f43ad253c7faeda9c4ed31d42582ea6b19205d197866f3dd0c0aa14c16.png' },
   { id: 'dmon', name: 'D.Mon', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a46c60b8562fdbd0b8308396d0808f7606fba208bc67cccf3f82fe56d2c73b9d.png', isNew: true },
-  { id: 'doctrine', name: '독트린', role: 'support', portraitUrl: '', isNew: true },
+  { id: 'doctrine', name: '독트린', role: 'support', portraitUrl: '/heroes/doctrine.png', isNew: true },
   { id: 'dva', name: 'D.Va', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/df5a5532862d9292634fb3dc0e51a4705aa601de65e5e815513ccc663d84de56.png' },
   { id: 'echo', name: '에코', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d4f2d5b0c2b7e82d61353186c5f23152ccba9d3569b50839aa580dca3e9114ba.png' },
   { id: 'emre', name: '엠레', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c51e2f698138861c0e3b6cfab3c3ca9d67fd709be175e7c397aa6f2649712a30.png' },

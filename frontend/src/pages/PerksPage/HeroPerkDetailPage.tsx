@@ -31,7 +31,10 @@ function PerkGroup({
   perks: readonly [Perk, Perk];
   accentClass: string;
 }) {
-  const preferredIndex = perks[0].preferRate >= perks[1].preferRate ? 0 : 1;
+  // 선호율 집계가 없는 영웅(미출시)은 어느 쪽도 '선호'로 강조하지 않는다.
+  const [a, b] = perks;
+  const preferredIndex =
+    typeof a.preferRate === 'number' && typeof b.preferRate === 'number' ? (a.preferRate >= b.preferRate ? 0 : 1) : -1;
 
   return (
     <section className="glass-panel space-y-3 rounded-xl p-5">
@@ -77,6 +80,8 @@ export function HeroPerkDetailPage() {
   const RoleIcon = ROLE_ICON[hero.role];
   const roleLabel = ROLES.find((r) => r.id === hero.role)?.label ?? hero.role;
   const accentClass = ROLE_BAR_ACCENT[hero.role] ?? 'bg-secondary';
+  // 선호율 집계가 하나도 없으면 아직 출시되지 않은 영웅이다(owperks 집계는 출시 후에야 생긴다).
+  const isReleased = [...perks.minor, ...perks.major].some((perk) => typeof perk.preferRate === 'number');
 
   return (
     <div className="bg-background pb-[calc(5rem+env(safe-area-inset-bottom))] text-on-background">
@@ -108,21 +113,39 @@ export function HeroPerkDetailPage() {
           </Link>
         </section>
 
+        {!isReleased && (
+          <section className="rounded-xl border border-primary/40 bg-primary/5 p-4 text-xs leading-relaxed text-on-surface">
+            <b className="text-primary">아직 출시되지 않은 영웅이에요.</b> {hero.name}은 5시즌(10월 6일 예정)에
+            정식 합류합니다. 아래 특전은 블리즈컨 체험 기간에 공개된 내용을 정리한 것으로, 공식 한글 표기가 나오기
+            전이라 <b>이름과 수치가 정식 출시 때 달라질 수 있어요.</b> 커뮤니티 선호율은 아직 집계가 없습니다.
+          </section>
+        )}
+
         <PerkGroup title="마이너 특전" level="레벨 2 · 2택 1" perks={perks.minor} accentClass={accentClass} />
         <PerkGroup title="메이저 특전" level="레벨 3 · 2택 1" perks={perks.major} accentClass={accentClass} />
 
         <section className="glass-panel rounded-xl p-5 text-xs leading-relaxed text-on-surface-variant">
-          특전 효과·이름은 인게임 한글 표기 기준이에요. <b className="text-on-surface">커뮤니티 선호율</b>은{' '}
-          <a
-            href={PERKS_PREFER_SOURCE_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="underline decoration-dotted underline-offset-2 hover:text-primary"
-          >
-            owperks.com
-          </a>{' '}
-          커뮤니티 투표 집계({PERKS_CHECKED_AT} 확인)로, 플레이어들이 "가장 자주 고른다"고 응답한 비율이에요. 실제
-          게임 내 채용률이나 승률과는 다를 수 있고, 두 특전 중 한쪽 값에서 나머지를 환산했어요.
+          {isReleased ? (
+            <>
+              특전 효과·이름은 인게임 한글 표기 기준이에요. <b className="text-on-surface">커뮤니티 선호율</b>은{' '}
+              <a
+                href={PERKS_PREFER_SOURCE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="underline decoration-dotted underline-offset-2 hover:text-primary"
+              >
+                owperks.com
+              </a>{' '}
+              커뮤니티 투표 집계({PERKS_CHECKED_AT} 확인)로, 플레이어들이 "가장 자주 고른다"고 응답한 비율이에요.
+              실제 게임 내 채용률이나 승률과는 다를 수 있고, 두 특전 중 한쪽 값에서 나머지를 환산했어요.
+            </>
+          ) : (
+            <>
+              출시 전 영웅이라 특전 이름·효과는 블리즈컨 체험 기간을 다룬 해외 매체 정보를 옮긴 것이고, 기술
+              이름(영겁의 홀·주입·활기 드론 등)은 체험 기간 인게임 한글 표기를 따랐어요. 정식 출시 후 공식 데이터로
+              교체할 예정입니다.
+            </>
+          )}
         </section>
       </div>
     </div>
