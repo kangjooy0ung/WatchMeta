@@ -3,16 +3,18 @@
 // 플레이어들이 '가장 자주 고른다'고 응답한 비율이며, 두 특전 중 나머지 하나는 (100 - preferRate)로 환산했다.
 //
 // 예외 - 독트린(doctrine): 2026-10-06(5시즌) 정식 출시 전이라 OverFast API·owperks.com 어디에도 데이터가 없다.
-// heroes.ts(ALL_HEROES)에는 목록 노출을 위해 넣어뒀지만, 여기(HERO_PERKS)에는 일부러 항목을 만들지 않았다 —
-// 이름·설명을 비공식으로 지어내는 대신, HeroPerkDetailPage가 이미 갖고 있는 "특전 정보가 없는 영웅이에요" 처리를
-// 그대로 타게 둔다. 5시즌 출시 후 OverFast API가 갱신되면 그때 공식 데이터로 항목을 추가할 것.
+// 기술 이름(영겁의 홀·주입·추진형 장막·활기 드론·구제)은 블리즈컨 체험 기간 인게임 한글 표기로 확인됐지만,
+// 특전은 한글 공식 표기가 아직 없어 블리즈컨 체험 기간을 취재한 해외 매체 정보를 옮겼다. 효과는 두 개 이상의
+// 매체에서 일치하는 내용만 실었고, 이름은 한 곳에서만 확인돼 번역이 정식 표기와 다를 수 있다. 그래서
+// HeroPerkDetailPage에서 출시 전 정보임을 배너로 안내한다. 선호율은 데이터 자체가 없어 undefined로 둔다.
+// 5시즌 출시 후 OverFast API·owperks.com이 갱신되면 공식 데이터로 교체할 것.
 
 export interface Perk {
   name: string;
   description: string;
   icon: string;
-  /** owperks.com 커뮤니티 투표 기준 이 특전을 고른다고 응답한 비율(%) */
-  preferRate: number;
+  /** owperks.com 커뮤니티 투표 기준 이 특전을 고른다고 응답한 비율(%). 미출시 영웅은 집계가 없어 undefined. */
+  preferRate?: number;
 }
 
 export interface HeroPerks {
@@ -125,6 +127,17 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
     major: [
       { name: '추가 강타', description: '돌진 강타가 150%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b87f463706a6816a371f8c8b0cb62cd77f33860e85baa19998dd2aad97f89662.png', preferRate: 50 },
       { name: '집중 융합', description: '융합 연발총의 발사 속도가 느려지지만, 분산 없이 더욱 강력한 탄을 발사합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/46d8466d7de4b04dea213c55cae621e407206055eb3b9247796b3f8cd7ba2b4e.png', preferRate: 50 },
+    ],
+  },
+  // 출시 전 영웅 — 파일 상단 주석 참고. 아이콘·선호율은 공개된 데이터가 없다.
+  'doctrine': {
+    minor: [
+      { name: '구원의 은총', description: '활기 드론을 적용하면 대상의 생명력을 40 즉시 치유합니다.', icon: '' },
+      { name: '선혈 착취', description: '주입한 영겁의 홀로 준 피해의 50%만큼 생명력을 회복합니다.', icon: '' },
+    ],
+    major: [
+      { name: '수혈', description: '피해와 치유를 준 만큼 주입의 재사용 대기시간이 감소합니다.', icon: '' },
+      { name: '생명의 대가', description: '최대 생명력을 25 잃는 대신, 영겁의 홀의 치유량이 20% 증가합니다.', icon: '' },
     ],
   },
   'dva': {

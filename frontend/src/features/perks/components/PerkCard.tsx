@@ -9,7 +9,7 @@ interface PerkCardProps {
 }
 
 export function PerkCard({ perk, preferred, accentClass }: PerkCardProps) {
-  const rate = Math.round(perk.preferRate);
+  const rate = typeof perk.preferRate === 'number' ? Math.round(perk.preferRate) : null;
 
   return (
     <div
@@ -18,12 +18,17 @@ export function PerkCard({ perk, preferred, accentClass }: PerkCardProps) {
       }`}
     >
       <div className="flex items-start gap-3">
-        <img
-          src={perk.icon}
-          alt=""
-          loading="lazy"
-          className="h-11 w-11 shrink-0 rounded-lg bg-surface-container object-contain p-1"
-        />
+        {/* 아이콘이 아직 공개되지 않은 영웅은 빈 src로 현재 페이지를 다시 요청하지 않도록 자리만 남긴다. */}
+        {perk.icon ? (
+          <img
+            src={perk.icon}
+            alt=""
+            loading="lazy"
+            className="h-11 w-11 shrink-0 rounded-lg bg-surface-container object-contain p-1"
+          />
+        ) : (
+          <div className="h-11 w-11 shrink-0 rounded-lg bg-surface-container" />
+        )}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
             <p className="font-headline-md text-on-surface">{perk.name}</p>
@@ -41,14 +46,16 @@ export function PerkCard({ perk, preferred, accentClass }: PerkCardProps) {
       <div className="mt-auto space-y-1">
         <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
           <span>커뮤니티 선호율</span>
-          <span className={preferred ? 'text-primary' : 'text-on-surface'}>{rate}%</span>
+          <span className={preferred ? 'text-primary' : 'text-on-surface'}>{rate === null ? '집계 없음' : `${rate}%`}</span>
         </div>
-        <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-surface-container-low">
-          <div
-            className={`h-full rounded-full ${preferred ? 'bg-primary' : accentClass}`}
-            style={{ width: `${Math.min(100, Math.max(0, rate))}%` }}
-          />
-        </div>
+        {rate !== null && (
+          <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-surface-container-low">
+            <div
+              className={`h-full rounded-full ${preferred ? 'bg-primary' : accentClass}`}
+              style={{ width: `${Math.min(100, Math.max(0, rate))}%` }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

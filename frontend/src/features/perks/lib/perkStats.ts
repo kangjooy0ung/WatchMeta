@@ -33,14 +33,21 @@ function pairToPicks(heroId: string): { minor: PerkPick[]; major: PerkPick[] } |
   return { minor: build(perks.minor, 'minor'), major: build(perks.major, 'major') };
 }
 
-/** 각 영웅·등급에서 커뮤니티 선호율이 더 높은 특전 하나씩만 모은다. */
-export function preferredPicks(): PerkPick[] {
-  const picks: PerkPick[] = [];
+/** 선호율 집계가 있는 특전. 미출시 영웅은 집계가 없어 이 타입에서 빠진다. */
+export type RatedPerkPick = PerkPick & { preferRate: number };
+type RatedPerk = Perk & { preferRate: number };
+
+const isRated = <T extends Perk>(perk: T): perk is T & { preferRate: number } =>
+  typeof perk.preferRate === 'number';
+
+/** 각 영웅·등급에서 커뮤니티 선호율이 더 높은 특전 하나씩만 모은다. 집계가 없는 영웅은 제외한다. */
+export function preferredPicks(): RatedPerkPick[] {
+  const picks: RatedPerkPick[] = [];
   for (const hero of ALL_HEROES) {
     const pair = pairToPicks(hero.id);
     if (!pair) continue;
     for (const group of [pair.minor, pair.major]) {
-      const top = [...group].sort((a, b) => b.preferRate - a.preferRate)[0];
+      const top = group.filter(isRated).sort((a, b) => b.preferRate - a.preferRate)[0];
       if (top) picks.push(top);
     }
   }
@@ -48,28 +55,34 @@ export function preferredPicks(): PerkPick[] {
 }
 
 /** 커뮤니티 의견이 한쪽으로 가장 굳어진 특전 (선호율 높은 순) */
-export function consensusPicks(limit = 8): PerkPick[] {
+export function consensusPicks(limit = 8): RatedPerkPick[] {
   return preferredPicks()
     .sort((a, b) => b.preferRate - a.preferRate)
     .slice(0, limit);
 }
 
 /** 커뮤니티 의견이 가장 팽팽하게 갈리는 특전 (50%에 가까운 순) */
-export function contestedPicks(limit = 6): PerkPick[] {
+export function contestedPicks(limit = 6): RatedPerkPick[] {
   return preferredPicks()
     .sort((a, b) => a.preferRate - b.preferRate)
     .slice(0, limit);
 }
 
 export interface HeroTopPerks {
-  minor: Perk;
-  major: Perk;
+  minor: RatedPerk;
+  major: RatedPerk;
 }
 
-/** 목록 카드에서 미리보기로 쓸, 영웅별 가장 선호되는 소형·대형 특전 */
+/**
+ * 목록 카드에서 미리보기로 쓸, 영웅별 가장 선호되는 소형·대형 특전.
+ * 선호율 집계가 없는 영웅(미출시)은 미리보기를 만들지 않는다.
+ */
 export function heroTopPerks(heroId: string): HeroTopPerks | null {
   const perks = HERO_PERKS[heroId];
   if (!perks) return null;
-  const pick = (list: readonly [Perk, Perk]) => [...list].sort((a, b) => b.preferRate - a.preferRate)[0];
-  return { minor: pick(perks.minor), major: pick(perks.major) };
+  const pick = (list: readonly [Perk, Perk]) => list.filter(isRated).sort((a, b) => b.preferRate - a.preferRate)[0];
+  const minor = pick(perks.minor);
+  const major = pick(perks.major);
+  if (!minor || !major) return null;
+  return { minor, major };
 }
