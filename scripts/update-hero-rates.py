@@ -78,7 +78,7 @@ def hero_key(hero_id: str) -> str:
     return hero_id if hero_id.isalnum() else f"'{hero_id}'"
 
 
-def render(data: dict[str, dict[str, Rates]], checked_at: str) -> str:
+def render(data: dict[str, dict[str, Rates]], checked_at: str, iso_date: str) -> str:
     out: list[str] = []
     add = out.append
     add("export interface HeroRate {")
@@ -100,6 +100,8 @@ def render(data: dict[str, dict[str, Rates]], checked_at: str) -> str:
     add("// 이 파일은 scripts/update-hero-rates.py 가 생성한다. 직접 수정하지 말 것.")
     add(f"export const HERO_RATES_SOURCE_URL = '{BASE_URL}';")
     add(f"export const HERO_RATES_CHECKED_AT = '{checked_at}';")
+    add("/** 수집 시점(ISO). patchNotes의 version과 직접 비교하려고 표시용 문자열과 따로 둔다. */")
+    add(f"export const HERO_RATES_COLLECTED_ON = '{iso_date}';")
     add("")
     add("export const HERO_RATES: Record<RateRegion, Record<RateTier, Record<string, HeroRate>>> = {")
     for region in REGIONS:
@@ -135,7 +137,7 @@ def main() -> int:
 
     today = datetime.date.today()
     checked_at = f"{today.year}년 {today.month}월 {today.day}일"
-    OUT_PATH.write_text(render(data, checked_at), encoding="utf-8")
+    OUT_PATH.write_text(render(data, checked_at, today.isoformat()), encoding="utf-8")
 
     total = sum(len(data[r][t]) for r in REGIONS for t in TIERS)
     print(f"\n{OUT_PATH} 갱신 완료 — {checked_at} 기준, {total}개 엔트리", file=sys.stderr)

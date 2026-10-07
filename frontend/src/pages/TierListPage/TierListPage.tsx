@@ -9,6 +9,7 @@ import { RoleTabs } from '../../features/tier-list/components/RoleTabs';
 import { ServerFilter } from '../../features/tier-list/components/ServerFilter';
 import { TIER_META, TierSection } from '../../features/tier-list/components/TierSection';
 import { buildTierList } from '../../features/tier-list/data/tierList';
+import { HERO_RATES_COLLECTED_ON } from '../../features/tier-list/data/heroRates';
 import { PATCH_NOTES } from '../../features/patch-notes/data/patchNotes';
 import { ROLES } from '../../constants/roles';
 import { ROUTES } from '../../constants/routes';
@@ -23,10 +24,19 @@ const DEFAULT_RANK = '전체';
 const DEFAULT_SERVER = '아시아';
 
 // heroRates.ts는 패치별 스냅샷이 아니라 "가장 최근 확인 시점" 단일 데이터라, 과거 패치를 골라도
-// 실제로는 같은 수치가 나온다. 그래서 선택 가능한 옵션은 실제 최신 패치 하나만 제공한다.
-const CURRENT_PATCH = PATCH_NOTES[0];
+// 실제로는 같은 수치가 나온다. 그래서 선택 가능한 옵션은 하나뿐이다.
+//
+// 이때 최신 패치가 아니라 "수집 시점에 적용돼 있던 패치"를 보여줘야 한다. 패치 노트는 바로 반영되지만
+// 통계는 수동 스냅샷이라, 최신 패치를 그대로 라벨에 쓰면 패치를 추가할수록 실제 데이터와 어긋난다.
+// (예: 5시즌 출시 직후엔 경쟁전 통계가 초기화돼 한동안 직전 시즌 수치만 남아 있다.)
+const RATES_PATCH =
+  PATCH_NOTES.find((note) => note.version <= HERO_RATES_COLLECTED_ON) ?? PATCH_NOTES[PATCH_NOTES.length - 1];
+const IS_RATES_PATCH_LATEST = RATES_PATCH.version === PATCH_NOTES[0].version;
 const PATCH_VERSIONS: PatchVersionOption[] = [
-  { value: CURRENT_PATCH.version, label: `${CURRENT_PATCH.patchDate} 패치 (최신)` },
+  {
+    value: RATES_PATCH.version,
+    label: `${RATES_PATCH.patchDate} 패치${IS_RATES_PATCH_LATEST ? ' (최신)' : ''}`,
+  },
 ];
 
 const ALL_TIERS_OPEN: Record<TierRank, boolean> = { S: true, A: true, B: true, C: true, D: true };
