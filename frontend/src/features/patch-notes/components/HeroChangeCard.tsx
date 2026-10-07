@@ -25,8 +25,8 @@ export function HeroChangeCard({ heroChange }: HeroChangeCardProps) {
           <div key={change.ability ?? index}>
             {change.ability && <p className="text-label-sm font-label-sm uppercase text-secondary">{change.ability}</p>}
             <ul className="mt-1 list-disc space-y-1 pl-4 text-sm text-on-surface">
-              {change.bullets.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
+              {change.bullets.map((bullet, bulletIndex) => (
+                <li key={bulletIndex}>{bullet}</li>
               ))}
             </ul>
           </div>

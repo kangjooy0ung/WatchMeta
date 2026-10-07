@@ -29,8 +29,8 @@ export function PatchSectionBlock({ section, heroFilter }: PatchSectionBlockProp
 
       {!isFiltering && section.bullets && (
         <ul className="list-disc space-y-1 pl-5 text-sm text-on-surface">
-          {section.bullets.map((bullet) => (
-            <li key={bullet}>{bullet}</li>
+          {section.bullets.map((bullet, bulletIndex) => (
+            <li key={bulletIndex}>{bullet}</li>
           ))}
         </ul>
       )}
