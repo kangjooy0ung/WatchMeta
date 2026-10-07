@@ -1,11 +1,8 @@
 import type { Hero } from '../types/hero';
 
-// 출처: OverFast API (https://overfast-api.tekrop.fr/heroes?locale=ko-kr), 2026-07-29 확인
-// 예외 - 독트린(doctrine): 2026-10-06(5시즌) 정식 출시 전 영웅이라 OverFast API에는 아직 없다. 블리즈컨 2026
-// 공개 및 기간 한정 체험 취재 기준으로 수동 추가했다. 다른 영웅처럼 쓸 수 있는 공식 포트레이트가 아직
-// 공개되지 않아, 넥슨이 공지에 올린 '탈론의 지배' 공식 키아트에서 독트린 부분을 잘라 public/heroes/에 넣어
-// 임시로 쓰고 있다(다른 영웅과 구도·배경이 달라 보인다). 출시 후 API가 갱신되면 공식 포트레이트 URL로
-// 교체하고 이 임시 이미지는 지울 것.
+// 출처: 넥슨 공식 영웅 목록 (https://overwatch.nexon.com/hero/list), 2026-10-07 확인
+// 포트레이트 주소는 넥슨 CDN과 블리자드 CDN이 같은 해시를 쓰므로 블리자드 CDN(cloudfront)으로 저장한다.
+// 솜브라는 2026-10-07(5시즌) 개편으로 공격 -> 지원으로 역할군이 바뀌었다.
 export const ALL_HEROES: Hero[] = [
   { id: 'ana', name: '아나', role: 'support', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/985b06beae46b7ba3ca87d1512d0fc62ca7f206ceca58ef16fc44d43a1cc84ed.png' },
   { id: 'anran', name: '안란', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2c38b41d79a1ce9a08b9ad8eb7edf3ff819bd448af16a5815be8c7fdb7203aa0.png' },
@@ -17,7 +14,7 @@ export const ALL_HEROES: Hero[] = [
   { id: 'domina', name: '도미나', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/1161c112292c56c052c0ae711792fcde06e3251b98bc9709e582dd7585b5dcd6.png' },
   { id: 'doomfist', name: '둠피스트', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ff5c54f43ad253c7faeda9c4ed31d42582ea6b19205d197866f3dd0c0aa14c16.png' },
   { id: 'dmon', name: 'D.Mon', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a46c60b8562fdbd0b8308396d0808f7606fba208bc67cccf3f82fe56d2c73b9d.png', isNew: true },
-  { id: 'doctrine', name: '독트린', role: 'support', portraitUrl: '/heroes/doctrine.png', isNew: true },
+  { id: 'doctrine', name: '독트린', role: 'support', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2492a15c575c12314907d0d77501ec337b4d56796bc7f03e5dfb50d415612bae.png', isNew: true },
   { id: 'dva', name: 'D.Va', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/df5a5532862d9292634fb3dc0e51a4705aa601de65e5e815513ccc663d84de56.png' },
   { id: 'echo', name: '에코', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d4f2d5b0c2b7e82d61353186c5f23152ccba9d3569b50839aa580dca3e9114ba.png' },
   { id: 'emre', name: '엠레', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c51e2f698138861c0e3b6cfab3c3ca9d67fd709be175e7c397aa6f2649712a30.png' },
@@ -49,7 +46,7 @@ export const ALL_HEROES: Hero[] = [
   { id: 'sigma', name: '시그마', role: 'tank', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a4c032fa466c9a6d9c6974747635d7ef910027f91cd58892af0c899db565f92d.png' },
   { id: 'sojourn', name: '소전', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/82b8c1b8765dcb9a0ba16e343c3516bf324c771ac81e9878473280216e70a889.png' },
   { id: 'soldier-76', name: '솔저: 76', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c93b5f0a528c40473188f77cc2a267aee7d5b6cf5c9e104105d634b4388674e2.png' },
-  { id: 'sombra', name: '솜브라', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/47727b02a16e3bd7b2447d86ae1edf11587bc320b2aecb4f2f16a7ca4ad4e8a0.png' },
+  { id: 'sombra', name: '솜브라', role: 'support', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/47727b02a16e3bd7b2447d86ae1edf11587bc320b2aecb4f2f16a7ca4ad4e8a0.png' },
   { id: 'symmetra', name: '시메트라', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ebec57e8bd68b3d4383edfeb34f8f52dd0b94a6467d594c2fee722e8a97c32aa.png' },
   { id: 'torbjorn', name: '토르비욘', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ce17118cedc29b0d2ac1e059666bed36b9531c85079b0b894bb402d12c917ba9.png' },
   { id: 'tracer', name: '트레이서', role: 'damage', portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4504f6f15cb3feaa92ecd38e01dcf751cb5abdac2e0bb52d0555727e53277502.png' },
