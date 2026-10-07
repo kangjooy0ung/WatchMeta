@@ -17,6 +17,8 @@ export type RateTier = 'all' | 'grandmaster' | 'master' | 'diamond' | 'emerald' 
 // 이 파일은 scripts/update-hero-rates.py 가 생성한다. 직접 수정하지 말 것.
 export const HERO_RATES_SOURCE_URL = 'https://overwatch.nexon.com/hero/rate';
 export const HERO_RATES_CHECKED_AT = '2026년 9월 29일';
+/** 수집 시점(ISO). patchNotes의 version과 직접 비교하려고 표시용 문자열과 따로 둔다. */
+export const HERO_RATES_COLLECTED_ON = '2026-09-29';
 
 export const HERO_RATES: Record<RateRegion, Record<RateTier, Record<string, HeroRate>>> = {
   korea: {
