@@ -29,8 +29,11 @@ const DEFAULT_SERVER = '아시아';
 // 이때 최신 패치가 아니라 "수집 시점에 적용돼 있던 패치"를 보여줘야 한다. 패치 노트는 바로 반영되지만
 // 통계는 수동 스냅샷이라, 최신 패치를 그대로 라벨에 쓰면 패치를 추가할수록 실제 데이터와 어긋난다.
 // (예: 5시즌 출시 직후엔 경쟁전 통계가 초기화돼 한동안 직전 시즌 수치만 남아 있다.)
+//
+// 수집일과 같은 날 올라온 패치는 제외한다(엄격한 <). 승률은 여러 날에 걸쳐 쌓인 값이라 당일 패치가
+// 반영돼 있을 수 없다. 실제로 10월 14일에 통계를 수집한 직후 같은 날 핫픽스가 올라온 적이 있다.
 const RATES_PATCH =
-  PATCH_NOTES.find((note) => note.version <= HERO_RATES_COLLECTED_ON) ?? PATCH_NOTES[PATCH_NOTES.length - 1];
+  PATCH_NOTES.find((note) => note.version < HERO_RATES_COLLECTED_ON) ?? PATCH_NOTES[PATCH_NOTES.length - 1];
 const IS_RATES_PATCH_LATEST = RATES_PATCH.version === PATCH_NOTES[0].version;
 const PATCH_VERSIONS: PatchVersionOption[] = [
   {

@@ -25,27 +25,27 @@ export interface HeroPerks {
 
 export const PERKS_SOURCE_URL = 'https://overwatch.nexon.com/hero/list';
 export const PERKS_PREFER_SOURCE_URL = 'https://owperks.com';
-export const PERKS_CHECKED_AT = '2026년 10월 7일';
+export const PERKS_CHECKED_AT = '2026년 10월 14일';
 
 export const HERO_PERKS: Record<string, HeroPerks> = {
   'ana': {
     minor: [
-      { name: '국소 마취', description: '수면총이 적중 시 폭발해 적을 둔화시키고 3초에 걸쳐 45의 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ae02fae670005f987ff17803a469c958a1281c236aa2817fd1b8a03e119ad77d.png', preferRate: 18 },
-      { name: '가속 혈청', description: '나노 강화제가 아나와 대상 모두의 이동 속도를 30% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2dc4cdf319916abf18c9972b4fb8d14e5dd92e319960b36846c270b3bd5ffa4f.png', preferRate: 82 },
+      { name: '국소 마취', description: '수면총이 적중 시 폭발해 적을 둔화시키고 3초에 걸쳐 45의 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ae02fae670005f987ff17803a469c958a1281c236aa2817fd1b8a03e119ad77d.png', preferRate: 38 },
+      { name: '가속 혈청', description: '나노 강화제가 아나와 대상 모두의 이동 속도를 30% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2dc4cdf319916abf18c9972b4fb8d14e5dd92e319960b36846c270b3bd5ffa4f.png', preferRate: 62 },
     ],
     major: [
-      { name: '생체 수류탄 튕기기', description: '폭발 후, 생체 수류탄이 튕겨 다시 폭발합니다. 두 번째 폭발은 60의 피해와 치유량을 갖습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/388dfc3c6fb4cb6a233350b887d1400876890a33c79e49d7fb3c6ca220eddc31.png', preferRate: 25 },
-      { name: '인간사냥꾼', description: '생체 소총이 적에게 치명타를 줄 수 있습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/fe56a0ef536dd3f17d3c7728151ff60ef1a48071e93c2071c095f4e1712e6721.png', preferRate: 75 },
+      { name: '생체 수류탄 튕기기', description: '폭발 후, 생체 수류탄이 튕겨 다시 폭발합니다. 두 번째 폭발은 60의 피해와 치유량을 갖습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/388dfc3c6fb4cb6a233350b887d1400876890a33c79e49d7fb3c6ca220eddc31.png', preferRate: 24 },
+      { name: '인간사냥꾼', description: '생체 소총이 적에게 치명타를 줄 수 있습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/fe56a0ef536dd3f17d3c7728151ff60ef1a48071e93c2071c095f4e1712e6721.png', preferRate: 76 },
     ],
   },
   'anran': {
     minor: [
-      { name: '불씨', description: '불태우기가 적을 1.5초 더 오래 불태웁니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5d927315af0a5729ab1be838556dc1e2d9206bbe0fd69bf3c084b64a761c9b12.png', preferRate: 67 },
-      { name: '열 보호막', description: '궁극기 사용 중에 궁극기로 불태운 적 하나당 추가 생명력을 50 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/52a35ec19286d15384a73910c2763d02774674069f3cfd0ee5681afd545f3c82.png', preferRate: 33 },
+      { name: '불씨', description: '불태우기가 적을 1.5초 더 오래 불태웁니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5d927315af0a5729ab1be838556dc1e2d9206bbe0fd69bf3c084b64a761c9b12.png', preferRate: 66 },
+      { name: '열 보호막', description: '궁극기 사용 중에 궁극기로 불태운 적 하나당 추가 생명력을 50 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/52a35ec19286d15384a73910c2763d02774674069f3cfd0ee5681afd545f3c82.png', preferRate: 34 },
     ],
     major: [
-      { name: '급한 성미', description: '맹염 질주로 적과 충돌하면 재사용 대기시간이 1.5초 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/6aedcee19eff304025cefdba8f089cf356293389088f53c8c6f4de11a008ba63.png', preferRate: 40 },
-      { name: '굶주린 불꽃', description: '춤추는 불꽃 연쇄 공격의 치유량이 25 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/110e0b00345b359281b3ae871725d149051bed40fce266435806b4c390729722.png', preferRate: 60 },
+      { name: '급한 성미', description: '맹염 질주로 적과 충돌하면 재사용 대기시간이 1.5초 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/6aedcee19eff304025cefdba8f089cf356293389088f53c8c6f4de11a008ba63.png', preferRate: 41 },
+      { name: '굶주린 불꽃', description: '춤추는 불꽃 연쇄 공격의 치유량이 25 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/110e0b00345b359281b3ae871725d149051bed40fce266435806b4c390729722.png', preferRate: 59 },
     ],
   },
   'ashe': {
@@ -60,8 +60,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'baptiste': {
     minor: [
-      { name: '확대장', description: '불사 장치의 반경이 30% 커집니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/99a5dc8c29d169d2c8e095495657d8d69a57e19e311f8282c8d5f6648cd74f9e.png', preferRate: 31 },
-      { name: '맹공의 파동', description: '치유 파동이 3초 동안 바티스트의 공격 속도를 20% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/78de19e8f754a2882980435a03ada17d1bd791bbec10bfa9a076cdf82ef9ccce.png', preferRate: 69 },
+      { name: '확대장', description: '불사 장치의 반경이 30% 커집니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/99a5dc8c29d169d2c8e095495657d8d69a57e19e311f8282c8d5f6648cd74f9e.png', preferRate: 30 },
+      { name: '맹공의 파동', description: '치유 파동이 3초 동안 바티스트의 공격 속도를 20% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/78de19e8f754a2882980435a03ada17d1bd791bbec10bfa9a076cdf82ef9ccce.png', preferRate: 70 },
     ],
     major: [
       { name: '자동화 치유', description: '아무 기술을 사용하면 바티스트의 견착식 포탑이 활성화되어 아군에게 주기적으로 최대 3회 발사해 매번 40의 생명력을 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/0ba2344d9af993c4ba4f74f7a381327f20bcf153e78d2b0269a2fa1ef5884a6a.png', preferRate: 69 },
@@ -94,18 +94,18 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '이랴!', description: '구르기 사용 후, 캐서디가 1.5초에 걸쳐 사라지는 60%의 이동 속도 증가 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b0d48ad9c8bdf1ce4ec5aeb9fe01b8fe8c1db55e4a5c411eedb74a7c41967526.png', preferRate: 30 },
     ],
     major: [
-      { name: '굴러 모으기', description: '구르기 사용 시 재장전한 탄약 한 발당 생명력 또한 15씩 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4eb33f06a39774d03562b84d4541ed691de840de3aedefc18fb6b809a9f01b8f.png' },
-      { name: '은탄환', description: '피스키퍼의 보조 발사가 출혈을 유발하는 관통 사격으로 대체됩니다. 구르기와 황야의 무법자 사용 시 재사용 대기시간이 초기화됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/383425b058c7a8a60439132ecb199ea59e91be71b7e57835019c28beb7f080a2.png' },
+      { name: '굴러 모으기', description: '구르기 사용 시 재장전한 탄약 한 발당 생명력 또한 15씩 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4eb33f06a39774d03562b84d4541ed691de840de3aedefc18fb6b809a9f01b8f.png', preferRate: 10 },
+      { name: '은탄환', description: '피스키퍼의 보조 발사가 출혈을 유발하는 관통 사격으로 대체됩니다. 구르기와 황야의 무법자 사용 시 재사용 대기시간이 초기화됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/383425b058c7a8a60439132ecb199ea59e91be71b7e57835019c28beb7f080a2.png', preferRate: 90 },
     ],
   },
   'dmon': {
     minor: [
-      { name: '내면의 야수', description: '플라스마 세이버 적중 시 파워 배리어 내구도가 40 회복됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a49a4aa586ec9a0f10b16d299e541fdfeb6da4ee2c1bf75a4f2bab1f4170ee45.png', preferRate: 69 },
-      { name: 'MEKA 기동성', description: '파워 배리어를 유지할 때 추진기 연료 비용이 30% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8d2f97ae5a2dc9b137d45bcf277030fc32754a67155c55d3d7f0525d6ea9ac6e.png', preferRate: 31 },
+      { name: '내면의 야수', description: '플라스마 세이버 적중 시 파워 배리어 내구도가 40 회복됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a49a4aa586ec9a0f10b16d299e541fdfeb6da4ee2c1bf75a4f2bab1f4170ee45.png', preferRate: 70 },
+      { name: 'MEKA 기동성', description: '파워 배리어를 유지할 때 추진기 연료 비용이 30% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8d2f97ae5a2dc9b137d45bcf277030fc32754a67155c55d3d7f0525d6ea9ac6e.png', preferRate: 30 },
     ],
     major: [
-      { name: '추가 강타', description: '돌진 강타가 150%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b87f463706a6816a371f8c8b0cb62cd77f33860e85baa19998dd2aad97f89662.png', preferRate: 47 },
-      { name: '집중 융합', description: '융합 연발총의 발사 속도가 느려지지만, 분산 없이 더욱 강력한 탄을 발사합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/46d8466d7de4b04dea213c55cae621e407206055eb3b9247796b3f8cd7ba2b4e.png', preferRate: 53 },
+      { name: '추가 강타', description: '돌진 강타가 150%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b87f463706a6816a371f8c8b0cb62cd77f33860e85baa19998dd2aad97f89662.png', preferRate: 48 },
+      { name: '집중 융합', description: '융합 연발총의 발사 속도가 느려지지만, 분산 없이 더욱 강력한 탄을 발사합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/46d8466d7de4b04dea213c55cae621e407206055eb3b9247796b3f8cd7ba2b4e.png', preferRate: 52 },
     ],
   },
   'doctrine': {
@@ -114,8 +114,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '핏빛 흡수', description: '주입된 영겁의 홀로 준 피해의 50%만큼 치유됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/32ffd184fd6bf247ca7539d2d3175659acb8bec2be892a2008c2e281c5f5468f.png', preferRate: 24 },
     ],
     major: [
-      { name: '수혈', description: '준 피해와 치유에 따라 주입의 재사용 대기시간이 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d4231c031993e68b5cd6359ca35be5f1bac7571f0619ada25cd30f48e9091e5a.png', preferRate: 95 },
-      { name: '생명의 대가', description: '최대 생명력을 25 희생합니다. 영겁의 홀 치유량이 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/1f60c2577f3709fe41fbf494432e7539b4a942374b301b06a97ed7c0bb11017f.png', preferRate: 5 },
+      { name: '수혈', description: '준 피해와 치유에 따라 주입의 재사용 대기시간이 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d4231c031993e68b5cd6359ca35be5f1bac7571f0619ada25cd30f48e9091e5a.png', preferRate: 93 },
+      { name: '생명의 대가', description: '최대 생명력을 25 희생합니다. 영겁의 홀 치유량이 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/1f60c2577f3709fe41fbf494432e7539b4a942374b301b06a97ed7c0bb11017f.png', preferRate: 7 },
     ],
   },
   'domina': {
@@ -160,12 +160,12 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'emre': {
     minor: [
-      { name: '제압 보장', description: '오버라이드 프로토콜의 경량탄이 적을 1.5초 동안 30% 감속시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/241ca51517666e1a6d64dda896c55d67151beab7e7ba1a54936beddb00186261.png', preferRate: 30 },
-      { name: '향상된 민첩성', description: '발사 중이 아닐 때 사이펀 블라스터의 이동 속도 보너스가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/0a82995c66a16506c6637fa41deefa87b913bb398126e68091ff308f544d9219.png', preferRate: 70 },
+      { name: '제압 보장', description: '오버라이드 프로토콜의 경량탄이 적을 1.5초 동안 30% 감속시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/241ca51517666e1a6d64dda896c55d67151beab7e7ba1a54936beddb00186261.png', preferRate: 29 },
+      { name: '향상된 민첩성', description: '발사 중이 아닐 때 사이펀 블라스터의 이동 속도 보너스가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/0a82995c66a16506c6637fa41deefa87b913bb398126e68091ff308f544d9219.png', preferRate: 71 },
     ],
     major: [
-      { name: '히트 싱크', description: '사이펀 블라스터 명중 시 열기를 60% 돌려받고 지속 시간이 0.1초 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/be7d093a726667fb18c02a46983edf58dda1e07c1e6b411e202461414d28ccba.png', preferRate: 83 },
-      { name: '사이버 부착', description: '사이버 파편 수류탄이 적중 시 부착되고, 부착한 적에게 40의 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c1e486e48f92254734e19a47d63672f81c187bfbcb524f9634fe295ea89d36ee.png', preferRate: 17 },
+      { name: '히트 싱크', description: '사이펀 블라스터 명중 시 열기를 60% 돌려받고 지속 시간이 0.1초 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/be7d093a726667fb18c02a46983edf58dda1e07c1e6b411e202461414d28ccba.png', preferRate: 82 },
+      { name: '사이버 부착', description: '사이버 파편 수류탄이 적중 시 부착되고, 부착한 적에게 40의 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c1e486e48f92254734e19a47d63672f81c187bfbcb524f9634fe295ea89d36ee.png', preferRate: 18 },
     ],
   },
   'freja': {
@@ -174,8 +174,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '가속 증폭', description: '재빠른 돌진의 거리가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2444e973875857e2425dfcc64f3aa5de3aba82fe12887134e6cfb38172a074f6.png', preferRate: 24 },
     ],
     major: [
-      { name: '공중 회복', description: '상승기류를 사용한 후, 프레야가 땅에 닿을 때까지 생명력을 초당 30 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e374851a1c97f54461526905d9e97b3466ea7ef0c7c592994eb098e404a7ef2a.png', preferRate: 71 },
-      { name: '솟구치는 바람', description: '상승기류 충전 횟수가 1 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4ac4daca1df0efba3715a3406834bf8efb379dc636682e7d771377dc5139c3f9.png', preferRate: 29 },
+      { name: '공중 회복', description: '상승기류를 사용한 후, 프레야가 땅에 닿을 때까지 생명력을 초당 30 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e374851a1c97f54461526905d9e97b3466ea7ef0c7c592994eb098e404a7ef2a.png', preferRate: 70 },
+      { name: '솟구치는 바람', description: '상승기류 충전 횟수가 1 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4ac4daca1df0efba3715a3406834bf8efb379dc636682e7d771377dc5139c3f9.png', preferRate: 30 },
     ],
   },
   'genji': {
@@ -204,8 +204,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '무정부 광신자', description: '날카로운 저항의 가시가 40%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5769d726c1fd432aee499cc0adfc4812a82bd3a928af713302de5157e03986cd.png', preferRate: 91 },
     ],
     major: [
-      { name: '깊숙이 덤벼들기', description: '덤벼들기의 사거리가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/26384e47df6a6723ce3a777ae72b667f60f4bdf317ac87bd01df4af34dbb95b9.png', preferRate: 78 },
-      { name: '폭발성 꿰뚫기', description: '본스퍼의 가시가 대상에게 표식을 남깁니다. 빠른 근접 공격과 덤벼들기로 상대를 베면 가시가 폭발하여 30의 폭발 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d6c6cff5997b09cc6c02c03b0d2bfce48afc4bbf3f95717ea337f633af985b5f.png', preferRate: 22 },
+      { name: '깊숙이 덤벼들기', description: '덤벼들기의 사거리가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/26384e47df6a6723ce3a777ae72b667f60f4bdf317ac87bd01df4af34dbb95b9.png', preferRate: 79 },
+      { name: '폭발성 꿰뚫기', description: '본스퍼의 가시가 대상에게 표식을 남깁니다. 빠른 근접 공격과 덤벼들기로 상대를 베면 가시가 폭발하여 30의 폭발 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d6c6cff5997b09cc6c02c03b0d2bfce48afc4bbf3f95717ea337f633af985b5f.png', preferRate: 21 },
     ],
   },
   'illari': {
@@ -224,14 +224,14 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '운송 보호막', description: '다른 영웅을 운반하는 동안 추가 보호막 내구도를 최대 50 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/acd4b58fc4607cf4471de067547d9dd1fd1760fbf55d67217f0574567aa0e98b.png', preferRate: 8 },
     ],
     major: [
-      { name: '냥벽한 골골대기', description: '골골대기의 각 파동이 세 번 물결칩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/7b90c625a71b1ab6709796db494907b934637e3f793895d4729f0387fadbc35f.png', preferRate: 29 },
-      { name: '발톱 꺼내기', description: '빠른 근접 공격이 6초마다 강해지고, 적에게 상처를 입혀 40의 피해를 주며 1초 동안 30% 감속시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/989caae5faf782438c32b4ed7451ac93ebff03d884c065c768c1cee265b8aae9.png', preferRate: 71 },
+      { name: '냥벽한 골골대기', description: '골골대기의 각 파동이 세 번 물결칩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/7b90c625a71b1ab6709796db494907b934637e3f793895d4729f0387fadbc35f.png', preferRate: 28 },
+      { name: '발톱 꺼내기', description: '빠른 근접 공격이 6초마다 강해지고, 적에게 상처를 입혀 40의 피해를 주며 1초 동안 30% 감속시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/989caae5faf782438c32b4ed7451ac93ebff03d884c065c768c1cee265b8aae9.png', preferRate: 72 },
     ],
   },
   'junker-queen': {
     minor: [
-      { name: '광분 돌진', description: '살육 사용 시 저지 불가 상태가 되고 모든 재사용 대기시간이 6초 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/69acb5b21896563bbddc2d166f1d53b31ab96257adec55ca0fb20a9d38f1e726.png', preferRate: 80 },
-      { name: '전투의 외침', description: '지휘의 외침이 산탄총을 완전히 재장전하고 아군의 재장전 속도를 50% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c0c7a9fabfe1e722d591074d61212cd951ca241daf4f857e16277520f66a7bf2.png', preferRate: 20 },
+      { name: '광분 돌진', description: '살육 사용 시 저지 불가 상태가 되고 모든 재사용 대기시간이 6초 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/69acb5b21896563bbddc2d166f1d53b31ab96257adec55ca0fb20a9d38f1e726.png', preferRate: 81 },
+      { name: '전투의 외침', description: '지휘의 외침이 산탄총을 완전히 재장전하고 아군의 재장전 속도를 50% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c0c7a9fabfe1e722d591074d61212cd951ca241daf4f857e16277520f66a7bf2.png', preferRate: 19 },
     ],
     major: [
       { name: '선풍', description: '톱니칼을 회수하면 반경이 100% 증가하고 30의 추가 명중 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/79f03361567257341b863613a591508eca0077c5b934a590f6ed34822616f005.png', preferRate: 29 },
@@ -240,12 +240,12 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'junkrat': {
     minor: [
-      { name: '니트로 부스트', description: '죽이는 타이어가 활성화되어 있는 동안 좌Shift 사용 시 속도가 잠시 동안 증가합니다. 이때 죽이는 타이어의 피해가 50% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/150e4b3594f8ddc25eca19a90f39ca146c9dfcd5449e7538c5c131ee15b2277b.png', preferRate: 52 },
-      { name: '빵 터지는 여행', description: '충격 지뢰로 밀쳐진 후, 정크랫의 공격 속도가 3초 동안 35% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/11b40305e441dbcdfcd86232e84758683d290f13ef0d28fe9dc7e0c3aa8d3d24.png', preferRate: 48 },
+      { name: '니트로 부스트', description: '죽이는 타이어가 활성화되어 있는 동안 좌Shift 사용 시 속도가 잠시 동안 증가합니다. 이때 죽이는 타이어의 피해가 50% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/150e4b3594f8ddc25eca19a90f39ca146c9dfcd5449e7538c5c131ee15b2277b.png', preferRate: 53 },
+      { name: '빵 터지는 여행', description: '충격 지뢰로 밀쳐진 후, 정크랫의 공격 속도가 3초 동안 35% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/11b40305e441dbcdfcd86232e84758683d290f13ef0d28fe9dc7e0c3aa8d3d24.png', preferRate: 47 },
     ],
     major: [
-      { name: '지뢰 재활용', description: '충격 지뢰로 처치하면 충전 수가 하나 회복됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/76e4650ee601f21fa966ff326d80366271d862199f7250edaafa9033aa29e236.png', preferRate: 14 },
-      { name: '폭탄 발사포', description: '폭탄 발사기의 투사체 속도가 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/046617c7617e09bec3445e0b3059d6157f1bdabe842650ec2ed3962634a52da0.png', preferRate: 86 },
+      { name: '지뢰 재활용', description: '충격 지뢰로 처치하면 충전 수가 하나 회복됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/76e4650ee601f21fa966ff326d80366271d862199f7250edaafa9033aa29e236.png', preferRate: 13 },
+      { name: '폭탄 발사포', description: '폭탄 발사기의 투사체 속도가 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/046617c7617e09bec3445e0b3059d6157f1bdabe842650ec2ed3962634a52da0.png', preferRate: 87 },
     ],
   },
   'juno': {
@@ -264,8 +264,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '점술가', description: '쿠나이 적중 시 앞에 있는 아군에게 치유의 부적 2장을 날립니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/50a9304063fc8ea8c23b6533940563cf666fb0a1f80e6240b30344aa014d40b6.png', preferRate: 78 },
     ],
     major: [
-      { name: '준비 단계', description: '순보 사용 시 3초 동안 키리코의 공격 속도와 재장전 속도가 40% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e5443afa1c9fe57e7839befb9a986eb960fb08d66a0085f1bba898335a7eb740.png', preferRate: 19 },
-      { name: '여우걸음', description: '정화의 방울이 4초 동안 아군의 이동 속도를 30% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/cd3b70802f80c187212db9a9db342e6aa4f0cd349d1979055e52eb7539a8cc30.png', preferRate: 81 },
+      { name: '준비 단계', description: '순보 사용 시 3초 동안 키리코의 공격 속도와 재장전 속도가 40% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e5443afa1c9fe57e7839befb9a986eb960fb08d66a0085f1bba898335a7eb740.png', preferRate: 20 },
+      { name: '여우걸음', description: '정화의 방울이 4초 동안 아군의 이동 속도를 30% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/cd3b70802f80c187212db9a9db342e6aa4f0cd349d1979055e52eb7539a8cc30.png', preferRate: 80 },
     ],
   },
   'lifeweaver': {
@@ -280,8 +280,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'lucio': {
     minor: [
-      { name: '소리 파동 타기', description: '벽 타기 시 다음 소리 파동이 강화되어 밀쳐내기 효과가 25%, 피해가 50% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5ab9044637d85c3c53022189dbab7913eec2faedc95176069a754441588ac630.png', preferRate: 46 },
-      { name: '비트 드롭', description: '소리 방벽을 시전한 후 4초 동안 볼륨을 높여라!가 활성화됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4639fbbde04ac4e8ca26a56ebd4ddc3f34ccf5c20add8796fe2282a2b2b739fa.png', preferRate: 54 },
+      { name: '소리 파동 타기', description: '벽 타기 시 다음 소리 파동이 강화되어 밀쳐내기 효과가 25%, 피해가 50% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5ab9044637d85c3c53022189dbab7913eec2faedc95176069a754441588ac630.png', preferRate: 37 },
+      { name: '비트 드롭', description: '소리 방벽을 시전한 후 4초 동안 볼륨을 높여라!가 활성화됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4639fbbde04ac4e8ca26a56ebd4ddc3f34ccf5c20add8796fe2282a2b2b739fa.png', preferRate: 63 },
     ],
     major: [
       { name: '소음 공해', description: '볼륨을 높여라!가 활성화되어 있는 동안 분위기 전환!의 사거리가 150% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/37679a0a1cca337b61885f503002dd8698de32df504b0e8de93a627d89afb59f.png', preferRate: 77 },
@@ -310,8 +310,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'mercy': {
     minor: [
-      { name: '천사의 부활', description: '메르시가 부활을 시전한 후 100의 추가 생명력을 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/39c6fcef8a4380d73f7714d7276c6559bc25547d0c090631d603d05ed4d6620e.png', preferRate: 40 },
-      { name: '날개의 영역', description: '수호천사의 사거리가 30% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/77e68b4b2cdab6bdbb2509b8dcaf964cbbaffa14523b72d1fe512abc87f3576f.png', preferRate: 60 },
+      { name: '천사의 부활', description: '메르시가 부활을 시전한 후 100의 추가 생명력을 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/39c6fcef8a4380d73f7714d7276c6559bc25547d0c090631d603d05ed4d6620e.png', preferRate: 39 },
+      { name: '날개의 영역', description: '수호천사의 사거리가 30% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/77e68b4b2cdab6bdbb2509b8dcaf964cbbaffa14523b72d1fe512abc87f3576f.png', preferRate: 61 },
     ],
     major: [
       { name: '연쇄 증폭', description: '카두세우스 지팡이의 공격력 증폭 효과가 5% 증가하고 근처의 두 번째 아군에게 연결됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/48d23bc9eebad7092ef2b1895abc99ff1f4207a1ac423a88b8418b388f10f4eb.png', preferRate: 66 },
@@ -320,8 +320,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'mizuki': {
     minor: [
-      { name: '샘물', description: '회복 오라 재생량이 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/65dc63c40f3f40290ad291f9dda4f981e4cf9980b676946d1b145336b4aa1858.png', preferRate: 27 },
-      { name: '드러난 영혼', description: '속박 사슬이 적에게 적중하면 2초 동안 해당 적에게 주는 피해가 30% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/44773ab19e89d3732249176897c44c9164c5099e5c8e29599255ba3cc3e29f62.png', preferRate: 73 },
+      { name: '샘물', description: '회복 오라 재생량이 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/65dc63c40f3f40290ad291f9dda4f981e4cf9980b676946d1b145336b4aa1858.png', preferRate: 26 },
+      { name: '드러난 영혼', description: '속박 사슬이 적에게 적중하면 2초 동안 해당 적에게 주는 피해가 30% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/44773ab19e89d3732249176897c44c9164c5099e5c8e29599255ba3cc3e29f62.png', preferRate: 74 },
     ],
     major: [
       { name: '공명 복귀', description: '치유의 삿갓이 한 번 더 튕깁니다. 튕길 때마다 치유량이 10 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f87c6cc1b61157dc4d40cac191544a3ebfa2c0a44b956e8526e6bf6eef6d5351.png', preferRate: 57 },
@@ -344,14 +344,14 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '이동식 강화', description: '방어 강화가 활성화된 동안 오리사는 이동 속도가 감소되지 않고 열을 생성하지 않습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/02ffaf6f362417f64e8bd50919d2d2d5d9238c2f9a7e168b3d68192c4c604004.png', preferRate: 78 },
     ],
     major: [
-      { name: '묵직한 투창', description: '투창의 밀쳐내는 효과가 25% 증가하고 벽 충돌 피해가 15 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/bcfd342643f783df7b6710fd613f2a2a7fc4e84d33e2d2235f203e8e6c6e58ea.png', preferRate: 81 },
-      { name: '보호 방벽', description: '수호의 창 대신 방벽을 발사합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/88b6e3613c49bf6c6edbd2e32fb8aaa71ba58d556ff0d6403688d1ceabc70f31.png', preferRate: 19 },
+      { name: '묵직한 투창', description: '투창의 밀쳐내는 효과가 25% 증가하고 벽 충돌 피해가 15 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/bcfd342643f783df7b6710fd613f2a2a7fc4e84d33e2d2235f203e8e6c6e58ea.png', preferRate: 82 },
+      { name: '보호 방벽', description: '수호의 창 대신 방벽을 발사합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/88b6e3613c49bf6c6edbd2e32fb8aaa71ba58d556ff0d6403688d1ceabc70f31.png', preferRate: 18 },
     ],
   },
   'pharah': {
     minor: [
-      { name: '충격력', description: '충격탄이 최대 30의 폭발 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f539cb6ea0b24ef0edd895d2d734d3fb2bc85345c1c5371c5987f92e784eb82e.png', preferRate: 71 },
-      { name: '나선 보호막', description: '생명력 125를 보호막으로 전환합니다. 로켓 런처로 직격타 시 보호막 재생 지속 능력이 활성화됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4136731c24d8b49678a8a9def5f5d3e5f7e3c5897cd9c151c1409dbdead93f71.png', preferRate: 29 },
+      { name: '충격력', description: '충격탄이 최대 30의 폭발 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f539cb6ea0b24ef0edd895d2d734d3fb2bc85345c1c5371c5987f92e784eb82e.png', preferRate: 70 },
+      { name: '나선 보호막', description: '생명력 125를 보호막으로 전환합니다. 로켓 런처로 직격타 시 보호막 재생 지속 능력이 활성화됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4136731c24d8b49678a8a9def5f5d3e5f7e3c5897cd9c151c1409dbdead93f71.png', preferRate: 30 },
     ],
     major: [
       { name: '연료 저장', description: '급속 추진이 연료를 50% 제공합니다. 최대 추가 연료량이 100% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/1b28fe153dc36c6b379ff6793420d280d5ce16bb855188cd35b6f078393cb134.png', preferRate: 11 },
@@ -360,8 +360,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'ramattra': {
     minor: [
-      { name: '맹공 형태', description: '네메시스 형태가 활성화된 동안 처치 시 지속 시간이 2초 연장됩니다. 절멸 중에는 그 절반만 연장됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8671fcad5ba90ab73fe1c01d831801d5ecac6f9b75bf1bbabde065d2277dc4de.png', preferRate: 23 },
-      { name: '연장된 방벽', description: '공허 방벽의 크기와 지속 시간이 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b94428b88e5858d65ac4a0f9800c344ecd11c9f31698d42d55a9f3ab4df241cb.png', preferRate: 77 },
+      { name: '맹공 형태', description: '네메시스 형태가 활성화된 동안 처치 시 지속 시간이 2초 연장됩니다. 절멸 중에는 그 절반만 연장됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8671fcad5ba90ab73fe1c01d831801d5ecac6f9b75bf1bbabde065d2277dc4de.png', preferRate: 24 },
+      { name: '연장된 방벽', description: '공허 방벽의 크기와 지속 시간이 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b94428b88e5858d65ac4a0f9800c344ecd11c9f31698d42d55a9f3ab4df241cb.png', preferRate: 76 },
     ],
     major: [
       { name: '공허 쇄도', description: '공허 가속기를 연속 발사하는 동안 주기적으로 6발의 추가 투사체를 방출합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8c4ab35a42b172b78cc2124f5c6098e1da757ff31c2c73e51d45c43b0b382bb2.png', preferRate: 76 },
@@ -384,24 +384,24 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '성전사의 결의', description: '방벽 방패 사용 중 생명력 지속 재생이 75% 빠르게 발동합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c5b0de9c882813ed237ae4822f9059b9c496f5b249ceeb79fdb2fbc4cff05e07.png', preferRate: 78 },
     ],
     major: [
-      { name: '방패 강타', description: '방벽 방패가 활성화되어 있는 동안 [mouse:left] 사용 시 적에게 피해를 주고 밀쳐냅니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f439f368062a58b9ee190afb5d4ea3ad28692d298600292f1f47e6e68151d108.png', preferRate: 59 },
-      { name: '불붙은 분노', description: '화염 강타가 적에게 적중할 때마다 2초 동안 공격 속도가 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/543ee152a75898b667a5c0a0127326b36716df02b6e2baace4bb0d9784571c6a.png', preferRate: 41 },
+      { name: '방패 강타', description: '방벽 방패가 활성화되어 있는 동안 [mouse:left] 사용 시 적에게 피해를 주고 밀쳐냅니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f439f368062a58b9ee190afb5d4ea3ad28692d298600292f1f47e6e68151d108.png', preferRate: 60 },
+      { name: '불붙은 분노', description: '화염 강타가 적에게 적중할 때마다 2초 동안 공격 속도가 25% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/543ee152a75898b667a5c0a0127326b36716df02b6e2baace4bb0d9784571c6a.png', preferRate: 40 },
     ],
   },
   'roadhog': {
     minor: [
-      { name: '고철 갈고리', description: '사슬 갈고리 명중 시 탄약을 4발 재장전합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2ca8a50b6b369d47a33ec5d4a3e42e12ca1aebb8144a29d959a134fb4226934a.png', preferRate: 70 },
-      { name: '이리 와 꼬마 돼지야', description: '돼재앙 사용 중 사슬 갈고리의 재사용 대기시간이 80% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4b0364924157ffcb8dc2673e4e1daf86c8e3651b664bc9c1cc494a281dfaabba.png', preferRate: 30 },
+      { name: '고철 갈고리', description: '사슬 갈고리 명중 시 탄약을 4발 재장전합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2ca8a50b6b369d47a33ec5d4a3e42e12ca1aebb8144a29d959a134fb4226934a.png', preferRate: 62 },
+      { name: '이리 와 꼬마 돼지야', description: '돼재앙 사용 중 사슬 갈고리의 재사용 대기시간이 80% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/4b0364924157ffcb8dc2673e4e1daf86c8e3651b664bc9c1cc494a281dfaabba.png', preferRate: 38 },
     ],
     major: [
-      { name: '호그가스 노출', description: '숨 돌리기 사용 시 주위의 아군을 치유량의 50%만큼 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/bbeb9d0110d04466eda5f4a845bd27685f80703264c967c0cf224f1b99d6f49d.png', preferRate: 72 },
-      { name: '독기 배출', description: '쓰레기 압축기가 활성화된 동안 로드호그 앞에 있는 적을 30% 둔화하며 초당 20의 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d9dcccfe7fb8e200ca9b3eec39dc3eec0789f99f8d6de38d26997bd591963eae.png', preferRate: 28 },
+      { name: '호그가스 노출', description: '숨 돌리기 사용 시 주위의 아군을 치유량의 50%만큼 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/bbeb9d0110d04466eda5f4a845bd27685f80703264c967c0cf224f1b99d6f49d.png', preferRate: 53 },
+      { name: '독기 배출', description: '쓰레기 압축기가 활성화된 동안 로드호그 앞에 있는 적을 30% 둔화하며 초당 20의 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d9dcccfe7fb8e200ca9b3eec39dc3eec0789f99f8d6de38d26997bd591963eae.png', preferRate: 47 },
     ],
   },
   'shion': {
     minor: [
-      { name: '생존 본능', description: '피하기의 추가 생명력 지속 시간이 1초 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2785c741990d138c080612ae2edccaf84fc913b437c559b5f56db2da5244d10c.png', preferRate: 10 },
-      { name: 'X 마키나', description: '처형이 생명력이 절반 미만인 적에게 20% 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/7d496f8a59eb6f13d661bc282be234e96a683862347777ec7281a92516b8bb1c.png', preferRate: 90 },
+      { name: '생존 본능', description: '피하기의 추가 생명력 지속 시간이 1초 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2785c741990d138c080612ae2edccaf84fc913b437c559b5f56db2da5244d10c.png', preferRate: 9 },
+      { name: 'X 마키나', description: '처형이 생명력이 절반 미만인 적에게 20% 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/7d496f8a59eb6f13d661bc282be234e96a683862347777ec7281a92516b8bb1c.png', preferRate: 91 },
     ],
     major: [
       { name: '재급유', description: '조이라이드가 생명력 50을 즉시 회복시키고 활성화되어 있는 동안 생명력을 초당 20씩 재생합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ef825e7cd91405f38bb5e0400b9d20162a01fa81e726d574528a0d3ef3812abc.png', preferRate: 31 },
@@ -414,18 +414,18 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '단단한 손아귀', description: '헬릭스 소총 집탄율이 70% 빨리 좁혀지고 30% 느리게 넓어집니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b61cf59f034272059a12bc580f5554c80cada3d3efb58bd2a50b6422f8dd228f.png', preferRate: 82 },
     ],
     major: [
-      { name: '의료 드론', description: '앵커 드론에 시에라를 치유하는 생명력 팩이 탑재됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/40bee6462dc1424e2a7b0edf20ed84689f3ea5729d41377187a257982524e818.png', preferRate: 10 },
-      { name: '대상 포착', description: '추적 사격이 적에게 적중하면 2초 동안 공격 속도가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/656d1dee1ba31c2433d36512c973f0958231dae8dcfc70226c16497819ddc65f.png', preferRate: 90 },
+      { name: '의료 드론', description: '앵커 드론에 시에라를 치유하는 생명력 팩이 탑재됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/40bee6462dc1424e2a7b0edf20ed84689f3ea5729d41377187a257982524e818.png', preferRate: 11 },
+      { name: '대상 포착', description: '추적 사격이 적에게 적중하면 2초 동안 공격 속도가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/656d1dee1ba31c2433d36512c973f0958231dae8dcfc70226c16497819ddc65f.png', preferRate: 89 },
     ],
   },
   'sigma': {
     minor: [
-      { name: '키네틱 순환', description: '키네틱 손아귀로 투사체 흡수 시 강착의 재사용 대기시간이 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f22dbfb1aaeff73f2fea11906bf431b2063f68160ba54473337c24a8d01cc524.png', preferRate: 16 },
-      { name: '초재생', description: '초구체로 준 피해의 30%만큼 실험용 방벽의 내구도가 회복됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a6f10bff0408ce201f848449e2ae55ae8b2f368b42165090922b08854a90cb86.png', preferRate: 84 },
+      { name: '키네틱 순환', description: '키네틱 손아귀로 투사체 흡수 시 강착의 재사용 대기시간이 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f22dbfb1aaeff73f2fea11906bf431b2063f68160ba54473337c24a8d01cc524.png', preferRate: 15 },
+      { name: '초재생', description: '초구체로 준 피해의 30%만큼 실험용 방벽의 내구도가 회복됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a6f10bff0408ce201f848449e2ae55ae8b2f368b42165090922b08854a90cb86.png', preferRate: 85 },
     ],
     major: [
-      { name: '하이퍼 강타', description: '초구체가 5회 명중할 때마다 다음 빠른 근접 공격이 적중한 적을 공중에 띄우고 멀리 밀쳐냅니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f5bbae6e666458d5d8a382c67056ea3cf0ce0781d575c540a6afb58267e92027.png', preferRate: 40 },
-      { name: '공중 부양', description: '공중에서 점프를 길게 누르면 잠시 더 높이 떠오릅니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/15828d0a39a88da3687e84e52a1a119fb0b5b08812e11c356bfffb8fe90d8a41.png', preferRate: 60 },
+      { name: '하이퍼 강타', description: '초구체가 5회 명중할 때마다 다음 빠른 근접 공격이 적중한 적을 공중에 띄우고 멀리 밀쳐냅니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/f5bbae6e666458d5d8a382c67056ea3cf0ce0781d575c540a6afb58267e92027.png', preferRate: 39 },
+      { name: '공중 부양', description: '공중에서 점프를 길게 누르면 잠시 더 높이 떠오릅니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/15828d0a39a88da3687e84e52a1a119fb0b5b08812e11c356bfffb8fe90d8a41.png', preferRate: 61 },
     ],
   },
   'sojourn': {
@@ -444,18 +444,18 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '전술 일제 사격', description: '전술 조준경 사용 중, 나선 로켓의 재사용 대기시간이 80% 감소하며 펄스 소총 발사를 중단하지 않습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c2b0f0b31aa7064f89843efe9f3d4a1ed47b235e9727a925b8a268c6981ddf57.png', preferRate: 20 },
     ],
     major: [
-      { name: '전속력', description: '질주의 이동 속도 보너스가 2초 동안 점진적으로 25% 추가로 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/062d822ee3836054bd987c73831c74c87f9e18ce74b7ceec14e0450d582aa524.png', preferRate: 20 },
-      { name: '전투자극제', description: '전투자극제가 생체장을 대체합니다. 사용 시, 5초 동안 솔저: 76의 생명력이 초당 30 치유되고 공격 속도가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/534498771c3a5a981a3d3f8c2f55df2998753e791f2fd77b51ac95fe501edafd.png', preferRate: 80 },
+      { name: '전속력', description: '질주의 이동 속도 보너스가 2초 동안 점진적으로 25% 추가로 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/062d822ee3836054bd987c73831c74c87f9e18ce74b7ceec14e0450d582aa524.png', preferRate: 19 },
+      { name: '전투자극제', description: '전투자극제가 생체장을 대체합니다. 사용 시, 5초 동안 솔저: 76의 생명력이 초당 30 치유되고 공격 속도가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/534498771c3a5a981a3d3f8c2f55df2998753e791f2fd77b51ac95fe501edafd.png', preferRate: 81 },
     ],
   },
   'sombra': {
     minor: [
-      { name: '생명력 해킹', description: 'EMP가 주위 모든 아군에게 긴급 패치를 적용합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/34e108b70ea2d33e67e973b4e3d62d8c6587a0ea3eea3a9645630f469f3321ae.png', preferRate: 23 },
-      { name: 'CTRL ALT ESC', description: '생명력이 절반 미만일 때 위치변환기로 순간이동하면 지속 생명력 재생이 시작됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b6d526c6b4a6dc8af1266bafb5dca4e649754e3ad4ffd8b7338601f40adb0b87.png', preferRate: 77 },
+      { name: '생명력 해킹', description: 'EMP가 주위 모든 아군에게 긴급 패치를 적용합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/34e108b70ea2d33e67e973b4e3d62d8c6587a0ea3eea3a9645630f469f3321ae.png', preferRate: 85 },
+      { name: 'CTRL ALT ESC', description: '생명력이 절반 미만일 때 위치변환기로 순간이동하면 지속 생명력 재생이 시작됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b6d526c6b4a6dc8af1266bafb5dca4e649754e3ad4ffd8b7338601f40adb0b87.png', preferRate: 15 },
     ],
     major: [
-      { name: '데이터 패킷', description: '긴급 패치로 생명력 팩을 해킹하면 기본 재사용 대기시간이 4초 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/87fec003fc9753ad1d6233bc54f163ef280684396101f9088727e886f15b24fd.png' },
-      { name: '사이버 보안', description: '생명력이 절반 미만인 아군에게는 사이버 스페이스의 치유량이 두 배로 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/28a09178c65bff6e100c872bf029d5c8f98f13f57679ad793b30782546eb027b.png' },
+      { name: '데이터 패킷', description: '긴급 패치로 생명력 팩을 해킹하면 기본 재사용 대기시간이 4초 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/87fec003fc9753ad1d6233bc54f163ef280684396101f9088727e886f15b24fd.png', preferRate: 36 },
+      { name: '사이버 보안', description: '생명력이 절반 미만인 아군에게는 사이버 스페이스의 치유량이 두 배로 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/28a09178c65bff6e100c872bf029d5c8f98f13f57679ad793b30782546eb027b.png', preferRate: 64 },
     ],
   },
   'symmetra': {
@@ -470,32 +470,32 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'torbjorn': {
     minor: [
-      { name: '망치질 개시', description: '대장간 망치를 장착한 동안 이동 속도가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d60050f7eff6fa99e2914cceacd5fcc2e5bec6b1c898155246743d51be4bebc4.png', preferRate: 40 },
-      { name: '예열 완료', description: '초고열 용광로가 과부하를 활성화합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/510847cb9a3e297cea8bdab984e2589cc30f72dd611899b26409dbb5fe8a84fd.png', preferRate: 60 },
+      { name: '망치질 개시', description: '대장간 망치를 장착한 동안 이동 속도가 20% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d60050f7eff6fa99e2914cceacd5fcc2e5bec6b1c898155246743d51be4bebc4.png', preferRate: 41 },
+      { name: '예열 완료', description: '초고열 용광로가 과부하를 활성화합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/510847cb9a3e297cea8bdab984e2589cc30f72dd611899b26409dbb5fe8a84fd.png', preferRate: 59 },
     ],
     major: [
-      { name: '고정 나사', description: '포탑 설치의 투척 거리가 25% 증가합니다. 이제 포탑을 벽이나 천장에 설치할 수 있습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5f3ae1fcd2f9a78ae44293324d53c8cd9273b42cf9be0d56ff920ee5f45c589d.png', preferRate: 80 },
-      { name: '포탑 과부하', description: '과부하가 5초 동안 내 포탑을 업그레이드하여 생명력과 피해를 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c6eb6f52be58ddb12bf57b744d374f00871fd0068345e61b0c962eb04c0901b5.png', preferRate: 20 },
+      { name: '고정 나사', description: '포탑 설치의 투척 거리가 25% 증가합니다. 이제 포탑을 벽이나 천장에 설치할 수 있습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5f3ae1fcd2f9a78ae44293324d53c8cd9273b42cf9be0d56ff920ee5f45c589d.png', preferRate: 78 },
+      { name: '포탑 과부하', description: '과부하가 5초 동안 내 포탑을 업그레이드하여 생명력과 피해를 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c6eb6f52be58ddb12bf57b744d374f00871fd0068345e61b0c962eb04c0901b5.png', preferRate: 22 },
     ],
   },
   'tracer': {
     minor: [
-      { name: '시간적 재생', description: '생명력 지속 재생이 100% 빠르게 발동합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/abd0ec9faa55dabce39858b243817ae53ac30baf210f7c2214768b60806d9dae.png', preferRate: 57 },
-      { name: '키네틱 재장전', description: '근접 공격 적중 시 탄약을 12발 재장전합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/0f73a044de1866a093ccb2e7e368a730387936eae6cb18274b4dbafed26fa0fe.png', preferRate: 43 },
+      { name: '시간적 재생', description: '생명력 지속 재생이 100% 빠르게 발동합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/abd0ec9faa55dabce39858b243817ae53ac30baf210f7c2214768b60806d9dae.png', preferRate: 56 },
+      { name: '키네틱 재장전', description: '근접 공격 적중 시 탄약을 12발 재장전합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/0f73a044de1866a093ccb2e7e368a730387936eae6cb18274b4dbafed26fa0fe.png', preferRate: 44 },
     ],
     major: [
-      { name: '점멸 팩', description: '생명력 팩이 점멸을 1회 충전시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/de00cd532bf045c7d4e242d01944723f724f2eaa6f8df8a44769450d8f49b0d3.png', preferRate: 26 },
-      { name: '양자 얽힘', description: '시간 역행이 점차 사라지는 추가 생명력 50과 탄약 20발을 부여합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ace0ed5106148847a2b2f4dfcee58b883ed38bb2851ccbd106528f4ddea6cf41.png', preferRate: 74 },
+      { name: '점멸 팩', description: '생명력 팩이 점멸을 1회 충전시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/de00cd532bf045c7d4e242d01944723f724f2eaa6f8df8a44769450d8f49b0d3.png', preferRate: 25 },
+      { name: '양자 얽힘', description: '시간 역행이 점차 사라지는 추가 생명력 50과 탄약 20발을 부여합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/ace0ed5106148847a2b2f4dfcee58b883ed38bb2851ccbd106528f4ddea6cf41.png', preferRate: 75 },
     ],
   },
   'vendetta': {
     minor: [
-      { name: '추가 칼날', description: '칼날 투영의 에너지 비용이 25% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e970c9fa76693e93f3f490fdfd46efd56ba6a603d9b9169daa32b4b9a9cae1e8.png', preferRate: 36 },
-      { name: '맹렬한 폭풍', description: '소용돌이 질주 사용 시 계속 회전하여 추가로 3회 공격해 넓은 범위에 30의 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/954fc7de0d9e63b963e255eb433ceba0a8fe7af235e93023bbc2788decec218e.png', preferRate: 64 },
+      { name: '추가 칼날', description: '칼날 투영의 에너지 비용이 25% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e970c9fa76693e93f3f490fdfd46efd56ba6a603d9b9169daa32b4b9a9cae1e8.png', preferRate: 37 },
+      { name: '맹렬한 폭풍', description: '소용돌이 질주 사용 시 계속 회전하여 추가로 3회 공격해 넓은 범위에 30의 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/954fc7de0d9e63b963e255eb433ceba0a8fe7af235e93023bbc2788decec218e.png', preferRate: 63 },
     ],
     major: [
-      { name: '착취의 강타', description: '내리치기가 40%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2f56f724364510363723ecace47dd3d08358146b1d689dca22fe1040c7f61705.png' },
-      { name: '무자비', description: '맹공이 추가로 3번 중첩되며, 중첩 하나당 공격 속도가 5%, 이동 속도는 3% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/6f16af6f1ddffb07db1c5885caf9ed63754c025d0ad7d0be09d7b45908fad80e.png' },
+      { name: '착취의 강타', description: '내리치기가 40%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2f56f724364510363723ecace47dd3d08358146b1d689dca22fe1040c7f61705.png', preferRate: 72 },
+      { name: '무자비', description: '맹공이 추가로 3번 중첩되며, 중첩 하나당 공격 속도가 5%, 이동 속도는 3% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/6f16af6f1ddffb07db1c5885caf9ed63754c025d0ad7d0be09d7b45908fad80e.png', preferRate: 28 },
     ],
   },
   'venture': {
@@ -504,8 +504,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '발굴의 쾌감', description: '지각 충격이 활성화되어 있는 동안 재사용 대기시간이 300% 빠르게 충전됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/d960ab39306289f689d7796d9ed40bc638e5ff8179c48be8cc6f7fa8a5b22497.png', preferRate: 70 },
     ],
     major: [
-      { name: '스마트 연장기', description: 'E 키로 스마트 굴착기를 강화하여 4초 동안 최대 투사체 사거리를 100% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8d8769f9aedd55622b1c994ae8cf7cddefbc66a55e0b33bbb4f07b2de7220e15.png', preferRate: 77 },
-      { name: '먼지투성이', description: '갈아 버리기로 피해를 주면 굳센 탐험가 보호막이 최대 40 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/bd3a6e0335e5c643bac274f1c7e6920712eb2844d2ef60e19434f1841990a238.png', preferRate: 23 },
+      { name: '스마트 연장기', description: 'E 키로 스마트 굴착기를 강화하여 4초 동안 최대 투사체 사거리를 100% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8d8769f9aedd55622b1c994ae8cf7cddefbc66a55e0b33bbb4f07b2de7220e15.png', preferRate: 79 },
+      { name: '먼지투성이', description: '갈아 버리기로 피해를 주면 굳센 탐험가 보호막이 최대 40 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/bd3a6e0335e5c643bac274f1c7e6920712eb2844d2ef60e19434f1841990a238.png', preferRate: 21 },
     ],
   },
   'widowmaker': {
@@ -514,8 +514,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '저격수의 본능', description: '갈고리 발사를 사용한 후 2초 동안 저격 모드가 100% 빨리 충전됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c7788454504da63392a16b1cee6c2edc3675eb4520c0c6e08fb2543c289648b2.png', preferRate: 23 },
     ],
     major: [
-      { name: '추적 지뢰', description: '맹독 지뢰가 10미터 이내의 적에게 독을 발사하며 발동된 후에도 사라지지 않고 유지됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/24e57c5145c859408f311fd13ca239da270c9258f0749e6e302a3ecdbdfb9044.png', preferRate: 9 },
-      { name: '위도우의 독니', description: '저격이 최대 125%까지 충전되며, 완충 시 적을 관통합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/0643cb690b369b1c2bcaab485ea20113ad629755c37bf2e14b7beb9b470cddba.png', preferRate: 91 },
+      { name: '추적 지뢰', description: '맹독 지뢰가 10미터 이내의 적에게 독을 발사하며 발동된 후에도 사라지지 않고 유지됩니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/24e57c5145c859408f311fd13ca239da270c9258f0749e6e302a3ecdbdfb9044.png', preferRate: 10 },
+      { name: '위도우의 독니', description: '저격이 최대 125%까지 충전되며, 완충 시 적을 관통합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/0643cb690b369b1c2bcaab485ea20113ad629755c37bf2e14b7beb9b470cddba.png', preferRate: 90 },
     ],
   },
   'winston': {
@@ -530,12 +530,12 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'wrecking-ball': {
     minor: [
-      { name: '증기 롤러', description: '구르기가 돌격 영웅에게 적중 시 100% 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/61ba1ca38638f3d83c7feaf3370ae8040c72bc49e77bad42a311d36031363155.png', preferRate: 42 },
-      { name: '멀티볼', description: '지뢰밭 사용 후 5초 이내에 Q 키를 누르면 지뢰 7개를 추가로 뿌립니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e542dc40c07eeb35f2c0c4c01e30357c408a8d343c14d6b177e6a904644a2a18.png', preferRate: 58 },
+      { name: '증기 롤러', description: '구르기가 돌격 영웅에게 적중 시 100% 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/61ba1ca38638f3d83c7feaf3370ae8040c72bc49e77bad42a311d36031363155.png', preferRate: 43 },
+      { name: '멀티볼', description: '지뢰밭 사용 후 5초 이내에 Q 키를 누르면 지뢰 7개를 추가로 뿌립니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e542dc40c07eeb35f2c0c4c01e30357c408a8d343c14d6b177e6a904644a2a18.png', preferRate: 57 },
     ],
     major: [
-      { name: '체공 시간', description: '파일드라이버가 더 오래 시전되며 공중에서 방향 조작이 가능해지고 50%의 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/3647153c08c0af7933fa49fff4669ff44db4fb20aa893a047307c08da5288115.png', preferRate: 12 },
-      { name: '적응형 방벽', description: '적응형 보호막 활성화 시, 1초간 유지되는 방벽을 생성합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/91c944d1e02f4bf1619b3b2f81d4af774a08c61d2974ee956e501dfc21a20f41.png', preferRate: 88 },
+      { name: '체공 시간', description: '파일드라이버가 더 오래 시전되며 공중에서 방향 조작이 가능해지고 50%의 추가 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/3647153c08c0af7933fa49fff4669ff44db4fb20aa893a047307c08da5288115.png', preferRate: 11 },
+      { name: '적응형 방벽', description: '적응형 보호막 활성화 시, 1초간 유지되는 방벽을 생성합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/91c944d1e02f4bf1619b3b2f81d4af774a08c61d2974ee956e501dfc21a20f41.png', preferRate: 89 },
     ],
   },
   'wuyang': {
@@ -550,8 +550,8 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
   },
   'zarya': {
     minor: [
-      { name: '점프 소동', description: '보조 발사로 자신을 밀쳐내는 거리가 75% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a1c471e92b4c70a11e2ad276fcc7589f653ae06cdfb0e38967a4593653866de6.png' },
-      { name: '지원 관찰', description: '방벽 씌우기가 아군의 생명력 재생을 활성화시키고 이동 속도를 20% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/198c67146cb8a79d7584fab1a0762bc9bba2f37e24852bf716dc9587acffecbc.png' },
+      { name: '점프 소동', description: '보조 발사로 자신을 밀쳐내는 거리가 75% 증가합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a1c471e92b4c70a11e2ad276fcc7589f653ae06cdfb0e38967a4593653866de6.png', preferRate: 26 },
+      { name: '지원 관찰', description: '방벽 씌우기가 아군의 생명력 재생을 활성화시키고 이동 속도를 20% 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/198c67146cb8a79d7584fab1a0762bc9bba2f37e24852bf716dc9587acffecbc.png', preferRate: 74 },
     ],
     major: [
       { name: '출력 증폭', description: '방벽이 활성화되어 있을 때 입자포 광선으로 피해를 주면 에너지를 생성합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/e1327b5d6c493bf9a2b89e7c6a0e68d6fbb5f5dd3f1291b648534ddb68f2dc44.png', preferRate: 85 },

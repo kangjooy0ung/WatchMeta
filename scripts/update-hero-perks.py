@@ -97,10 +97,14 @@ def prefer_rates() -> dict[str, float]:
         for i, line in enumerate(lines):
             if line != "커뮤니티 선택" or i + 2 >= len(lines):
                 continue
-            name, pct = lines[i + 1], lines[i + 2]
-            m = re.fullmatch(r"(\d+(?:\.\d+)?)%", pct)
-            if m:
-                rates[name] = float(m.group(1))
+            name = lines[i + 1]
+            # 이름과 퍼센트 사이에 '신규'·'업데이트' 같은 배지가 끼기도 한다(패치로 특전이
+            # 바뀐 직후). 위치를 고정하지 말고 몇 줄 안에서 첫 퍼센트를 찾는다.
+            for candidate in lines[i + 2 : i + 5]:
+                m = re.fullmatch(r"(\d+(?:\.\d+)?)%", candidate)
+                if m:
+                    rates[name] = float(m.group(1))
+                    break
         time.sleep(REQUEST_DELAY_SEC)
     return rates
 

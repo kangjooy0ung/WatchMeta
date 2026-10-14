@@ -1,6 +1,6 @@
 import type { PatchNote } from '../../../types/patchNote';
 
-// 출처: https://overwatch.nexon.com/news/patchnotes (2026-10-07 최종 확인, 국내 서비스사 넥슨 공식 페이지)
+// 출처: https://overwatch.nexon.com/news/patchnotes (2026-10-14 최종 확인, 국내 서비스사 넥슨 공식 페이지)
 // 2026-10-07 5시즌 패치는 블리자드 공식 페이지(overwatch.blizzard.com/ko-kr/news/patch-notes/live/)와도
 // 대조해 섹션 13개·영웅 46명이 동일함을 확인했다.
 // 2026-08-16 확인 시점까지는 https://overwatch.blizzard.com/ko-kr/news/patch-notes/ 를 출처로 사용함
@@ -12,6 +12,103 @@ import type { PatchNote } from '../../../types/patchNote';
 export const PATCH_NOTES_SOURCE_URL = 'https://overwatch.nexon.com/news/patchnotes';
 
 export const PATCH_NOTES: PatchNote[] = [
+  {
+    version: '2026-10-14',
+    patchDate: '2026년 10월 14일',
+    title: '오버워치 패치 노트 - 2026년 10월 14일',
+    highlight: '핫픽스 업데이트입니다. 10월 6일 패치의 리플레이 코드는 계속 이용할 수 있습니다.',
+    sections: [
+      {
+        title: '영웅 업데이트',
+        heroes: [
+          {
+            hero: '독트린',
+            role: 'support',
+            portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/2492a15c575c12314907d0d77501ec337b4d56796bc7f03e5dfb50d415612bae.png',
+            changes: [
+              {
+                ability: '영겁의 홀',
+                bullets: [
+                  '공격력과 치유량이 60에서 55로 감소했습니다.',
+                ],
+              },
+              {
+                ability: '활기 드론',
+                bullets: [
+                  '지속 시간이 6초에서 5초로 감소했습니다.',
+                ],
+              },
+            ],
+          },
+          {
+            hero: '솜브라',
+            role: 'support',
+            portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/47727b02a16e3bd7b2447d86ae1edf11587bc320b2aecb4f2f16a7ca4ad4e8a0.png',
+            changes: [
+              {
+                ability: '기관권총',
+                bullets: [
+                  '공격력이 7에서 6.5로 감소했습니다.',
+                ],
+              },
+              {
+                ability: '사이버 스페이스',
+                bullets: [
+                  '폭발 피해가 40에서 20으로 감소했습니다.',
+                  '재사용 대기시간이 12초에서 13초로 증가했습니다.',
+                ],
+              },
+            ],
+          },
+          {
+            hero: '로드호그',
+            role: 'tank',
+            portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/89ddf07e4b619ed96169042e296a1b8856d102746f35add88284b44a9a5a6a03.png',
+            changes: [
+              {
+                ability: '고철 총',
+                bullets: [
+                  '중앙 투사체의 피해량이 34에서 40으로 증가했습니다.',
+                ],
+              },
+              {
+                ability: '숨 돌리기',
+                bullets: [
+                  '재사용 대기시간이 2초에서 1.25초로 감소했습니다.',
+                  '피해 감소량이 35%에서 40%로 증가했습니다.',
+                  '최대 지속 시간이 2초에서 2.5초로 증가했습니다.',
+                ],
+              },
+            ],
+          },
+          {
+            hero: '키리코',
+            role: 'support',
+            portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/408603fe037e8576078eaac5eab2fb251489ced4003b11f5f522776d43d0b83d.png',
+            changes: [
+              {
+                bullets: [
+                  '기본 생명력이 225에서 250으로 증가했습니다.',
+                ],
+              },
+            ],
+          },
+          {
+            hero: 'D.Mon',
+            role: 'tank',
+            portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/a46c60b8562fdbd0b8308396d0808f7606fba208bc67cccf3f82fe56d2c73b9d.png',
+            changes: [
+              {
+                bullets: [
+                  '기본 방어력이 275에서 250으로 감소했습니다.',
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   {
     version: '2026-10-07',
     patchDate: '2026년 10월 7일',
