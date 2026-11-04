@@ -87,11 +87,30 @@ def hero_perks(hero_id: str) -> dict[str, list[dict]]:
     return out
 
 
+def existing_rates() -> dict[str, float]:
+    """현재 heroPerks.ts에 들어있는 '특전 이름 -> 선호율'. owperks 장애 시 폴백으로 쓴다."""
+    if not OUT_PATH.exists():
+        return {}
+    out: dict[str, float] = {}
+    for m in re.finditer(r"\{ name: '([^']*)'.*?preferRate: ([0-9.]+) \}", OUT_PATH.read_text(encoding="utf-8")):
+        out[m.group(1).replace("\\'", "'")] = float(m.group(2))
+    return out
+
+
 def prefer_rates() -> dict[str, float]:
-    """owperks 역할 페이지에서 '특전 이름 -> 선호율(%)'을 모은다."""
+    """owperks 역할 페이지에서 '특전 이름 -> 선호율(%)'을 모은다.
+
+    owperks는 서드파티라 가끔 접속이 막힌다. 그때 전체 작업을 중단하면 공식 데이터(이름·설명·
+    아이콘) 갱신까지 함께 막히므로, 실패하면 기존 파일의 선호율을 그대로 유지한다.
+    """
     rates: dict[str, float] = {}
     for role_path in ROLE_PATHS.values():
-        html = fetch(OWPERKS_URL.format(role_path=role_path))
+        try:
+            html = fetch(OWPERKS_URL.format(role_path=role_path))
+        except subprocess.CalledProcessError as exc:
+            print(f"  !! owperks {role_path} 접속 실패(exit {exc.returncode}) — 기존 선호율을 유지합니다.",
+                  file=sys.stderr)
+            return existing_rates()
         text = H.unescape(re.sub(r"<[^>]+>", "\n", html))
         lines = [l.strip() for l in text.split("\n") if l.strip()]
         for i, line in enumerate(lines):

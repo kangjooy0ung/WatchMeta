@@ -25,7 +25,7 @@ export interface HeroPerks {
 
 export const PERKS_SOURCE_URL = 'https://overwatch.nexon.com/hero/list';
 export const PERKS_PREFER_SOURCE_URL = 'https://owperks.com';
-export const PERKS_CHECKED_AT = '2026년 10월 14일';
+export const PERKS_CHECKED_AT = '2026년 11월 4일';
 
 export const HERO_PERKS: Record<string, HeroPerks> = {
   'ana': {
@@ -104,7 +104,7 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: 'MEKA 기동성', description: '파워 배리어를 유지할 때 추진기 연료 비용이 30% 감소합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/8d2f97ae5a2dc9b137d45bcf277030fc32754a67155c55d3d7f0525d6ea9ac6e.png', preferRate: 30 },
     ],
     major: [
-      { name: '추가 강타', description: '돌진 강타가 150%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b87f463706a6816a371f8c8b0cb62cd77f33860e85baa19998dd2aad97f89662.png', preferRate: 48 },
+      { name: '추가 강타', description: '돌진 강타가 125%의 생명력 흡수 효과를 얻습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/b87f463706a6816a371f8c8b0cb62cd77f33860e85baa19998dd2aad97f89662.png', preferRate: 48 },
       { name: '집중 융합', description: '융합 연발총의 발사 속도가 느려지지만, 분산 없이 더욱 강력한 탄을 발사합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/46d8466d7de4b04dea213c55cae621e407206055eb3b9247796b3f8cd7ba2b4e.png', preferRate: 52 },
     ],
   },
@@ -474,7 +474,7 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
       { name: '예열 완료', description: '초고열 용광로가 과부하를 활성화합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/510847cb9a3e297cea8bdab984e2589cc30f72dd611899b26409dbb5fe8a84fd.png', preferRate: 59 },
     ],
     major: [
-      { name: '고정 나사', description: '포탑 설치의 투척 거리가 25% 증가합니다. 이제 포탑을 벽이나 천장에 설치할 수 있습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5f3ae1fcd2f9a78ae44293324d53c8cd9273b42cf9be0d56ff920ee5f45c589d.png', preferRate: 78 },
+      { name: '고정 나사', description: '포탑 설치의 투척 거리가 25% 증가하고, 이제 포탑을 벽이나 천장에 설치할 수 있습니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/5f3ae1fcd2f9a78ae44293324d53c8cd9273b42cf9be0d56ff920ee5f45c589d.png', preferRate: 78 },
       { name: '포탑 과부하', description: '과부하가 5초 동안 내 포탑을 업그레이드하여 생명력과 피해를 증가시킵니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/c6eb6f52be58ddb12bf57b744d374f00871fd0068345e61b0c962eb04c0901b5.png', preferRate: 22 },
     ],
   },
@@ -525,7 +525,7 @@ export const HERO_PERKS: Record<string, HeroPerks> = {
     ],
     major: [
       { name: '연쇄 번개', description: '완전히 충전된 보조 발사가 명중하면 튕겨 나와 최대 2명의 대상에게 추가로 피해를 줍니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/07057b7cb8a72dfe55a0880562ab4afbe9a056e226e19c3c1ae6e2fa88d59c14.png', preferRate: 22 },
-      { name: '활력 충전 방벽', description: '방벽 생성기가 내부에 있는 아군의 생명력을 초당 35 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/92c7620c5f92eb1eabb51b9ffeeab93e6be9e0966e7981b3cf515f3fe6ae27ae.png', preferRate: 78 },
+      { name: '활력 충전 방벽', description: '방벽 생성기가 내부에 있는 아군의 생명력을 초당 30 치유합니다.', icon: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/92c7620c5f92eb1eabb51b9ffeeab93e6be9e0966e7981b3cf515f3fe6ae27ae.png', preferRate: 78 },
     ],
   },
   'wrecking-ball': {
