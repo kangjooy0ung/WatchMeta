@@ -33,6 +33,8 @@ NEXON_CDN = "https://sht-vod.dn.nexoncdn.co.kr/shpd-game/Hero/OW/"
 BLIZZARD_CDN = "https://d15f34w2p8l1cc.cloudfront.net/overwatch/"
 ROLE_PATHS = {"tank": "tanks", "damage": "damages", "support": "supports"}
 REQUEST_DELAY_SEC = 0.3
+# owperks 영웅 카드의 머리글. 색상 클래스는 역할마다 다르므로 색은 패턴에서 뺀다.
+HERO_CARD_RE = re.compile(r'<h2 class="text-lg sm:text-xl md:text-2xl font-bold [^"]*">([^<]+)</h2>')
 
 OUT_PATH = pathlib.Path(__file__).resolve().parent.parent / "frontend/src/features/perks/data/heroPerks.ts"
 
@@ -54,19 +56,20 @@ def payload(html: str) -> list:
     return json.loads(match.group(1))
 
 
-def hero_ids() -> list[str]:
+def hero_list() -> list[tuple[str, str]]:
+    """(영웅 id, 표시 이름) 목록. 이름은 owperks 카드 제목과 맞추는 데 쓴다."""
     pool = payload(fetch(HERO_LIST_URL))
 
     def lit(i):
         return pool[i] if isinstance(i, int) and 0 <= i < len(pool) else None
 
-    ids = []
+    heroes = []
     for item in pool:
         if isinstance(item, dict) and {"id", "name", "slug", "role", "thumbnailUrl"} <= item.keys():
-            hero_id = lit(item["id"])
-            if isinstance(hero_id, str):
-                ids.append(hero_id)
-    return ids
+            hero_id, name = lit(item["id"]), lit(item["name"])
+            if isinstance(hero_id, str) and isinstance(name, str):
+                heroes.append((hero_id, H.unescape(name).strip()))
+    return heroes
 
 
 def hero_perks(hero_id: str) -> dict[str, list[dict]]:
@@ -87,23 +90,37 @@ def hero_perks(hero_id: str) -> dict[str, list[dict]]:
     return out
 
 
-def existing_rates() -> dict[str, float]:
-    """현재 heroPerks.ts에 들어있는 '특전 이름 -> 선호율'. owperks 장애 시 폴백으로 쓴다."""
+def existing_rates() -> dict[str, dict[str, float]]:
+    """현재 heroPerks.ts의 '영웅 id -> {특전 이름: 선호율}'. owperks 장애 시 폴백으로 쓴다."""
     if not OUT_PATH.exists():
         return {}
-    out: dict[str, float] = {}
-    for m in re.finditer(r"\{ name: '([^']*)'.*?preferRate: ([0-9.]+) \}", OUT_PATH.read_text(encoding="utf-8")):
-        out[m.group(1).replace("\\'", "'")] = float(m.group(2))
+    out: dict[str, dict[str, float]] = {}
+    for block in re.finditer(r"  '([a-z0-9-]+)': \{(.*?)\n  \},", OUT_PATH.read_text(encoding="utf-8"), re.S):
+        rates = {
+            m.group(1).replace("\\'", "'"): float(m.group(2))
+            for m in re.finditer(r"\{ name: '((?:[^'\\]|\\')*)'.*?preferRate: ([0-9.]+) \}", block.group(2))
+        }
+        if rates:
+            out[block.group(1)] = rates
     return out
 
 
-def prefer_rates() -> dict[str, float]:
-    """owperks 역할 페이지에서 '특전 이름 -> 선호율(%)'을 모은다.
+def prefer_rates(hero_names: dict[str, str]) -> dict[str, dict[str, float]]:
+    """owperks 역할 페이지에서 '영웅 id -> {특전 이름: 선호율(%)}'을 모은다.
+
+    특전 이름만으로 키를 만들면 안 된다. 서로 다른 영웅이 같은 이름의 특전을 갖는 경우가
+    있고(예: D.Mon '집중 융합' 49% vs D.Va '집중 융합' 30%, 주노/시에라 '대상 포착'),
+    이름만 쓰면 나중에 읽은 영웅의 값이 앞선 영웅을 덮어써 조용히 틀린 수치가 박힌다.
+
+    그래서 영웅 카드 단위로 끊어서 읽는다. 카드 경계는 영웅 이름이 담긴 h2다. 상세 페이지
+    링크(/ko/{role}/{slug})는 신규 영웅에 없을 수 있어(제트팩 캣) 경계로 쓰지 않는다.
 
     owperks는 서드파티라 가끔 접속이 막힌다. 그때 전체 작업을 중단하면 공식 데이터(이름·설명·
     아이콘) 갱신까지 함께 막히므로, 실패하면 기존 파일의 선호율을 그대로 유지한다.
     """
-    rates: dict[str, float] = {}
+    hero_id_by_name = {name: hero_id for hero_id, name in hero_names.items()}
+    rates: dict[str, dict[str, float]] = {}
+    unknown: list[str] = []
     for role_path in ROLE_PATHS.values():
         try:
             html = fetch(OWPERKS_URL.format(role_path=role_path))
@@ -111,21 +128,42 @@ def prefer_rates() -> dict[str, float]:
             print(f"  !! owperks {role_path} 접속 실패(exit {exc.returncode}) — 기존 선호율을 유지합니다.",
                   file=sys.stderr)
             return existing_rates()
-        text = H.unescape(re.sub(r"<[^>]+>", "\n", html))
-        lines = [l.strip() for l in text.split("\n") if l.strip()]
-        for i, line in enumerate(lines):
-            if line != "커뮤니티 선택" or i + 2 >= len(lines):
+        cards = list(HERO_CARD_RE.finditer(html))
+        if not cards:
+            print(f"  !! owperks {role_path}: 영웅 카드를 찾지 못했습니다. 페이지 구조가 바뀌었을 수 있습니다.",
+                  file=sys.stderr)
+            return existing_rates()
+        for index, card in enumerate(cards):
+            name = H.unescape(card.group(1)).strip()
+            hero_id = hero_id_by_name.get(name)
+            if hero_id is None:
+                unknown.append(name)
                 continue
-            name = lines[i + 1]
-            # 이름과 퍼센트 사이에 '신규'·'업데이트' 같은 배지가 끼기도 한다(패치로 특전이
-            # 바뀐 직후). 위치를 고정하지 말고 몇 줄 안에서 첫 퍼센트를 찾는다.
-            for candidate in lines[i + 2 : i + 5]:
-                m = re.fullmatch(r"(\d+(?:\.\d+)?)%", candidate)
-                if m:
-                    rates[name] = float(m.group(1))
-                    break
+            end = cards[index + 1].start() if index + 1 < len(cards) else len(html)
+            rates[hero_id] = card_rates(html[card.end() : end])
         time.sleep(REQUEST_DELAY_SEC)
+    if unknown:
+        print(f"  !! owperks 영웅 이름을 매칭하지 못했습니다: {', '.join(unknown)}", file=sys.stderr)
     return rates
+
+
+def card_rates(card_html: str) -> dict[str, float]:
+    """영웅 카드 한 장에서 '특전 이름 -> 선호율(%)'을 뽑는다."""
+    text = H.unescape(re.sub(r"<[^>]+>", "\n", card_html))
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    out: dict[str, float] = {}
+    for i, line in enumerate(lines):
+        if line != "커뮤니티 선택" or i + 2 >= len(lines):
+            continue
+        name = lines[i + 1]
+        # 이름과 퍼센트 사이에 '신규'·'업데이트' 같은 배지가 끼기도 한다(패치로 특전이
+        # 바뀐 직후). 위치를 고정하지 말고 몇 줄 안에서 첫 퍼센트를 찾는다.
+        for candidate in lines[i + 2 : i + 5]:
+            m = re.fullmatch(r"(\d+(?:\.\d+)?)%", candidate)
+            if m:
+                out[name] = float(m.group(1))
+                break
+    return out
 
 
 def ts_string(value: str) -> str:
@@ -188,27 +226,30 @@ def render(data: dict[str, dict[str, list[dict]]], checked_at: str) -> str:
 
 
 def main() -> int:
-    ids = hero_ids()
-    print(f"영웅 {len(ids)}명", file=sys.stderr)
+    heroes = hero_list()
+    print(f"영웅 {len(heroes)}명", file=sys.stderr)
 
-    rates = prefer_rates()
-    print(f"owperks 선호율 {len(rates)}건", file=sys.stderr)
+    rates = prefer_rates(dict(heroes))
+    print(f"owperks 선호율 {sum(len(v) for v in rates.values())}건 / 영웅 {len(rates)}명", file=sys.stderr)
 
     data: dict[str, dict[str, list[dict]]] = {}
-    for hero_id in ids:
+    for hero_id, _ in heroes:
         perks = hero_perks(hero_id)
         if len(perks["minor"]) != 2 or len(perks["major"]) != 2:
             print(f"  !! {hero_id}: 특전이 2+2가 아닙니다({len(perks['minor'])}+{len(perks['major'])}). 중단합니다.", file=sys.stderr)
             return 1
+        hero_rates = rates.get(hero_id, {})
         for tier in ("minor", "major"):
             pair = perks[tier]
-            known = [p for p in pair if p["name"] in rates]
-            if known:
-                # 한쪽 값만 공개되므로 나머지는 100 - x 로 환산한다.
-                rate = rates[known[0]["name"]]
+            known = [p for p in pair if p["name"] in hero_rates]
+            if not known:
+                continue
+            for perk in known:
+                perk["preferRate"] = hero_rates[perk["name"]]
+            # owperks는 보통 두 특전 값을 모두 싣지만, 한쪽만 있으면 나머지는 100 - x 로 환산한다.
+            if len(known) == 1:
                 idx = pair.index(known[0])
-                pair[idx]["preferRate"] = rate
-                pair[1 - idx]["preferRate"] = round(100 - rate, 1)
+                pair[1 - idx]["preferRate"] = round(100 - known[0]["preferRate"], 1)
         data[hero_id] = perks
         print(f"  {hero_id}: minor/major 2+2", file=sys.stderr)
         time.sleep(REQUEST_DELAY_SEC)
