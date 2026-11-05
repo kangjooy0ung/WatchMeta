@@ -47,7 +47,9 @@ def payload(html: str) -> list:
 
 
 def text(s: str) -> str:
-    return H.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", s))).strip()
+    """태그를 걷어내고 공백을 정리한다. &nbsp;(U+00A0)도 일반 공백으로 바꾼다."""
+    plain = H.unescape(re.sub(r"<[^>]+>", "", s)).replace("\u00a0", " ")
+    return re.sub(r"\s+", " ", plain).strip()
 
 
 def bullets(block: str) -> list[str]:
@@ -82,7 +84,7 @@ def parse_hero(block: str) -> dict:
     dev = re.search(r'PatchNotes-dev PatchNotesHeroUpdate-dev">\s*<p>(.*?)</p>', block, re.S)
     hero = {"hero": text(name.group(1)) if name else "?", "changes": []}
     if dev:
-        hero["description"] = re.sub(r"^개발자의 의견:\s*", "", text(dev.group(1)))
+        hero["description"] = re.sub(r"^개발자의?\s*의견:\s*", "", re.sub(r"^개발자의?\s*의견:\s*", "", text(dev.group(1))))
 
     gen = re.search(
         r'PatchNotesHeroUpdate-generalUpdates">(.*?)(?=<div class="PatchNotesHeroUpdate-abilitiesList"|</div></div></div>)',
@@ -98,9 +100,20 @@ def parse_hero(block: str) -> dict:
                 entry["ability"] = label
             hero["changes"].append(entry)
 
-    for ab in re.findall(r'<div class="PatchNotesAbilityUpdate">(.*?)</div></div></div>', block, re.S):
+    # 닫는 </div>가 몇 개인지로 끊으면 마지막 기술 블록이 통째로 날아간다(실제로 독트린의
+    # '영겁의 홀'이 빠졌다). 다음 블록이 시작되기 직전까지로 끊는다.
+    for ab in re.findall(
+        r'<div class="PatchNotesAbilityUpdate">(.*?)(?=<div class="PatchNotesAbilityUpdate">|$)', block, re.S):
+        # 기술명이 -name div에 있는 게 보통이지만, detailList 안에 <p><strong>이름</strong></p>로
+        # 들어오는 블록도 있다(실제로 독트린 '영겁의 홀'이 이 형태라 통째로 누락됐었다).
         nm = re.search(r'PatchNotesAbilityUpdate-name">(.*?)</div>', ab, re.S)
+        if not nm:
+            nm = re.search(r"<p><strong>(.*?)</strong></p>", ab, re.S)
         b = bullets(ab)
+        if nm:
+            label = text(nm.group(1))
+            # 이름이 <strong>으로 온 경우 그 줄이 불릿에 섞여 들어오지 않는지 확인한다.
+            b = [x for x in b if x != label]
         if nm and b:
             hero["changes"].append({"ability": text(nm.group(1)), "bullets": b})
     return hero
@@ -198,7 +211,19 @@ def emit(sections: list[dict], version: str, patch_date: str, title: str, highli
         res.append(f"{pad}}},")
         return res
 
+    # '영웅 업데이트' / '스타디움 업데이트'처럼 내용 없이 제목만 있는 섹션은 뒤따르는 섹션들의
+    # 묶음 제목 구실을 한다. 그대로 버리면 '돌격 영웅'이 두 번 나와 어느 쪽이 스타디움인지 알 수 없다.
+    parent = None
     for sec in sections:
+        if not (sec.get("heroes") or sec.get("bullets") or sec.get("paragraphs") or sec.get("groups")):
+            parent = sec["title"]
+            continue
+        # 묶음 제목은 역할별로 쪼개진 영웅 섹션(돌격/공격/지원)에만 붙인다. 자체 소제목(groups)을
+        # 가진 섹션은 그 자체가 top-level이므로 묶음에서 빠져나온 것으로 본다.
+        if sec.get("groups"):
+            parent = None
+        elif parent and not sec["title"].startswith(parent):
+            sec = {**sec, "title": f"{parent} - {sec['title']}"}
         if sec.get("groups"):
             for g in sec["groups"]:
                 if not g.get("label"):
@@ -210,7 +235,7 @@ def emit(sections: list[dict], version: str, patch_date: str, title: str, highli
                 body = {"paragraphs": g["paragraphs"]} if g["paragraphs"] and not g["bullets"] else {"bullets": g["bullets"]}
                 out += section(t, body)
             continue
-        if sec.get("heroes") or sec.get("bullets"):
+        if sec.get("heroes") or sec.get("bullets") or sec.get("paragraphs"):
             out += section(sec["title"], sec)
     out += ["    ],", "  },"]
     return "\n".join(out)
@@ -240,11 +265,15 @@ def main() -> int:
     version = f"{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}" if m else "YYYY-MM-DD"
     patch_date = f"{m.group(1)}년 {int(m.group(2))}월 {int(m.group(3))}일" if m else "?"
 
-    # 첫 섹션이 '핫픽스 업데이트'처럼 안내문 한 줄만 있으면 highlight로 끌어올린다.
+    # 첫 섹션이 '핫픽스 업데이트입니다...'처럼 패치 성격을 알리는 안내문 한 줄이면 highlight로
+    # 끌어올린다. 이벤트 소개 문단도 같은 모양이라(섹션 하나 + 문단 하나) 문구까지 확인해야 한다.
+    # 안 그러면 '군림 이벤트가 ...' 같은 섹션이 통째로 highlight로 빨려 들어가 제목이 사라진다.
+    NOTICE_HINTS = ("업데이트입니다", "패치입니다", "리플레이 코드")
     highlight = None
     first = sections[0] if sections else None
     if (first and not first.get("heroes") and not first.get("groups")
-            and not first.get("bullets") and len(first.get("paragraphs", [])) == 1):
+            and not first.get("bullets") and len(first.get("paragraphs", [])) == 1
+            and any(h in first["paragraphs"][0] for h in NOTICE_HINTS)):
         highlight = first["paragraphs"][0]
         sections = sections[1:]
 

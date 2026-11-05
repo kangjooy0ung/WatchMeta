@@ -35,3 +35,7 @@ lerna-debug.log*
 *.sln
 *.sw?
 *.local
+
+# Python (scripts/)
+__pycache__/
+*.pyc
