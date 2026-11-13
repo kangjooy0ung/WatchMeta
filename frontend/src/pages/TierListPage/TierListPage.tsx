@@ -12,6 +12,7 @@ import { buildTierList } from '../../features/tier-list/data/tierList';
 import { HERO_RATES_COLLECTED_ON } from '../../features/tier-list/data/heroRates';
 import { PATCH_NOTES } from '../../features/patch-notes/data/patchNotes';
 import { ROLES } from '../../constants/roles';
+import { CURRENT_SEASON_LABEL } from '../../constants/season';
 import { ROUTES } from '../../constants/routes';
 import { useDocumentMeta } from '../../lib/useDocumentMeta';
 import type { HeroRole } from '../../types/hero';
@@ -113,7 +114,7 @@ export function TierListPage() {
       <div className="mx-auto w-full max-w-[1600px] space-y-8 px-4 pt-6 lg:px-8">
         <section className="flex flex-col items-start justify-between gap-4 border-l-4 border-primary pl-4 md:flex-row md:items-end">
           <div>
-            <h1 className="font-headline-xl text-headline-xl italic uppercase text-primary">4시즌 메타 데이터</h1>
+            <h1 className="font-headline-xl text-headline-xl italic uppercase text-primary">{CURRENT_SEASON_LABEL} 메타 데이터</h1>
             <p className="max-w-xl text-body-lg font-body-lg text-on-surface-variant">
               {server} · {rank} 랭크 · {roleLabel} · 경쟁전 · {patchLabel} 기준
             </p>
