@@ -32,6 +32,7 @@ const MAP_NAME_KO: Record<string, string> = {
   paraiso: '파라이수',
   'circuit-royal': '서킷 로얄',
   dorado: '도라도',
+  grimsvotn: '그림스뵈튼',
   havana: '하바나',
   junkertown: '정크타운',
   rialto: '리알토',
