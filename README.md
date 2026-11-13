@@ -111,6 +111,10 @@ WatchMeta/
 | --- | --- | --- |
 | `GET` | `/health` | 헬스체크 (Render 배포 시 사용) |
 | `GET` | `/api/players/:battleTag/overview` | 배틀태그로 경쟁전 티어, 플레이타임, 승률, 영웅별 스탯 등 프로필 데이터 조회 |
+| `GET` | `/api/maps` | 경쟁전 전장 목록 (키, 한글 이름, 모드, 스크린샷) |
+| `GET` | `/api/map-stats` | 전장별 영웅 승률·픽률·밴률. `map` / `region` / `division` 쿼리 |
+
+출처가 두 갈래입니다. **전장 승률·전장 목록은 넥슨 공식 통계**(`overwatch.nexon.com/hero/rate`)를, **전적 검색은 OverFast**를 씁니다. 넥슨은 플레이어 조회를 제공하지 않고, OverFast에는 한국 지역이 없습니다.
 
 ---
 
@@ -128,7 +132,7 @@ npm install
 
 ```bash
 cp frontend/.env.example frontend/.env   # VITE_API_BASE_URL=http://localhost:4000/api
-cp backend/.env.example backend/.env     # PORT=4000, OVERFAST_BASE_URL=https://overfast-api.tekrop.fr
+cp backend/.env.example backend/.env     # PORT=4000, OVERFAST_BASE_URL=..., NEXON_BASE_URL=...
 ```
 
 ```bash
@@ -152,7 +156,26 @@ npm run dev:backend   # 백엔드 개발 서버 (http://localhost:4000)
 ## 배포
 
 - **Frontend**: Vercel. 모노레포 구조이므로 프로젝트 설정에서 **Root Directory를 `frontend`로 지정**해야 합니다. npm workspaces로 `package-lock.json`이 루트 하나로 통합되어 있어, Vercel이 Root Directory 바깥의 lockfile을 읽도록 **"Include files outside of the root directory"** 옵션을 켜는 것이 안전합니다.
-- **Backend**: Render (`render.yaml` 참고). `OVERFAST_BASE_URL` 환경 변수를 사용하며 `/health`로 헬스체크합니다.
+- **Backend**: Render (`render.yaml` 참고). `OVERFAST_BASE_URL`·`NEXON_BASE_URL` 환경 변수를 사용하며 `/health`로 헬스체크합니다.
+
+### 백엔드 깨워두기 (무료 플랜 콜드 스타트)
+
+Render 무료 플랜은 **15분 동안 요청이 없으면 서비스를 재웁니다.** 다음 요청이 깨우는 데 20~60초가 걸려(실측 21초) 전장 승률 페이지가 그 시간을 그대로 떠안습니다.
+
+`.github/workflows/keep-backend-awake.yml`이 **14분마다 `/health`를 호출**해 이를 막습니다. 공개 저장소라 Actions 사용량은 무료입니다.
+
+동작하려면 **저장소 Variables에 `BACKEND_URL`** 이 있어야 합니다. 없으면 워크플로가 조용히 건너뜁니다.
+
+- 위치: `Settings` → `Secrets and variables` → `Actions` → `Variables` 탭 → `New repository variable`
+- 이름 `BACKEND_URL`, 값 `https://watchmeta.onrender.com` (끝에 `/api`를 붙이지 말 것)
+- CLI로는 `gh variable set BACKEND_URL --body "https://watchmeta.onrender.com"`
+
+알아둘 점:
+
+- **스케줄 워크플로는 기본 브랜치(`main`)에 있어야 돕니다.** 기능 브랜치에 있는 동안에는 실행되지 않습니다.
+- GitHub의 `schedule`은 정시를 보장하지 않아 밀릴 수 있습니다. 가끔은 콜드 스타트가 그대로 발생합니다.
+- **저장소에 60일간 커밋이 없으면 GitHub이 스케줄을 자동으로 멈춥니다.** 그때는 Actions 탭에서 다시 켜면 됩니다.
+- 무료 플랜의 월 750 인스턴스 시간 안에서 한 서비스를 24시간 깨워두는 정도(약 730시간)는 가능하지만, **서비스를 하나 더 두면 초과**합니다.
 
 ---
 
