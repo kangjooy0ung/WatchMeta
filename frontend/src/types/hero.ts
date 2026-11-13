@@ -5,6 +5,8 @@ export interface Hero {
   name: string;
   role: HeroRole;
   portraitUrl: string;
-  // 출시된 지 얼마 안 돼 메타가 아직 안정되지 않은 영웅에 표시. 출시일 데이터가 없어 수동으로 관리한다.
+  /** 정식 출시일(ISO). 패치 노트에서 확인한 값. */
+  releasedOn?: string;
+  /** releasedOn에서 계산한다. 직접 넣지 말 것 — constants/heroes.ts 참고. */
   isNew?: boolean;
 }
