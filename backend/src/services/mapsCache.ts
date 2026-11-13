@@ -12,8 +12,10 @@ export interface MapMeta {
 // 워크샵 등)는 아케이드 전용이라 애초에 후보에서 뺀다.
 const COMPETITIVE_GAMEMODES = new Set(['control', 'escort', 'hybrid', 'push', 'flashpoint']);
 
-// 나무위키 등 커뮤니티 자료로 확인한 공식(또는 통용) 한글 명칭. 확인 못 한 맵은 임의로 지어내지
-// 않고 영문 키를 사람이 읽기 좋은 형태로만 바꿔서 보여준다.
+// 넥슨 공식 전장 명칭. overwatch.nexon.com/hero/rate 페이지의 전장 드롭다운에 모든 경쟁전 맵이
+// (키, 한글 이름, 모드)로 들어있어 거기서 맞췄다 — 2026-11-13 기준 31개로 우리 목록과 정확히 일치한다.
+// 예전엔 커뮤니티 자료를 참고했는데 junkertown을 '정크타운'으로 적고 있었다(공식은 '쓰레기촌').
+// 확인 못 한 맵은 임의로 지어내지 않고 영문 키를 사람이 읽기 좋은 형태로만 바꿔서 보여준다.
 const MAP_NAME_KO: Record<string, string> = {
   'antarctic-peninsula': '남극 반도',
   busan: '부산',
@@ -34,7 +36,7 @@ const MAP_NAME_KO: Record<string, string> = {
   dorado: '도라도',
   grimsvotn: '그림스뵈튼',
   havana: '하바나',
-  junkertown: '정크타운',
+  junkertown: '쓰레기촌',
   rialto: '리알토',
   'route-66': '66번 국도',
   'shambali-monastery': '샴발리 수도원',
@@ -51,7 +53,13 @@ const MAP_NAME_KO: Record<string, string> = {
 
 // OverFast가 아직 스크린샷을 못 올린 맵(대개 갓 출시된 신규 맵)에 한해, 우리가 직접 받아둔
 // 인게임 로딩 화면 이미지를 프론트(frontend/public/maps)에서 대신 서빙한다.
+//
+// OverFast는 /maps 응답에 screenshot 주소를 넣어주면서 정작 그 파일은 404인 경우가 있다.
+// 배포에 정적 파일이 안 따라붙어서인데, 깃 저장소에는 멀쩡히 들어있다. 그래서 신규 맵이
+// 목록에 뜨면 screenshot 주소를 한 번 직접 확인할 것 — 화면에서는 이니셜 타일로 대체돼
+// 깨진 티가 안 나기 때문에 그냥 넘어가기 쉽다.
 const SCREENSHOT_OVERRIDES: Record<string, string> = {
+  grimsvotn: '/maps/grimsvotn.jpg',
   'neon-junction': '/maps/neon-junction.jpg',
 };
 
