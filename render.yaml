@@ -8,5 +8,9 @@ services:
     startCommand: npm run start:backend
     healthCheckPath: /health
     envVars:
+      # 전적 검색은 OverFast를 쓴다(넥슨은 플레이어 조회를 제공하지 않는다).
       - key: OVERFAST_BASE_URL
         value: https://overfast-api.tekrop.fr
+      # 전장 승률·전장 목록은 넥슨 공식 통계를 쓴다.
+      - key: NEXON_BASE_URL
+        value: https://overwatch.nexon.com

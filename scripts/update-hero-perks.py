@@ -105,7 +105,15 @@ def existing_rates() -> dict[str, dict[str, float]]:
     return out
 
 
-def prefer_rates(hero_names: dict[str, str]) -> dict[str, dict[str, float]]:
+def existing_checked_at() -> str | None:
+    """현재 heroPerks.ts의 PERKS_CHECKED_AT 값. 선호율 폴백 시 날짜도 함께 유지한다."""
+    if not OUT_PATH.exists():
+        return None
+    m = re.search(r"PERKS_CHECKED_AT = '([^']*)'", OUT_PATH.read_text(encoding="utf-8"))
+    return m.group(1) if m else None
+
+
+def prefer_rates(hero_names: dict[str, str]) -> tuple[dict[str, dict[str, float]], bool]:
     """owperks 역할 페이지에서 '영웅 id -> {특전 이름: 선호율(%)}'을 모은다.
 
     특전 이름만으로 키를 만들면 안 된다. 서로 다른 영웅이 같은 이름의 특전을 갖는 경우가
@@ -117,6 +125,9 @@ def prefer_rates(hero_names: dict[str, str]) -> dict[str, dict[str, float]]:
 
     owperks는 서드파티라 가끔 접속이 막힌다. 그때 전체 작업을 중단하면 공식 데이터(이름·설명·
     아이콘) 갱신까지 함께 막히므로, 실패하면 기존 파일의 선호율을 그대로 유지한다.
+
+    (선호율, 폴백했는지)를 돌려준다. 화면의 '{날짜} 확인' 문구는 선호율에 붙는 설명이라,
+    폴백했다면 날짜도 기존 값을 유지해야 한다 — 안 그러면 오늘 집계를 받은 것처럼 보인다.
     """
     hero_id_by_name = {name: hero_id for hero_id, name in hero_names.items()}
     rates: dict[str, dict[str, float]] = {}
@@ -127,12 +138,12 @@ def prefer_rates(hero_names: dict[str, str]) -> dict[str, dict[str, float]]:
         except subprocess.CalledProcessError as exc:
             print(f"  !! owperks {role_path} 접속 실패(exit {exc.returncode}) — 기존 선호율을 유지합니다.",
                   file=sys.stderr)
-            return existing_rates()
+            return existing_rates(), True
         cards = list(HERO_CARD_RE.finditer(html))
         if not cards:
             print(f"  !! owperks {role_path}: 영웅 카드를 찾지 못했습니다. 페이지 구조가 바뀌었을 수 있습니다.",
                   file=sys.stderr)
-            return existing_rates()
+            return existing_rates(), True
         for index, card in enumerate(cards):
             name = H.unescape(card.group(1)).strip()
             hero_id = hero_id_by_name.get(name)
@@ -144,7 +155,7 @@ def prefer_rates(hero_names: dict[str, str]) -> dict[str, dict[str, float]]:
         time.sleep(REQUEST_DELAY_SEC)
     if unknown:
         print(f"  !! owperks 영웅 이름을 매칭하지 못했습니다: {', '.join(unknown)}", file=sys.stderr)
-    return rates
+    return rates, False
 
 
 def card_rates(card_html: str) -> dict[str, float]:
@@ -229,7 +240,7 @@ def main() -> int:
     heroes = hero_list()
     print(f"영웅 {len(heroes)}명", file=sys.stderr)
 
-    rates = prefer_rates(dict(heroes))
+    rates, rates_stale = prefer_rates(dict(heroes))
     print(f"owperks 선호율 {sum(len(v) for v in rates.values())}건 / 영웅 {len(rates)}명", file=sys.stderr)
 
     data: dict[str, dict[str, list[dict]]] = {}
@@ -256,6 +267,13 @@ def main() -> int:
 
     today = datetime.date.today()
     checked_at = f"{today.year}년 {today.month}월 {today.day}일"
+    # 화면의 '{날짜} 확인'은 선호율 집계에 붙는 문구다. owperks가 죽어 기존 값을 쓴 경우
+    # 날짜까지 오늘로 올리면 오늘 집계를 받아온 것처럼 보이므로, 기존 날짜를 그대로 둔다.
+    if rates_stale:
+        previous = existing_checked_at()
+        if previous:
+            print(f"  !! 선호율이 기존 값({previous} 확인)이라 확인 날짜도 그대로 둡니다.", file=sys.stderr)
+            checked_at = previous
     OUT_PATH.write_text(render(data, checked_at), encoding="utf-8")
     rated = sum(1 for h in data.values() for t in ("minor", "major") for p in h[t] if p.get("preferRate") is not None)
     print(f"\n{OUT_PATH} 갱신 완료 — {checked_at} 기준, 영웅 {len(data)}명 / 선호율 {rated}건", file=sys.stderr)

@@ -1,0 +1,37 @@
+name: 백엔드 깨워두기
+
+# Render 무료 플랜은 15분 동안 요청이 없으면 서비스를 잠재우고, 다음 요청은 깨우느라
+# 30~60초가 걸린다. 전장 승률 페이지가 그 시간을 그대로 떠안고 있어서 주기적으로 깨워둔다.
+#
+# 쓰려면 저장소 Variables에 BACKEND_URL을 넣을 것 (Settings > Secrets and variables >
+# Actions > Variables). 예: https://<서비스이름>.onrender.com
+# 값이 없으면 아무것도 하지 않고 조용히 끝난다.
+#
+# 공개 저장소라 Actions 사용량은 무료다. 다만 GitHub의 schedule은 정시 보장이 아니라
+# 바쁠 때 밀릴 수 있어, 가끔은 콜드 스타트가 그대로 발생한다.
+# 또 저장소에 60일간 커밋이 없으면 GitHub이 스케줄을 자동으로 멈춘다.
+
+on:
+  schedule:
+    # 14분마다 (Render가 재우는 15분보다 짧게)
+    - cron: '*/14 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 헬스체크 호출
+        env:
+          BACKEND_URL: ${{ vars.BACKEND_URL }}
+        run: |
+          if [ -z "$BACKEND_URL" ]; then
+            echo "BACKEND_URL 변수가 없어 건너뜁니다."
+            exit 0
+          fi
+          code=$(curl -sS -o /dev/null --max-time 90 -w '%{http_code}' "${BACKEND_URL%/}/health" || echo 000)
+          echo "GET ${BACKEND_URL%/}/health -> $code"
+          # 깨어나는 중이면 실패할 수도 있다. 다음 주기에 다시 때리므로 워크플로를 실패로 만들지 않는다.
+          if [ "$code" != "200" ]; then
+            echo "::warning::헬스체크가 200이 아닙니다($code). 다음 주기에 재시도합니다."
+          fi

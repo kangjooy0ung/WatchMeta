@@ -25,23 +25,23 @@ export function MapDataDisclosure({ updatedSecondsAgo }: MapDataDisclosureProps)
         <p>
           <span className="font-semibold text-on-surface">출처·갱신</span>
           {' — '}
-          블리자드 공식 통계를 반영하는{' '}
+          넥슨{' '}
           <a
-            href="https://overfast-api.tekrop.fr/"
+            href="https://overwatch.nexon.com/hero/rate"
             target="_blank"
             rel="noreferrer"
             className="underline decoration-dotted underline-offset-2 hover:text-primary"
           >
-            OverFast API
+            공식 영웅 통계
           </a>
-          를 실시간에 가깝게 조회합니다. 다만 출처가 정확한 집계 시각·기간을 공개하지 않아, 위 문구는
-          "이 응답이 캐시된 지 얼마나 됐는지"만 보여줍니다. 실제 반영 시점은 이보다 더 최근일 수 있습니다.
+          를 전장별로 조회합니다. 메타 티어리스트와 같은 출처라 수치 기준이 일치합니다. 다만 출처가 정확한
+          집계 시각·기간을 공개하지 않아, 위 문구는 "이 응답을 받아온 지 얼마나 됐는지"만 보여줍니다.
+          실제 반영 시점은 이보다 더 최근일 수 있습니다.
         </p>
         <p>
           <span className="font-semibold text-on-surface">맵 이름 표기</span>
           {' — '}
-          한글 공식 명칭이 확인된 것은 한글로, 확인되지 않은 것은 영문으로 표시합니다. PC · 경쟁전(역할 고정)
-          기준입니다.
+          넥슨 공식 전장 명칭을 그대로 씁니다. PC · 경쟁전(역할 고정) 기준입니다.
         </p>
         <p>
           <span className="font-semibold text-on-surface">표본 신뢰도</span>
@@ -53,8 +53,9 @@ export function MapDataDisclosure({ updatedSecondsAgo }: MapDataDisclosureProps)
         <p>
           <span className="font-semibold text-on-surface">종합 추천 정렬</span>
           {' — '}
-          밴률 데이터는 맵 단위로 제공되지 않아, 승률 60% · 픽률 40% 비중으로 정규화해 합산한 점수로
-          정렬합니다. 픽률이 아주 낮은 영웅이 승률만으로 과대평가되는 걸 줄이기 위함입니다.
+          승률 60% · 픽률 40% 비중으로 정규화해 합산한 점수로 정렬합니다. 픽률이 아주 낮은 영웅이
+          승률만으로 과대평가되는 걸 줄이기 위함입니다. 밴률도 전장별로 함께 표시하지만 정렬에는
+          넣지 않았습니다.
         </p>
       </div>
     </details>
