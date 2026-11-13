@@ -6,6 +6,7 @@ import { PageContainer } from '../../components/layout/PageContainer';
 import { ALL_HEROES } from '../../constants/heroes';
 import { ROLE_ACCENT_COLOR, ROLE_ICON, ROLES } from '../../constants/roles';
 import { ROUTES } from '../../constants/routes';
+import { DEFAULT_RANK, DEFAULT_SERVER } from '../../constants/filters';
 import { RateBar } from '../../features/tier-list/components/RateBar';
 import { SampleConfidenceBadge } from '../../features/tier-list/components/SampleConfidenceBadge';
 import { buildTierList, RANK_TO_RATE_TIER, SERVER_TO_RATE_REGION } from '../../features/tier-list/data/tierList';
@@ -22,8 +23,6 @@ const TIER_BADGE_CLASS: Record<TierRank, string> = {
   D: 'bg-surface-variant',
 };
 
-const DEFAULT_RANK = '전체';
-const DEFAULT_SERVER = '아시아';
 
 export function HeroDetailPage() {
   const { heroId } = useParams<{ heroId: string }>();
