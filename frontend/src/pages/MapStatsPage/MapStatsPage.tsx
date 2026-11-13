@@ -68,9 +68,12 @@ export function MapStatsPage() {
           </section>
         )}
 
+        {/* 검색 결과 그리드는 auto-fill을 쓴다. auto-fit이면 결과가 하나일 때 그 카드가 가로
+            전체로 늘어나 썸네일이 1100px를 넘어버린다. auto-fill은 빈 칸을 남겨둬서 결과 수와
+            상관없이 아래 전장 목록과 비슷한 크기로 보인다. */}
         {normalizedMapQuery ? (
           searchResults.length > 0 ? (
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,1fr))] gap-3">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3">
               {searchResults.map((map) => (
                 <MapThumbnail key={map.key} map={map} href={ROUTES.mapDetail(map.key)} isActive={false} />
               ))}
