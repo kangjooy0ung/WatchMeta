@@ -4,6 +4,7 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { ErrorState } from '../../components/feedback/ErrorState';
 import { HeroPortrait } from '../../components/hero/HeroPortrait';
 import { ROUTES } from '../../constants/routes';
+import { DEFAULT_RANK, DEFAULT_SERVER } from '../../constants/filters';
 import { ALL_MAPS_KEY, GAMEMODE_LABEL } from '../../features/tier-list/constants/mapModes';
 import { MapDataDisclosure } from '../../features/tier-list/components/MapDataDisclosure';
 import { MapSortControl, type MapSortOption } from '../../features/tier-list/components/MapSortControl';
@@ -21,8 +22,6 @@ import { useMapHistoryStore } from '../../store/useMapHistoryStore';
 import type { HeroRole } from '../../types/hero';
 
 const VALID_ROLES: Array<HeroRole | 'all'> = ['all', 'tank', 'damage', 'support'];
-const DEFAULT_RANK = '전체';
-const DEFAULT_SERVER = '아시아';
 const DEFAULT_SORT: MapSortOption = 'recommended';
 const VALID_SORTS: MapSortOption[] = ['recommended', 'winRate', 'pickRate'];
 
@@ -75,6 +74,11 @@ export function MapDetailPage() {
   // 전체 전장 대비 변화량 비교용 베이스라인. isAllMaps일 땐 위 조회와 쿼리 키가 같아 react-query가
   // 자동으로 중복 요청 없이 캐시를 공유한다.
   const { data: baselineData } = useMapHeroStats({ region, division });
+
+  // 서버는 "받아온 시각"만 주고 경과 시간은 여기서 계산한다. 응답이 CDN에 캐시돼 있어도
+  // 숫자가 실제 경과와 맞는다.
+  const fetchedAt = mapData?.meta.fetchedAt ?? null;
+  const fetchedSecondsAgo = fetchedAt === null ? null : Math.max(0, Math.floor((Date.now() - fetchedAt) / 1000));
 
   const selectedMap = isAllMaps ? undefined : maps?.find((m) => m.key === mapKey);
   const modeLabel = selectedMap ? GAMEMODE_LABEL[selectedMap.gamemodes[0]] ?? selectedMap.gamemodes[0] : null;
@@ -173,7 +177,7 @@ export function MapDetailPage() {
           />
         </label>
 
-        <MapDataDisclosure updatedSecondsAgo={mapData?.meta.updatedSecondsAgo ?? null} />
+        <MapDataDisclosure updatedSecondsAgo={fetchedSecondsAgo} />
 
         {isLoading && <MapDetailSkeleton />}
         {isError && (

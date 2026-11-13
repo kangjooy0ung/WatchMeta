@@ -1,9 +1,5 @@
-import axios from 'axios';
-import { Router } from 'express';
-import { getHeroesMap } from '../services/heroesCache.js';
-import { overfastClient, toPlayerId } from '../services/overfastClient.js';
-
-export const playersRouter = Router();
+import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { OverfastError, getHeroesMap, overfastGet, toPlayerId, type HeroMeta } from '../../_lib/overfast.js';
 
 type Role = 'tank' | 'damage' | 'support';
 
@@ -56,27 +52,20 @@ interface PlayerSummary {
   };
 }
 
-interface PlayerSearchEntry {
-  player_id: string;
-  name: string;
-  avatar: string | null;
-  title: string | null;
-  is_public: boolean;
-  // OverFast가 이 계정 데이터를 마지막으로 갱신한 시각(unix seconds). 배틀태그 번호·플랫폼·지역처럼
-  // 동명이인을 구분할 만한 정보를 OverFast 검색 응답이 제공하지 않아, 최소한의 구분 신호로 사용한다.
-  last_updated_at?: number;
-}
-
 const ROLES: Role[] = ['tank', 'damage', 'support'];
+const EMPTY_STAT_BLOCK: StatBlock = { eliminations: 0, assists: 0, deaths: 0, damage: 0, healing: 0 };
+const EMPTY_STATS: StatsSummary = {
+  general: { time_played: 0, winrate: 0, total: EMPTY_STAT_BLOCK, average: EMPTY_STAT_BLOCK },
+  roles: {},
+  heroes: {},
+};
 
 function toHours(seconds: number | undefined): number {
   return Math.round((seconds ?? 0) / 3600);
 }
 
-function buildHeroStats(stats: StatsSummary, heroesMap: Map<string, import('../services/heroesCache.js').HeroMeta>) {
-  const emptyStatBlock: StatBlock = { eliminations: 0, assists: 0, deaths: 0, damage: 0, healing: 0 };
+function buildHeroStats(stats: StatsSummary, heroesMap: Map<string, HeroMeta>) {
   const playedHeroes = stats.heroes ?? {};
-
   return Array.from(heroesMap.values())
     .sort((a, b) => (playedHeroes[b.key]?.time_played ?? 0) - (playedHeroes[a.key]?.time_played ?? 0))
     .map((meta) => {
@@ -92,8 +81,8 @@ function buildHeroStats(stats: StatsSummary, heroesMap: Map<string, import('../s
         winRate: heroStat?.winrate ?? 0,
         kda: heroStat?.kda ?? 0,
         playTimeHours: toHours(heroStat?.time_played),
-        total: heroStat?.total ?? emptyStatBlock,
-        average: heroStat?.average ?? emptyStatBlock,
+        total: heroStat?.total ?? EMPTY_STAT_BLOCK,
+        average: heroStat?.average ?? EMPTY_STAT_BLOCK,
       };
     });
 }
@@ -109,55 +98,20 @@ function buildPerformance(stats: StatsSummary) {
   };
 }
 
-// 배틀태그를 직접 player_id로 변환하는 방식은 더 이상 대부분의 계정에서 통하지 않아
-// (OverFast가 해시 형태의 내부 ID를 반환), 이름 검색으로 후보를 찾아 사용자가 직접 고르게 한다.
-playersRouter.get('/search', async (req, res) => {
-  const name = typeof req.query.name === 'string' ? req.query.name.trim() : '';
-  if (!name) {
-    res.status(400).json({ message: '검색어를 입력해 주세요.' });
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const raw = req.query.battleTag;
+  const battleTag = Array.isArray(raw) ? raw[0] : raw;
+  if (!battleTag) {
+    res.status(400).json({ message: '배틀태그가 필요합니다.' });
     return;
   }
-
-  try {
-    const { data } = await overfastClient.get<{ results: PlayerSearchEntry[] }>('/players', {
-      params: { name },
-    });
-
-    res.json(
-      data.results
-        .filter((entry) => entry.is_public)
-        .slice(0, 20)
-        .map((entry) => ({
-          playerId: entry.player_id,
-          name: entry.name,
-          avatarUrl: entry.avatar,
-          title: entry.title,
-          lastUpdatedAt: entry.last_updated_at ?? null,
-        })),
-    );
-  } catch {
-    res.status(502).json({ message: 'Overwatch 데이터를 가져오지 못했습니다.' });
-  }
-});
-
-playersRouter.get('/:battleTag/overview', async (req, res) => {
-  const battleTag = req.params.battleTag;
-  const playerId = toPlayerId(battleTag);
-  const encodedId = encodeURIComponent(playerId);
-
-  const emptyStatBlock: StatBlock = { eliminations: 0, assists: 0, deaths: 0, damage: 0, healing: 0 };
-  const emptyStats: StatsSummary = {
-    general: { time_played: 0, winrate: 0, total: emptyStatBlock, average: emptyStatBlock },
-    roles: {},
-    heroes: {},
-  };
+  const encodedId = encodeURIComponent(toPlayerId(battleTag));
 
   let summary: PlayerSummary;
   try {
-    const summaryRes = await overfastClient.get<PlayerSummary>(`/players/${encodedId}/summary`);
-    summary = summaryRes.data;
+    summary = await overfastGet<PlayerSummary>(`/players/${encodedId}/summary`);
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 404) {
+    if (error instanceof OverfastError && error.status === 404) {
       res.status(404).json({ message: '존재하지 않거나 비공개 프로필입니다.' });
       return;
     }
@@ -168,19 +122,14 @@ playersRouter.get('/:battleTag/overview', async (req, res) => {
   try {
     // 프로필은 공개여도 전적 통계만 비공개이거나 조회에 실패할 수 있어, 통계 실패가 전체 요청을
     // 실패시키지 않도록 summary 조회와 분리해 개별적으로 폴백 처리한다.
-    const [statsRes, heroesMap, competitiveRes, quickplayRes] = await Promise.all([
-      overfastClient.get<StatsSummary>(`/players/${encodedId}/stats/summary`).catch(() => null),
+    const [allStats, heroesMap, competitive, quickplay] = await Promise.all([
+      overfastGet<StatsSummary>(`/players/${encodedId}/stats/summary`).catch(() => null),
       getHeroesMap(),
-      overfastClient
-        .get<StatsSummary>(`/players/${encodedId}/stats/summary`, { params: { gamemode: 'competitive' } })
-        .catch(() => null),
-      overfastClient
-        .get<StatsSummary>(`/players/${encodedId}/stats/summary`, { params: { gamemode: 'quickplay' } })
-        .catch(() => null),
+      overfastGet<StatsSummary>(`/players/${encodedId}/stats/summary`, { gamemode: 'competitive' }).catch(() => null),
+      overfastGet<StatsSummary>(`/players/${encodedId}/stats/summary`, { gamemode: 'quickplay' }).catch(() => null),
     ]);
 
-    const stats = statsRes?.data ?? emptyStats;
-
+    const stats = allStats ?? EMPTY_STATS;
     const competitiveData = summary.competitive?.pc ?? summary.competitive?.console ?? null;
     const platform: 'pc' | 'console' = summary.competitive?.pc ? 'pc' : 'console';
 
@@ -200,11 +149,6 @@ playersRouter.get('/:battleTag/overview', async (req, res) => {
     }
 
     const heroStats = buildHeroStats(stats, heroesMap);
-    const heroStatsByMode = {
-      competitive: competitiveRes ? buildHeroStats(competitiveRes.data, heroesMap) : [],
-      quickplay: quickplayRes ? buildHeroStats(quickplayRes.data, heroesMap) : [],
-    };
-
     const topHeroes = heroStats.slice(0, 6).map((hero) => ({
       heroId: hero.heroId,
       heroName: hero.heroName,
@@ -214,7 +158,7 @@ playersRouter.get('/:battleTag/overview', async (req, res) => {
       levelLabel: `${hero.gamesPlayed}경기 · 승률 ${hero.winRate.toFixed(1)}%`,
     }));
 
-    res.json({
+    res.status(200).json({
       battleTag,
       displayName: summary.username || battleTag,
       avatarUrl: summary.avatar,
@@ -229,19 +173,22 @@ playersRouter.get('/:battleTag/overview', async (req, res) => {
         support: toHours(stats.roles?.support?.time_played),
       },
       modeHours: {
-        competitive: toHours(competitiveRes?.data.general.time_played),
-        quickplay: toHours(quickplayRes?.data.general.time_played),
+        competitive: toHours(competitive?.general.time_played),
+        quickplay: toHours(quickplay?.general.time_played),
       },
       performance: buildPerformance(stats),
       performanceByMode: {
-        competitive: competitiveRes ? buildPerformance(competitiveRes.data) : null,
-        quickplay: quickplayRes ? buildPerformance(quickplayRes.data) : null,
+        competitive: competitive ? buildPerformance(competitive) : null,
+        quickplay: quickplay ? buildPerformance(quickplay) : null,
       },
       topHeroes,
       heroStats,
-      heroStatsByMode,
+      heroStatsByMode: {
+        competitive: competitive ? buildHeroStats(competitive, heroesMap) : [],
+        quickplay: quickplay ? buildHeroStats(quickplay, heroesMap) : [],
+      },
     });
   } catch {
     res.status(502).json({ message: 'Overwatch 데이터를 가져오지 못했습니다.' });
   }
-});
+}
