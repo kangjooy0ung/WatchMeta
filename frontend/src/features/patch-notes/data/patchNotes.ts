@@ -13,6 +13,51 @@ export const PATCH_NOTES_SOURCE_URL = 'https://overwatch.nexon.com/news/patchnot
 
 export const PATCH_NOTES: PatchNote[] = [
   {
+    version: '2026-11-06',
+    patchDate: '2026년 11월 6일',
+    title: '오버워치 패치 노트 - 2026년 11월 6일',
+    highlight: '핫픽스 업데이트입니다. 11월 4일 패치의 리플레이 코드는 계속 이용할 수 있습니다.',
+    sections: [
+      {
+        title: '영웅 업데이트',
+        heroes: [
+          {
+            hero: '레킹볼',
+            role: 'tank',
+            portraitUrl: 'https://d15f34w2p8l1cc.cloudfront.net/overwatch/9ef1d58867136e0b26f928d896000b9dab216118f6e2f59e53f2e975e1e27afa.png',
+            changes: [
+              {
+                ability: '갈고리 고정',
+                bullets: [
+                  '갈고리 고정을 취소하는 동안 레킹볼의 기본 속도 제한이 15% 증가했습니다.',
+                  '아군 속도 증폭이 이제 갈고리 고정을 취소하는 동안 레킹볼의 속도 제한을 증가시킵니다.',
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: '버그 수정 - 일반',
+        bullets: [
+          '이전 경쟁전 드라이브에서 체크포인트 4에 도달하지 않은 플레이어는 장착 해제할 수 없는 시그니처를 더 이상 장착하지 않습니다.',
+        ],
+      },
+      {
+        title: '버그 수정 - 영웅',
+        bullets: [
+          '이전 업데이트으로 수정 완료됨: 조종사 D.Mon이 궁극기 충전 없이 부활하여 D.Mon이 즉각적으로 메카에 탑승하지 못하곤 했던 문제를 수정했습니다.',
+        ],
+      },
+      {
+        title: '버그 수정 - 스타디움',
+        bullets: [
+          '점수판과 관련 화면이 제대로 표시되지 않던 문제를 수정했습니다.',
+        ],
+      },
+    ],
+  },
+  {
     version: '2026-11-04',
     patchDate: '2026년 11월 4일',
     title: '오버워치 패치 노트 - 2026년 11월 4일',
