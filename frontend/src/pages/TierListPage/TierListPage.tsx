@@ -14,6 +14,7 @@ import { PATCH_NOTES } from '../../features/patch-notes/data/patchNotes';
 import { ROLES } from '../../constants/roles';
 import { CURRENT_SEASON_LABEL } from '../../constants/season';
 import { ROUTES } from '../../constants/routes';
+import { DEFAULT_RANK, DEFAULT_SERVER } from '../../constants/filters';
 import { useDocumentMeta } from '../../lib/useDocumentMeta';
 import type { HeroRole } from '../../types/hero';
 import type { TierRank } from '../../types/tier';
@@ -21,8 +22,6 @@ import type { TierRank } from '../../types/tier';
 const TIER_ORDER: TierRank[] = ['S', 'A', 'B', 'C', 'D'];
 const ROLE_ORDER: Record<HeroRole, number> = { tank: 0, damage: 1, support: 2 };
 const VALID_ROLES: Array<HeroRole | 'all'> = ['all', 'tank', 'damage', 'support'];
-const DEFAULT_RANK = '전체';
-const DEFAULT_SERVER = '아시아';
 
 // heroRates.ts는 패치별 스냅샷이 아니라 "가장 최근 확인 시점" 단일 데이터라, 과거 패치를 골라도
 // 실제로는 같은 수치가 나온다. 그래서 선택 가능한 옵션은 하나뿐이다.

@@ -26,7 +26,7 @@
 
 ### 🔍 전적 검색 & 프로필
 
-배틀태그로 검색하면 백엔드가 [OverFast API](https://overfast-api.tekrop.fr)를 조회해 경쟁전 티어, 총 플레이타임, 승률, KDA, 모스트 영웅을 보여줍니다. 프로필에서 특정 영웅을 선택하면 그 영웅만의 승률·KDA·플레이타임 등 세부 기록으로 이동할 수 있습니다.
+배틀태그로 검색하면 서버리스 함수가 [OverFast API](https://overfast-api.tekrop.fr)를 조회해 경쟁전 티어, 총 플레이타임, 승률, KDA, 모스트 영웅을 보여줍니다. 프로필에서 특정 영웅을 선택하면 그 영웅만의 승률·KDA·플레이타임 등 세부 기록으로 이동할 수 있습니다.
 
 ### 📜 패치 노트
 
@@ -43,12 +43,15 @@
 ```mermaid
 flowchart LR
     U[사용자 브라우저] -->|React SPA| FE[Frontend<br/>Vercel]
-    FE -->|"/api/players/:battleTag/overview"| BE[Backend<br/>Render / Express]
-    BE -->|프록시 요청| OF[(OverFast API)]
+    FE -->|"/api/* (같은 오리진)"| FN[Vercel Functions<br/>frontend/api]
+    FN -->|전적| OF[(OverFast API)]
+    FN -->|전장 승률| NX[(넥슨 공식 영웅 통계)]
     FE -.정적 번들 데이터.-> TL[티어표 픽률·승률 데이터<br/>heroRates.ts]
 ```
 
-- **전적 검색·프로필**은 프론트엔드가 백엔드(Express)를 거쳐 OverFast API를 호출하는 실시간 프록시 구조입니다. 백엔드는 영웅 메타데이터를 메모리에 캐싱([`heroesCache.ts`](backend/src/services/heroesCache.ts))해 매 요청마다 반복 조회하지 않습니다.
+- **API는 프론트와 같은 오리진**의 Vercel Functions(`frontend/api/`)입니다. 별도 호스팅이 없어 CORS 설정도, 깨어나길 기다리는 콜드 스타트도 없습니다.
+- **전적 검색·프로필**은 OverFast API를 프록시합니다. 넥슨은 플레이어 조회를 제공하지 않아 이 경로만 OverFast를 씁니다.
+- **전장 승률·전장 목록**은 넥슨 공식 영웅 통계(`overwatch.nexon.com/hero/rate`)를 프록시합니다. 메타 티어표와 같은 출처라 수치 기준이 일치하고, OverFast에 없는 **한국 지역**과 **전장별 밴률**을 쓸 수 있습니다. 응답은 `Cache-Control`로 Vercel CDN에 올려 반복 요청이 함수를 깨우지 않게 합니다.
 - **메타 티어표**는 별도 API 호출 없이 프론트엔드에 번들된 정적 데이터를 클라이언트에서 그룹핑·정렬해 보여주는 구조입니다. 데이터 최신화는 [`heroRates.ts`](frontend/src/features/tier-list/data/heroRates.ts)를 갱신하는 방식으로 이뤄집니다.
 
 ---
@@ -64,15 +67,15 @@ flowchart LR
 | 클라이언트 상태 | Zustand (`persist` 미들웨어) |
 | HTTP 클라이언트 | Axios |
 | 아이콘 | lucide-react |
-| Backend | Express 5, TypeScript |
-| 외부 데이터 | [OverFast API](https://overfast-api.tekrop.fr) (전적), 블리자드 공식 영웅 통계 페이지 (티어표) |
-| 배포 | Vercel (Frontend), Render (Backend) |
+| Backend | Vercel Functions (Node) |
+| 외부 데이터 | 넥슨 공식 영웅 통계 (티어표·전장 승률), [OverFast API](https://overfast-api.tekrop.fr) (전적 검색) |
+| 배포 | Vercel (프론트엔드 + API 함수) |
 
 ---
 
 ## 프로젝트 구조
 
-npm workspaces 기반 모노레포입니다. `frontend`는 화면과 상태 관리, `backend`는 OverFast API 프록시 역할만 담당하는 얇은 API 서버입니다.
+`frontend` 하나짜리 npm workspace입니다. 화면과 API 함수가 같은 패키지에 있고, `frontend/api/`가 배포 시 Vercel Functions가 됩니다.
 
 ```
 WatchMeta/
@@ -91,25 +94,26 @@ WatchMeta/
 │       ├── store/                  # Zustand 스토어 (최근 검색 기록 등)
 │       ├── lib/                    # apiClient(Axios 인스턴스) 등 공용 클라이언트
 │       └── types/                  # feature 간 공유되는 타입 정의
-└── backend/
-    └── src/
-        ├── routes/players.ts       # GET /:battleTag/overview — 프로필 조회 API
-        ├── services/
-        │   ├── overfastClient.ts   # OverFast API용 Axios 인스턴스, 배틀태그 ↔ player_id 변환
-        │   └── heroesCache.ts      # 영웅 메타데이터 인메모리 캐시
-        ├── app.ts                  # Express 앱 설정 (cors, 라우터 등록, /health)
-        └── index.ts                # 서버 엔트리포인트
+└── frontend/api/                # 배포 시 Vercel Functions (/api/*)
+    ├── maps.ts                  # GET /api/maps — 경쟁전 전장 목록
+    ├── map-stats.ts             # GET /api/map-stats — 전장별 영웅 승률·픽률·밴률
+    ├── players/
+    │   ├── search.ts            # GET /api/players/search
+    │   └── [battleTag]/overview.ts
+    └── _lib/                    # 함수들이 공유하는 코드 (_ 로 시작해 라우트가 되지 않음)
+        ├── nexon.ts             #   넥슨 SSR 페이로드 파싱, 전장 목록·통계
+        └── overfast.ts          #   OverFast 호출, 영웅 메타데이터 캐시
 ```
 
 ---
 
 ## API
 
-백엔드는 아래 엔드포인트만 노출하는 최소한의 프록시 서버입니다.
+API는 프론트와 같은 오리진의 Vercel Functions입니다(`frontend/api/`).
 
 | 메서드 | 경로 | 설명 |
 | --- | --- | --- |
-| `GET` | `/health` | 헬스체크 (Render 배포 시 사용) |
+| `GET` | `/api/players/search` | 닉네임으로 플레이어 후보 검색 |
 | `GET` | `/api/players/:battleTag/overview` | 배틀태그로 경쟁전 티어, 플레이타임, 승률, 영웅별 스탯 등 프로필 데이터 조회 |
 | `GET` | `/api/maps` | 경쟁전 전장 목록 (키, 한글 이름, 모드, 스크린샷) |
 | `GET` | `/api/map-stats` | 전장별 영웅 승률·픽률·밴률. `map` / `region` / `division` 쿼리 |
@@ -128,54 +132,42 @@ cd WatchMeta
 npm install
 ```
 
-프론트엔드와 백엔드 각각 `.env.example`을 참고해 `.env`를 생성합니다.
+`.env`는 없어도 동작합니다. 다른 API를 붙여보고 싶을 때만 만듭니다.
 
 ```bash
-cp frontend/.env.example frontend/.env   # VITE_API_BASE_URL=http://localhost:4000/api
-cp backend/.env.example backend/.env     # PORT=4000, OVERFAST_BASE_URL=..., NEXON_BASE_URL=...
+cp frontend/.env.example frontend/.env   # VITE_API_BASE_URL — 비우면 같은 오리진의 /api
 ```
 
 ```bash
-npm run dev           # 프론트엔드 개발 서버 (http://localhost:5173)
-npm run dev:backend   # 백엔드 개발 서버 (http://localhost:4000)
+npm run dev           # http://localhost:5173 — 화면과 /api 함수가 함께 뜹니다
 ```
+
+개발 서버는 `vite.config.ts`의 작은 미들웨어가 `/api/*` 요청을 `api/` 아래 함수 파일로 직접 넘깁니다. Vercel CLI나 별도 백엔드 프로세스가 필요 없습니다.
 
 | 명령어 (루트에서 실행) | 설명 |
 | --- | --- |
 | `npm run dev` | 프론트엔드 개발 서버 실행 |
-| `npm run dev:backend` | 백엔드 개발 서버 실행 |
 | `npm run build` | 프론트엔드 타입체크 후 프로덕션 빌드 |
-| `npm run build:backend` | 백엔드 프로덕션 빌드 |
-| `npm run start:backend` | 빌드된 백엔드 실행 |
 | `npm run lint` | 프론트엔드 oxlint 린트 검사 |
 
-특정 워크스페이스에서 직접 명령을 실행하고 싶다면 `frontend/`, `backend/` 디렉터리로 이동해 각 `package.json`의 스크립트를 그대로 사용해도 됩니다.
+`frontend/` 로 이동해 해당 `package.json`의 스크립트를 직접 실행해도 됩니다.
 
 ---
 
 ## 배포
 
-- **Frontend**: Vercel. 모노레포 구조이므로 프로젝트 설정에서 **Root Directory를 `frontend`로 지정**해야 합니다. npm workspaces로 `package-lock.json`이 루트 하나로 통합되어 있어, Vercel이 Root Directory 바깥의 lockfile을 읽도록 **"Include files outside of the root directory"** 옵션을 켜는 것이 안전합니다.
-- **Backend**: Render (`render.yaml` 참고). `OVERFAST_BASE_URL`·`NEXON_BASE_URL` 환경 변수를 사용하며 `/health`로 헬스체크합니다.
+**Vercel 하나로 끝납니다.** 프론트엔드와 API 함수가 같은 프로젝트에 있습니다.
 
-### 백엔드 깨워두기 (무료 플랜 콜드 스타트)
+- 모노레포 구조이므로 프로젝트 설정에서 **Root Directory를 `frontend`로 지정**해야 합니다. 그래야 `frontend/api/`가 `/api/*`로 서빙됩니다.
+- npm workspaces로 `package-lock.json`이 루트 하나로 통합되어 있어, Vercel이 Root Directory 바깥의 lockfile을 읽도록 **"Include files outside of the root directory"** 옵션을 켜는 것이 안전합니다.
+- 환경 변수는 필수가 아닙니다. `OVERFAST_BASE_URL`·`NEXON_BASE_URL`을 지정하면 출처를 바꿀 수 있고, 없으면 기본값을 씁니다.
+- `vercel.json`의 rewrite는 `/api/`로 시작하지 않는 경로만 `index.html`로 보냅니다. 이 부정 패턴을 지우면 **API가 전부 SPA에 먹혀 404가 납니다.**
 
-Render 무료 플랜은 **15분 동안 요청이 없으면 서비스를 재웁니다.** 다음 요청이 깨우는 데 20~60초가 걸려(실측 21초) 전장 승률 페이지가 그 시간을 그대로 떠안습니다.
+### 왜 별도 백엔드를 두지 않나
 
-`.github/workflows/keep-backend-awake.yml`이 **14분마다 `/health`를 호출**해 이를 막습니다. 공개 저장소라 Actions 사용량은 무료입니다.
+예전에는 Express 서버를 Render 무료 플랜에 따로 올렸습니다. 무료 플랜은 **15분 동안 요청이 없으면 서비스를 재우고**, 다음 요청이 깨우는 데 20~60초가 걸립니다(실측 21초). 전장 승률 페이지가 그 시간을 그대로 떠안아 첫 진입이 **약 28초**였습니다.
 
-동작하려면 **저장소 Variables에 `BACKEND_URL`** 이 있어야 합니다. 없으면 워크플로가 조용히 건너뜁니다.
-
-- 위치: `Settings` → `Secrets and variables` → `Actions` → `Variables` 탭 → `New repository variable`
-- 이름 `BACKEND_URL`, 값 `https://watchmeta.onrender.com` (끝에 `/api`를 붙이지 말 것)
-- CLI로는 `gh variable set BACKEND_URL --body "https://watchmeta.onrender.com"`
-
-알아둘 점:
-
-- **스케줄 워크플로는 기본 브랜치(`main`)에 있어야 돕니다.** 기능 브랜치에 있는 동안에는 실행되지 않습니다.
-- GitHub의 `schedule`은 정시를 보장하지 않아 밀릴 수 있습니다. 가끔은 콜드 스타트가 그대로 발생합니다.
-- **저장소에 60일간 커밋이 없으면 GitHub이 스케줄을 자동으로 멈춥니다.** 그때는 Actions 탭에서 다시 켜면 됩니다.
-- 무료 플랜의 월 750 인스턴스 시간 안에서 한 서비스를 24시간 깨워두는 정도(약 730시간)는 가능하지만, **서비스를 하나 더 두면 초과**합니다.
+같은 오리진의 서버리스 함수로 옮기면서 그 대기가 사라졌습니다. 자주 쓰는 응답은 `Cache-Control`로 Vercel CDN에 올라가 **함수를 깨우지도 않습니다.**
 
 ---
 
@@ -186,7 +178,7 @@ Render 무료 플랜은 **15분 동안 요청이 없으면 서비스를 재웁�
 | 3주 | 오버워치 API 리서치 및 화면 흐름 기획 | ✅ 완료 |
 | 4주 | 전적 검색 및 프로필 화면 구현, 실 데이터 연동 | ✅ 완료 |
 | 5주 | 메타 티어표 실데이터 반영, 서버·랭크 필터 연동, 패치 노트 정리 | 🟡 진행 중 (패치 버전 필터 연동 예정) |
-| 6주 | QA 테스트 및 Vercel/Render를 통한 최종 MVP 배포 | ⚪️ 예정 |
+| 6주 | QA 테스트 및 Vercel 최종 MVP 배포 | ⚪️ 예정 |
 
 ---
 
