@@ -205,9 +205,10 @@ export function MapDetailPage() {
                   <SampleConfidenceBadge pickRate={hero.pickRate} className="hidden sm:inline-block" />
                 </div>
                 <div className="flex w-full items-center gap-3 sm:w-auto sm:max-w-sm sm:shrink-0">
-                  <div className="grid flex-1 grid-cols-2 gap-3">
+                  <div className="grid flex-1 grid-cols-3 gap-3">
                     <RateBar label="픽률" percentage={hero.pickRate} colorClass="bg-primary" />
                     <RateBar label="승률" percentage={hero.winRate} colorClass="bg-secondary" />
+                    <RateBar label="밴률" percentage={hero.banRate} colorClass="bg-tier-s" />
                   </div>
                   {!isAllMaps && <DeltaBadge delta={baselineByHeroId.get(hero.heroId)?.winRate != null ? hero.winRate - baselineByHeroId.get(hero.heroId)!.winRate : null} />}
                 </div>

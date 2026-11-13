@@ -14,10 +14,12 @@ export interface MapHeroStat {
   portraitUrl: string;
   pickRate: number;
   winRate: number;
+  banRate: number;
 }
 
 export interface MapHeroStatsMeta {
-  // 출처(OverFast)가 실제 집계 시각·기간을 공개하지 않아, 캐시 경과 시간(초)만 정직하게 보여준다.
+  // 출처(넥슨)가 실제 집계 시각·기간을 공개하지 않아, 백엔드가 이 응답을 받아온 지
+  // 몇 초 됐는지만 정직하게 보여준다.
   updatedSecondsAgo: number | null;
 }
 
